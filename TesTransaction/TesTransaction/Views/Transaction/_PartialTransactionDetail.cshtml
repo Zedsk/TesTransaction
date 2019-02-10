@@ -1,0 +1,43 @@
+﻿@model TesTransaction.Models.TrDetailsViewModel
+
+
+<table class="table">
+    <tr>
+        <th>Produit</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Remise</th>
+        <th>tva</th>
+        <th>Total</th>
+    </tr>
+    @{
+        if (Model.DetailsListById != null)
+        {
+            foreach (var item in Model.DetailsListById)
+            {
+                <tr>
+                    <td>@item.nameItem</td>
+                    <td>@item.price</td>
+                    <td>@item.quantity</td>
+                    <td>@item.Discount</td>
+                    <td>@item.vatItem</td>
+                    <td>(o)(o)</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>(o)(o)</td>
+            </tr>
+        }
+    }
+
+</table>
+<p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>
+

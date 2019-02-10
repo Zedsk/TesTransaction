@@ -1,0 +1,220 @@
+﻿@using TesTransaction.Models
+@model TrIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Content/test2.css")" rel="stylesheet" type="text/css" />
+}
+
+
+<div id="page">
+
+    <header id="header1">
+        <div style="visibility: hidden">
+            @*@Html.Raw(ViewBag.Error)
+                @Html.LabelFor(m => m.TerminalName)*@
+            @*@Html.DropDownListFor(m => m.TerminalName, new SelectList(Model.TerminalsNames), new { size = "1" })*@
+
+            @*<select name="listTerminals" id="listTerminals">
+                @foreach (var item in Model.TerminalsList)
+                {
+                    <option id="tId" value="@item.idTerminal">
+                        @item.nameTerminal
+                    </option>
+                }
+                </select>*@
+
+            @Html.TextBoxFor(m => m.TerminalId, new { size = "1" })
+        </div>
+        <div>
+            @Html.Raw(ViewBag.Error)
+            @Html.LabelFor(m => m.DateDay)
+            @Html.TextBoxFor(m => m.DateDay, new { size = "6" })
+        </div>
+        <div>
+            @Html.Raw(ViewBag.Error)
+            @Html.LabelFor(m => m.HourDay)
+            @Html.TextBoxFor(m => m.HourDay, new { size = "6" })
+        </div>
+        <div>
+            @Html.Raw(ViewBag.Error)
+            @Html.LabelFor(m => m.Vendor)
+            @Html.TextBoxFor(m => m.Vendor)
+        </div>
+        <div style="visibility: hidden">
+            @Html.Raw(ViewBag.Error)
+            @Html.LabelFor(m => m.NumTransaction)
+            @Html.TextBoxFor(m => m.NumTransaction, new { size = "3" })
+        </div>
+    </header>
+    <section id="mysection">
+        <div id="containerLeft">
+            <div id="addP">
+                <input id="addProduct" type="text" placeholder="Add..">
+                <button type="button" id="ButtonAddP" class="fct_btn" value="" onclick="ButtonAddProduct_Click()">Ajouter</button>
+
+            </div>
+            <div id="detail">
+                @*@Html.Partial("_PartialTransactionDetail")*@
+                @*@Html.Partial("_PartialTransactionDetail", new TrDetailsViewModel { DetailsListById = Model.TransactionDetailsListById })*@
+                @Html.Partial("_PartialTransactionDetail", new TrDetailsViewModel { })
+            </div>
+            <p>Vue Mère : @DateTime.Now.ToLongTimeString()</p>
+            <div id="Total">
+                <label for="subTotal1"><strong>Total </strong></label>
+                <input type="text" id="subTotal1" name="subTotal1" value="" />
+
+                <label for="subDiscount"><strong>Remise </strong></label>
+                <input type="text" id="subDiscount" name="subDiscount" value="" />
+
+                <label for="subTotal2"><strong>Sous-Total </strong></label>
+                <input type="text" id="subTotal2" name="subTotal2" value="" />
+
+                <label for="globalVAT"><strong>TVA </strong></label>
+                <select>
+                    <option value="0.21">21%</option>
+                </select>
+                <input type="text" id="globalVAT" name="globalVAT" value="" />
+
+                <label for="Total"><strong>TOTAL à payer </strong></label>
+                <input type="text" id="Total" name="Total" value="" />
+            </div>
+            <div id="calculator">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="button" id="Button1" class="calc_btn" value="1" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="Button2" class="calc_btn" value="2" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="Button3" class="calc_btn" value="3" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonAdd" class="calc_btn" value="+" onclick="ButtonAdd_Click()">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonCustomer" class="fct_btn" value="Customer" onclick="ButtonCustomer_Click()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="Button4" class="calc_btn" value="4" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="Button5" class="calc_btn" value="5" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="Button6" class="calc_btn" value="6" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonMinus" class="calc_btn" value="-" onclick="ButtonMinus_Click()">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonPayment" class="fct_btn" value="Payment" onclick="ButtonPayment_Click()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="Button7" class="calc_btn" value="7" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="Button8" class="calc_btn" value="8" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="Button9" class="calc_btn" value="9" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonMultiply" class="calc_btn" value="qty" onclick="ButtonQty_Click">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonSuspend" class="fct_btn" value="Suspend" onclick="ButtonSuspend_Click">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="ButtonPlusMinus" class="calc_btn" value="&plusmn;" onclick="ButtonPlusMinus_Click">
+                        </td>
+                        <td>
+                            <input type="button" id="Button0" class="calc_btn" value="0" onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonComa" class="calc_btn" value="," onclick="ButtonCalc_Click(this)">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonReturn" class="calc_btn" value="&larr;" onclick="ButtonDelete_Click()">
+                        </td>
+                        <td>
+                            <input type="button" id="ButtonS" class="fct_btn" value="S" onclick="ButtonS_Click">
+                        </td>
+                    </tr>
+                </table>
+            </div> <!-- end calculator -->
+        </div>  <!-- end containerLeft -->
+        <div id="containerRight">
+            <input id="searchProduct" name="searchProduct" type="text" placeholder="Search..">
+            <div id="search">
+
+            </div>
+        </div>  <!-- end containerRight -->
+    </section>
+
+
+</div> <!-- end page-->
+
+@section Scripts{
+    <script type="text/javascript">
+        function ButtonCalc_Click(id) {
+            var val = id.getAttribute('Value');
+            document.getElementById('addProduct').value += val;
+        }
+
+        function ButtonDelete_Click() {
+            var val = document.getElementById('addProduct').value;
+            document.getElementById('addProduct').value = val.substring(0, val.length - 1);
+        }
+
+        function ButtonAdd_Click() {
+            //todo
+        }
+
+        function ButtonAddProduct_Click() {
+            var val = document.getElementById('addProduct').value;
+            var numTransaction = document.getElementById('NumTransaction').value;
+
+            //var terminal = document.getElementById('tId').value;
+            var terminal = document.getElementById('TerminalId').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('addProduct').value = "";
+                    document.getElementById('detail').innerHTML = xhr.responseText;
+
+                }
+            }
+            ////Get Method
+            //var url = "/Transaction/RefreshDetails?codeProduct=" + val
+            //          + "&numTransaction=" + numTransaction
+            //          + "&terminal=" + terminal;
+
+            //xhr.open("GET", url);
+            //xhr.send();
+
+            //Post Method
+            var url = "/Transaction/RefreshDetails";
+            var param = "codeProduct=" + val
+                + "&numTransaction=" + numTransaction
+                + "&terminal=" + terminal;
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(param);
+
+        }
+
+    </script>
+}
