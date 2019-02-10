@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Transaction";
+}
+
+<h2>Transaction</h2>
+
+<p>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</p>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Menu</h4>
+        <ul>
+            <li><a class="btn btn-primary" href="~/Cash/Create" role="button">Début de journée</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Continuer</a></li>
+            <li><a class="btn btn-primary" href="#" role="button">Vidange</a></li>
+            <li><a class="btn btn-primary" href="~/Cash/End" role="button">Fin de journée</a></li>
+            <li><a class="btn btn-primary" href="~/Cash/Index" role="button">Consulter les fonds de caisse</a></li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-primary" href="~/Transaction/Index" role="button">Go</a>
+    </div>
+</div>

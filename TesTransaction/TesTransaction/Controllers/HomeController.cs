@@ -26,5 +26,10 @@ namespace TesTransaction.Controllers
 
             return View();
         }
+
+        public ActionResult Transaction()
+        {
+            return View();
+        }
     }
 }
