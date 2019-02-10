@@ -1,0 +1,42 @@
+﻿@model TesTransaction.Data.Entity.CASH_BOTTOM_DAY
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CASH_BOTTOM_DAY</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.beginningCash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beginningCash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endCash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endCash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TERMINAL.nameTerminal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TERMINAL.nameTerminal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

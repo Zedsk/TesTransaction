@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TesTransaction.Data.Entity.CASH_BOTTOM_DAY>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    // <strong style="color: red ">todo -> zone de recherche</strong>  | @Html.ActionLink("Back to Menu", "Transaction", "Home")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.dateDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.beginningCash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.endCash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TERMINAL.nameTerminal)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateDay, new { placeholder = "DD/MM/YYY", type = "date" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.beginningCash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endCash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TERMINAL.nameTerminal)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal }) |
+            @Html.ActionLink("Details", "Details", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal }) |
+            @Html.ActionLink("Delete", "Delete", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal })
+        </td>
+    </tr>
+}
+
+</table>
