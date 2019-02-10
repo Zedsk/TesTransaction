@@ -1,0 +1,895 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestTransactionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AGE">
+          <Key>
+            <PropertyRef Name="idAge" />
+          </Key>
+          <Property Name="idAge" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BRAND">
+          <Key>
+            <PropertyRef Name="idBrand" />
+          </Key>
+          <Property Name="idBrand" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameBrand" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="imageBrand" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CASH_BOTTOM_DAY">
+          <Key>
+            <PropertyRef Name="dateDay" />
+            <PropertyRef Name="terminalId" />
+          </Key>
+          <Property Name="dateDay" Type="datetime" Nullable="false" />
+          <Property Name="terminalId" Type="int" Nullable="false" />
+          <Property Name="beginningCash" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="endCash" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imageCat" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="HERO">
+          <Key>
+            <PropertyRef Name="idHero" />
+          </Key>
+          <Property Name="idHero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imageHero" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PAYMENT">
+          <Key>
+            <PropertyRef Name="idPayment" />
+          </Key>
+          <Property Name="idPayment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paymentMethodId" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="transactionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PAYMENT_METHOD">
+          <Key>
+            <PropertyRef Name="idPaymentMethod" />
+          </Key>
+          <Property Name="idPaymentMethod" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="method" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="idProduct" />
+          </Key>
+          <Property Name="idProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="barcode" Type="varchar" MaxLength="100" />
+          <Property Name="purchasePrice" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="salesPrice" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="discountRate" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="imageProduct" Type="varchar" MaxLength="100" />
+          <Property Name="categoryId" Type="int" Nullable="false" />
+          <Property Name="ageId" Type="int" Nullable="false" />
+          <Property Name="brandId" Type="int" Nullable="false" />
+          <Property Name="heroId" Type="int" Nullable="false" />
+          <Property Name="vatId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TERMINAL">
+          <Key>
+            <PropertyRef Name="idTerminal" />
+          </Key>
+          <Property Name="idTerminal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameTerminal" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="shopId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TICKET">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="messageId" Type="int" Nullable="false" />
+          <Property Name="languageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_DETAILS">
+          <Key>
+            <PropertyRef Name="idTransactionDetails" />
+          </Key>
+          <Property Name="idTransactionDetails" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transactionId" Type="int" Nullable="false" />
+          <Property Name="productId" Type="int" Nullable="false" />
+          <Property Name="nameItem" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="vatItem" Type="decimal" Precision="4" Scale="2" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONS">
+          <Key>
+            <PropertyRef Name="idTransaction" />
+          </Key>
+          <Property Name="idTransaction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transactionDate" Type="datetime" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="isClose" Type="bit" Nullable="false" />
+          <Property Name="isCanceled" Type="bit" Nullable="false" />
+          <Property Name="isReturn" Type="bit" Nullable="false" />
+          <Property Name="vendorId" Type="int" Nullable="false" />
+          <Property Name="terminalId" Type="int" Nullable="false" />
+          <Property Name="shopId" Type="int" Nullable="false" />
+          <Property Name="customerId" Type="int" Nullable="false" />
+          <Property Name="ticketId" Type="int" />
+          <Property Name="vatId" Type="int" />
+        </EntityType>
+        <EntityType Name="VAT">
+          <Key>
+            <PropertyRef Name="idVat" />
+          </Key>
+          <Property Name="idVat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="appliedVat" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CARD_TRANSACTION">
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="1" />
+          <End Role="PAYMENT" Type="Self.PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONS">
+              <PropertyRef Name="idTransaction" />
+            </Principal>
+            <Dependent Role="PAYMENT">
+              <PropertyRef Name="transactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CASH_BOTTOM_BEGIN_TERMINAL">
+          <End Role="TERMINAL" Type="Self.TERMINAL" Multiplicity="1" />
+          <End Role="CASH_BOTTOM_DAY" Type="Self.CASH_BOTTOM_DAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TERMINAL">
+              <PropertyRef Name="idTerminal" />
+            </Principal>
+            <Dependent Role="CASH_BOTTOM_DAY">
+              <PropertyRef Name="terminalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAYMENT_PAYMENT_METHOD">
+          <End Role="PAYMENT_METHOD" Type="Self.PAYMENT_METHOD" Multiplicity="1" />
+          <End Role="PAYMENT" Type="Self.PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAYMENT_METHOD">
+              <PropertyRef Name="idPaymentMethod" />
+            </Principal>
+            <Dependent Role="PAYMENT">
+              <PropertyRef Name="paymentMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_AGE">
+          <End Role="AGE" Type="Self.AGE" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGE">
+              <PropertyRef Name="idAge" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="ageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_BRAND">
+          <End Role="BRAND" Type="Self.BRAND" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRAND">
+              <PropertyRef Name="idBrand" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="brandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_CATEGORY">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_HERO">
+          <End Role="HERO" Type="Self.HERO" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HERO">
+              <PropertyRef Name="idHero" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="heroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_VAT">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="idVat" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="vatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_DETAILS_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="1" />
+          <End Role="TRANSACTION_DETAILS" Type="Self.TRANSACTION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="idProduct" />
+            </Principal>
+            <Dependent Role="TRANSACTION_DETAILS">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_DETAILS_TRANSACTION">
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="1" />
+          <End Role="TRANSACTION_DETAILS" Type="Self.TRANSACTION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONS">
+              <PropertyRef Name="idTransaction" />
+            </Principal>
+            <Dependent Role="TRANSACTION_DETAILS">
+              <PropertyRef Name="transactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_POS">
+          <End Role="TERMINAL" Type="Self.TERMINAL" Multiplicity="1" />
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TERMINAL">
+              <PropertyRef Name="idTerminal" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS">
+              <PropertyRef Name="terminalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTIONS_TICKET">
+          <End Role="TICKET" Type="Self.TICKET" Multiplicity="0..1" />
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TICKET">
+              <PropertyRef Name="idTicket" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS">
+              <PropertyRef Name="ticketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTIONS_VAT">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="idVat" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS">
+              <PropertyRef Name="vatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestTransactionModelStoreContainer">
+          <EntitySet Name="AGE" EntityType="Self.AGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BRAND" EntityType="Self.BRAND" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CASH_BOTTOM_DAY" EntityType="Self.CASH_BOTTOM_DAY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HERO" EntityType="Self.HERO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAYMENT" EntityType="Self.PAYMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAYMENT_METHOD" EntityType="Self.PAYMENT_METHOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TERMINAL" EntityType="Self.TERMINAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKET" EntityType="Self.TICKET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACTION_DETAILS" EntityType="Self.TRANSACTION_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACTIONS" EntityType="Self.TRANSACTIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VAT" EntityType="Self.VAT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CARD_TRANSACTION" Association="Self.FK_CARD_TRANSACTION">
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+            <End Role="PAYMENT" EntitySet="PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CASH_BOTTOM_BEGIN_TERMINAL" Association="Self.FK_CASH_BOTTOM_BEGIN_TERMINAL">
+            <End Role="TERMINAL" EntitySet="TERMINAL" />
+            <End Role="CASH_BOTTOM_DAY" EntitySet="CASH_BOTTOM_DAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAYMENT_PAYMENT_METHOD" Association="Self.FK_PAYMENT_PAYMENT_METHOD">
+            <End Role="PAYMENT_METHOD" EntitySet="PAYMENT_METHOD" />
+            <End Role="PAYMENT" EntitySet="PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_AGE" Association="Self.FK_PRODUCT_AGE">
+            <End Role="AGE" EntitySet="AGE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_BRAND" Association="Self.FK_PRODUCT_BRAND">
+            <End Role="BRAND" EntitySet="BRAND" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_HERO" Association="Self.FK_PRODUCT_HERO">
+            <End Role="HERO" EntitySet="HERO" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_VAT" Association="Self.FK_PRODUCT_VAT">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_DETAILS_PRODUCT" Association="Self.FK_TRANSACTION_DETAILS_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="TRANSACTION_DETAILS" EntitySet="TRANSACTION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_DETAILS_TRANSACTION" Association="Self.FK_TRANSACTION_DETAILS_TRANSACTION">
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+            <End Role="TRANSACTION_DETAILS" EntitySet="TRANSACTION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_POS" Association="Self.FK_TRANSACTION_POS">
+            <End Role="TERMINAL" EntitySet="TERMINAL" />
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTIONS_TICKET" Association="Self.FK_TRANSACTIONS_TICKET">
+            <End Role="TICKET" EntitySet="TICKET" />
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTIONS_VAT" Association="Self.FK_TRANSACTIONS_VAT">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestTransactionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AGE">
+          <Key>
+            <PropertyRef Name="idAge" />
+          </Key>
+          <Property Name="idAge" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_AGE" FromRole="AGE" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="BRAND">
+          <Key>
+            <PropertyRef Name="idBrand" />
+          </Key>
+          <Property Name="idBrand" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameBrand" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="imageBrand" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_BRAND" FromRole="BRAND" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="CASH_BOTTOM_DAY">
+          <Key>
+            <PropertyRef Name="dateDay" />
+            <PropertyRef Name="terminalId" />
+          </Key>
+          <Property Name="dateDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="terminalId" Type="Int32" Nullable="false" />
+          <Property Name="beginningCash" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="endCash" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <NavigationProperty Name="TERMINAL" Relationship="Self.FK_CASH_BOTTOM_BEGIN_TERMINAL" FromRole="CASH_BOTTOM_DAY" ToRole="TERMINAL" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imageCat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="CATEGORY" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="HERO">
+          <Key>
+            <PropertyRef Name="idHero" />
+          </Key>
+          <Property Name="idHero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imageHero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_HERO" FromRole="HERO" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PAYMENT">
+          <Key>
+            <PropertyRef Name="idPayment" />
+          </Key>
+          <Property Name="idPayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paymentMethodId" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="transactionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TRANSACTIONS" Relationship="Self.FK_CARD_TRANSACTION" FromRole="PAYMENT" ToRole="TRANSACTIONS" />
+          <NavigationProperty Name="PAYMENT_METHOD" Relationship="Self.FK_PAYMENT_PAYMENT_METHOD" FromRole="PAYMENT" ToRole="PAYMENT_METHOD" />
+        </EntityType>
+        <EntityType Name="PAYMENT_METHOD">
+          <Key>
+            <PropertyRef Name="idPaymentMethod" />
+          </Key>
+          <Property Name="idPaymentMethod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="method" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PAYMENT" Relationship="Self.FK_PAYMENT_PAYMENT_METHOD" FromRole="PAYMENT_METHOD" ToRole="PAYMENT" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="idProduct" />
+          </Key>
+          <Property Name="idProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="barcode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="purchasePrice" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="salesPrice" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="discountRate" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="imageProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="categoryId" Type="Int32" Nullable="false" />
+          <Property Name="ageId" Type="Int32" Nullable="false" />
+          <Property Name="brandId" Type="Int32" Nullable="false" />
+          <Property Name="heroId" Type="Int32" Nullable="false" />
+          <Property Name="vatId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AGE" Relationship="Self.FK_PRODUCT_AGE" FromRole="PRODUCT" ToRole="AGE" />
+          <NavigationProperty Name="BRAND" Relationship="Self.FK_PRODUCT_BRAND" FromRole="PRODUCT" ToRole="BRAND" />
+          <NavigationProperty Name="CATEGORY" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="PRODUCT" ToRole="CATEGORY" />
+          <NavigationProperty Name="HERO" Relationship="Self.FK_PRODUCT_HERO" FromRole="PRODUCT" ToRole="HERO" />
+          <NavigationProperty Name="VAT" Relationship="Self.FK_PRODUCT_VAT" FromRole="PRODUCT" ToRole="VAT" />
+          <NavigationProperty Name="TRANSACTION_DETAILS" Relationship="Self.FK_TRANSACTION_DETAILS_PRODUCT" FromRole="PRODUCT" ToRole="TRANSACTION_DETAILS" />
+        </EntityType>
+        <EntityType Name="TERMINAL">
+          <Key>
+            <PropertyRef Name="idTerminal" />
+          </Key>
+          <Property Name="idTerminal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameTerminal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="shopId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CASH_BOTTOM_DAY" Relationship="Self.FK_CASH_BOTTOM_BEGIN_TERMINAL" FromRole="TERMINAL" ToRole="CASH_BOTTOM_DAY" />
+          <NavigationProperty Name="TRANSACTIONS" Relationship="Self.FK_TRANSACTION_POS" FromRole="TERMINAL" ToRole="TRANSACTIONS" />
+        </EntityType>
+        <EntityType Name="TICKET">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="messageId" Type="Int32" Nullable="false" />
+          <Property Name="languageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TRANSACTIONS" Relationship="Self.FK_TRANSACTIONS_TICKET" FromRole="TICKET" ToRole="TRANSACTIONS" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_DETAILS">
+          <Key>
+            <PropertyRef Name="idTransactionDetails" />
+          </Key>
+          <Property Name="idTransactionDetails" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transactionId" Type="Int32" Nullable="false" />
+          <Property Name="productId" Type="Int32" Nullable="false" />
+          <Property Name="nameItem" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="vatItem" Type="Decimal" Precision="4" Scale="2" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_TRANSACTION_DETAILS_PRODUCT" FromRole="TRANSACTION_DETAILS" ToRole="PRODUCT" />
+          <NavigationProperty Name="TRANSACTIONS" Relationship="Self.FK_TRANSACTION_DETAILS_TRANSACTION" FromRole="TRANSACTION_DETAILS" ToRole="TRANSACTIONS" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONS">
+          <Key>
+            <PropertyRef Name="idTransaction" />
+          </Key>
+          <Property Name="idTransaction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="total" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="isClose" Type="Boolean" Nullable="false" />
+          <Property Name="isCanceled" Type="Boolean" Nullable="false" />
+          <Property Name="isReturn" Type="Boolean" Nullable="false" />
+          <Property Name="vendorId" Type="Int32" Nullable="false" />
+          <Property Name="terminalId" Type="Int32" Nullable="false" />
+          <Property Name="shopId" Type="Int32" Nullable="false" />
+          <Property Name="customerId" Type="Int32" Nullable="false" />
+          <Property Name="ticketId" Type="Int32" />
+          <Property Name="vatId" Type="Int32" />
+          <NavigationProperty Name="PAYMENT" Relationship="Self.FK_CARD_TRANSACTION" FromRole="TRANSACTIONS" ToRole="PAYMENT" />
+          <NavigationProperty Name="TERMINAL" Relationship="Self.FK_TRANSACTION_POS" FromRole="TRANSACTIONS" ToRole="TERMINAL" />
+          <NavigationProperty Name="TICKET" Relationship="Self.FK_TRANSACTIONS_TICKET" FromRole="TRANSACTIONS" ToRole="TICKET" />
+          <NavigationProperty Name="TRANSACTION_DETAILS" Relationship="Self.FK_TRANSACTION_DETAILS_TRANSACTION" FromRole="TRANSACTIONS" ToRole="TRANSACTION_DETAILS" />
+          <NavigationProperty Name="VAT" Relationship="Self.FK_TRANSACTIONS_VAT" FromRole="TRANSACTIONS" ToRole="VAT" />
+        </EntityType>
+        <EntityType Name="VAT">
+          <Key>
+            <PropertyRef Name="idVat" />
+          </Key>
+          <Property Name="idVat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="appliedVat" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_VAT" FromRole="VAT" ToRole="PRODUCT" />
+          <NavigationProperty Name="TRANSACTIONS" Relationship="Self.FK_TRANSACTIONS_VAT" FromRole="VAT" ToRole="TRANSACTIONS" />
+        </EntityType>
+        <Association Name="FK_PRODUCT_AGE">
+          <End Role="AGE" Type="Self.AGE" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGE">
+              <PropertyRef Name="idAge" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="ageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_BRAND">
+          <End Role="BRAND" Type="Self.BRAND" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRAND">
+              <PropertyRef Name="idBrand" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="brandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CASH_BOTTOM_BEGIN_TERMINAL">
+          <End Role="TERMINAL" Type="Self.TERMINAL" Multiplicity="1" />
+          <End Role="CASH_BOTTOM_DAY" Type="Self.CASH_BOTTOM_DAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TERMINAL">
+              <PropertyRef Name="idTerminal" />
+            </Principal>
+            <Dependent Role="CASH_BOTTOM_DAY">
+              <PropertyRef Name="terminalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_CATEGORY">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_HERO">
+          <End Role="HERO" Type="Self.HERO" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HERO">
+              <PropertyRef Name="idHero" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="heroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARD_TRANSACTION">
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="1" />
+          <End Role="PAYMENT" Type="Self.PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONS">
+              <PropertyRef Name="idTransaction" />
+            </Principal>
+            <Dependent Role="PAYMENT">
+              <PropertyRef Name="transactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAYMENT_PAYMENT_METHOD">
+          <End Role="PAYMENT_METHOD" Type="Self.PAYMENT_METHOD" Multiplicity="1" />
+          <End Role="PAYMENT" Type="Self.PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAYMENT_METHOD">
+              <PropertyRef Name="idPaymentMethod" />
+            </Principal>
+            <Dependent Role="PAYMENT">
+              <PropertyRef Name="paymentMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_VAT">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="idVat" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="vatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_DETAILS_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="1" />
+          <End Role="TRANSACTION_DETAILS" Type="Self.TRANSACTION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="idProduct" />
+            </Principal>
+            <Dependent Role="TRANSACTION_DETAILS">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_POS">
+          <End Role="TERMINAL" Type="Self.TERMINAL" Multiplicity="1" />
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TERMINAL">
+              <PropertyRef Name="idTerminal" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS">
+              <PropertyRef Name="terminalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTIONS_TICKET">
+          <End Role="TICKET" Type="Self.TICKET" Multiplicity="0..1" />
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TICKET">
+              <PropertyRef Name="idTicket" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS">
+              <PropertyRef Name="ticketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_DETAILS_TRANSACTION">
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="1" />
+          <End Role="TRANSACTION_DETAILS" Type="Self.TRANSACTION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONS">
+              <PropertyRef Name="idTransaction" />
+            </Principal>
+            <Dependent Role="TRANSACTION_DETAILS">
+              <PropertyRef Name="transactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTIONS_VAT">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+          <End Role="TRANSACTIONS" Type="Self.TRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="idVat" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS">
+              <PropertyRef Name="vatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestTransactionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AGE" EntityType="Self.AGE" />
+          <EntitySet Name="BRAND" EntityType="Self.BRAND" />
+          <EntitySet Name="CASH_BOTTOM_DAY" EntityType="Self.CASH_BOTTOM_DAY" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" />
+          <EntitySet Name="HERO" EntityType="Self.HERO" />
+          <EntitySet Name="PAYMENT" EntityType="Self.PAYMENT" />
+          <EntitySet Name="PAYMENT_METHOD" EntityType="Self.PAYMENT_METHOD" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" />
+          <EntitySet Name="TERMINAL" EntityType="Self.TERMINAL" />
+          <EntitySet Name="TICKET" EntityType="Self.TICKET" />
+          <EntitySet Name="TRANSACTION_DETAILS" EntityType="Self.TRANSACTION_DETAILS" />
+          <EntitySet Name="TRANSACTIONS" EntityType="Self.TRANSACTIONS" />
+          <EntitySet Name="VAT" EntityType="Self.VAT" />
+          <AssociationSet Name="FK_PRODUCT_AGE" Association="Self.FK_PRODUCT_AGE">
+            <End Role="AGE" EntitySet="AGE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_BRAND" Association="Self.FK_PRODUCT_BRAND">
+            <End Role="BRAND" EntitySet="BRAND" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CASH_BOTTOM_BEGIN_TERMINAL" Association="Self.FK_CASH_BOTTOM_BEGIN_TERMINAL">
+            <End Role="TERMINAL" EntitySet="TERMINAL" />
+            <End Role="CASH_BOTTOM_DAY" EntitySet="CASH_BOTTOM_DAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_HERO" Association="Self.FK_PRODUCT_HERO">
+            <End Role="HERO" EntitySet="HERO" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARD_TRANSACTION" Association="Self.FK_CARD_TRANSACTION">
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+            <End Role="PAYMENT" EntitySet="PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAYMENT_PAYMENT_METHOD" Association="Self.FK_PAYMENT_PAYMENT_METHOD">
+            <End Role="PAYMENT_METHOD" EntitySet="PAYMENT_METHOD" />
+            <End Role="PAYMENT" EntitySet="PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_VAT" Association="Self.FK_PRODUCT_VAT">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_DETAILS_PRODUCT" Association="Self.FK_TRANSACTION_DETAILS_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="TRANSACTION_DETAILS" EntitySet="TRANSACTION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_POS" Association="Self.FK_TRANSACTION_POS">
+            <End Role="TERMINAL" EntitySet="TERMINAL" />
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTIONS_TICKET" Association="Self.FK_TRANSACTIONS_TICKET">
+            <End Role="TICKET" EntitySet="TICKET" />
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_DETAILS_TRANSACTION" Association="Self.FK_TRANSACTION_DETAILS_TRANSACTION">
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+            <End Role="TRANSACTION_DETAILS" EntitySet="TRANSACTION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTIONS_VAT" Association="Self.FK_TRANSACTIONS_VAT">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="TRANSACTIONS" EntitySet="TRANSACTIONS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestTransactionModelStoreContainer" CdmEntityContainer="TestTransactionEntities">
+          <EntitySetMapping Name="AGE">
+            <EntityTypeMapping TypeName="TestTransactionModel.AGE">
+              <MappingFragment StoreEntitySet="AGE">
+                <ScalarProperty Name="idAge" ColumnName="idAge" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BRAND">
+            <EntityTypeMapping TypeName="TestTransactionModel.BRAND">
+              <MappingFragment StoreEntitySet="BRAND">
+                <ScalarProperty Name="idBrand" ColumnName="idBrand" />
+                <ScalarProperty Name="nameBrand" ColumnName="nameBrand" />
+                <ScalarProperty Name="imageBrand" ColumnName="imageBrand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CASH_BOTTOM_DAY">
+            <EntityTypeMapping TypeName="TestTransactionModel.CASH_BOTTOM_DAY">
+              <MappingFragment StoreEntitySet="CASH_BOTTOM_DAY">
+                <ScalarProperty Name="dateDay" ColumnName="dateDay" />
+                <ScalarProperty Name="terminalId" ColumnName="terminalId" />
+                <ScalarProperty Name="beginningCash" ColumnName="beginningCash" />
+                <ScalarProperty Name="endCash" ColumnName="endCash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORY">
+            <EntityTypeMapping TypeName="TestTransactionModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+                <ScalarProperty Name="imageCat" ColumnName="imageCat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HERO">
+            <EntityTypeMapping TypeName="TestTransactionModel.HERO">
+              <MappingFragment StoreEntitySet="HERO">
+                <ScalarProperty Name="idHero" ColumnName="idHero" />
+                <ScalarProperty Name="imageHero" ColumnName="imageHero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAYMENT">
+            <EntityTypeMapping TypeName="TestTransactionModel.PAYMENT">
+              <MappingFragment StoreEntitySet="PAYMENT">
+                <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+                <ScalarProperty Name="paymentMethodId" ColumnName="paymentMethodId" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="transactionId" ColumnName="transactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAYMENT_METHOD">
+            <EntityTypeMapping TypeName="TestTransactionModel.PAYMENT_METHOD">
+              <MappingFragment StoreEntitySet="PAYMENT_METHOD">
+                <ScalarProperty Name="idPaymentMethod" ColumnName="idPaymentMethod" />
+                <ScalarProperty Name="method" ColumnName="method" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT">
+            <EntityTypeMapping TypeName="TestTransactionModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="purchasePrice" ColumnName="purchasePrice" />
+                <ScalarProperty Name="salesPrice" ColumnName="salesPrice" />
+                <ScalarProperty Name="discountRate" ColumnName="discountRate" />
+                <ScalarProperty Name="imageProduct" ColumnName="imageProduct" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="ageId" ColumnName="ageId" />
+                <ScalarProperty Name="brandId" ColumnName="brandId" />
+                <ScalarProperty Name="heroId" ColumnName="heroId" />
+                <ScalarProperty Name="vatId" ColumnName="vatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TERMINAL">
+            <EntityTypeMapping TypeName="TestTransactionModel.TERMINAL">
+              <MappingFragment StoreEntitySet="TERMINAL">
+                <ScalarProperty Name="idTerminal" ColumnName="idTerminal" />
+                <ScalarProperty Name="nameTerminal" ColumnName="nameTerminal" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKET">
+            <EntityTypeMapping TypeName="TestTransactionModel.TICKET">
+              <MappingFragment StoreEntitySet="TICKET">
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="messageId" ColumnName="messageId" />
+                <ScalarProperty Name="languageId" ColumnName="languageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTION_DETAILS">
+            <EntityTypeMapping TypeName="TestTransactionModel.TRANSACTION_DETAILS">
+              <MappingFragment StoreEntitySet="TRANSACTION_DETAILS">
+                <ScalarProperty Name="idTransactionDetails" ColumnName="idTransactionDetails" />
+                <ScalarProperty Name="transactionId" ColumnName="transactionId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="nameItem" ColumnName="nameItem" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="vatItem" ColumnName="vatItem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTIONS">
+            <EntityTypeMapping TypeName="TestTransactionModel.TRANSACTIONS">
+              <MappingFragment StoreEntitySet="TRANSACTIONS">
+                <ScalarProperty Name="idTransaction" ColumnName="idTransaction" />
+                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="isClose" ColumnName="isClose" />
+                <ScalarProperty Name="isCanceled" ColumnName="isCanceled" />
+                <ScalarProperty Name="isReturn" ColumnName="isReturn" />
+                <ScalarProperty Name="vendorId" ColumnName="vendorId" />
+                <ScalarProperty Name="terminalId" ColumnName="terminalId" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="ticketId" ColumnName="ticketId" />
+                <ScalarProperty Name="vatId" ColumnName="vatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VAT">
+            <EntityTypeMapping TypeName="TestTransactionModel.VAT">
+              <MappingFragment StoreEntitySet="VAT">
+                <ScalarProperty Name="idVat" ColumnName="idVat" />
+                <ScalarProperty Name="appliedVat" ColumnName="appliedVat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
