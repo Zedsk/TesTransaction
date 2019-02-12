@@ -84,6 +84,16 @@ namespace TesTransaction.Dal
             return db.TRANSACTION_DETAILSs.Where(t => t.transactionId == id).ToList();
         }
 
+        public void EditQtyToDetailById(int id)
+        {
+            var detail = db.TRANSACTION_DETAILSs.First(d => d.idTransactionDetails == id);
+            if (detail != null)
+            {
+                detail.quantity += 1;
+                db.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region Product

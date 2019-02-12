@@ -26,6 +26,7 @@ namespace TesTransaction.Dal
         int CreateTransaction(int terminal);
         List<TRANSACTION_DETAILS> GetAllDetailsByTransactionId(int id);
         void CreateDetail(PRODUCT prod, int transactionId, int terminalId, decimal vat);
+        void EditQtyToDetailById(int id);
         #endregion
 
         #region Product

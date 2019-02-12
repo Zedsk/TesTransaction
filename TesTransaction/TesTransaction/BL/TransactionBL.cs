@@ -69,12 +69,50 @@ namespace TesTransaction.BL
             {
                 //find productId with codeProduct
                 var prod = dal.GetProductByCode(codeProduct);
-                //find value vatItem
-                var vatItem = dal.GetAppliedVatById(prod.vatId).appliedVat;
-                //Add param product, terminalId, transactionId, vatItem 
-                int terminalId = int.Parse(terminal);
-                int transactionId = int.Parse(transaction);
-                dal.CreateDetail(prod, terminalId, transactionId, vatItem);
+                //verify if product exist in detail
+                IList<TRANSACTION_DETAILS> detailList = FindTransactionDetailsListById(transaction);
+                var result = VerifyProductInDetail(prod.idProduct, detailList);
+                if (result)
+                {
+                    foreach (var item in detailList)
+                    {
+                        if (item.productId == prod.idProduct)
+                        {
+                            //qty++
+                            dal.EditQtyToDetailById(item.idTransactionDetails);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    //find value vatItem
+                    var vatItem = dal.GetAppliedVatById(prod.vatId).appliedVat;
+                    //Add new detail --> param product, terminalId, transactionId, vatItem 
+                    int terminalId = int.Parse(terminal);
+                    int transactionId = int.Parse(transaction);
+                    dal.CreateDetail(prod, terminalId, transactionId, vatItem);
+                }
+            }
+        }
+
+        private static bool VerifyProductInDetail(int idProd, IList<TRANSACTION_DETAILS> detailList)
+        {
+            var result = false;
+            if (detailList.Count != 0)
+            {
+                foreach (var item in detailList)
+                {
+                    if (item.productId == idProd)
+                    {
+                        result = true;
+                    }
+                }
+                return result;
+            }
+            else
+            {
+                return result;
             }
         }
 
