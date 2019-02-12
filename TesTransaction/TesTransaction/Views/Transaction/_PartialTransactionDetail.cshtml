@@ -1,7 +1,7 @@
 ﻿@model TesTransaction.Models.TrDetailsViewModel
 
 
-<table class="table">
+<table class="table" id="tableDetail">
     <tr>
         <th>Produit</th>
         <th>Prix</th>
@@ -11,29 +11,29 @@
         <th>Total</th>
     </tr>
     @{
-        if (Model.DetailsListById != null)
+        if (Model.DetailsListWithTot != null)
         {
-            foreach (var item in Model.DetailsListById)
+            foreach (var item in Model.DetailsListWithTot)
             {
                 <tr>
-                    <td>@item.nameItem</td>
-                    <td>@item.price</td>
-                    <td>@item.quantity</td>
-                    <td>@item.Discount</td>
-                    <td>@item.vatItem</td>
-                    <td>(o)(o)</td>
+                    <td id="nameItem">@item.ProductName</td>
+                    <td id="price">@item.Price</td>
+                    <td id="quantity">@item.Quantity</td>
+                    <td id="Discount">@item.Discount</td>
+                    <td id="vatItem">@item.ProductVat</td>
+                    <td id="itemSubTot">@item.Total</td>
                 </tr>
             }
         }
         else
         {
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>(o)(o)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
             </tr>
         }
     }

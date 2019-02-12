@@ -32,17 +32,16 @@ namespace TesTransaction.Controllers
             return View(vm);
         }
 
-        public ActionResult Test()
-        {
-            return View();
-        }
-
         //POST: 
         public ActionResult RefreshDetails(string codeProduct, string numTransaction, string terminal)
         {
-            TransactionBL.AddNewTransactionDetail(codeProduct, terminal, numTransaction);
             TrDetailsViewModel vm = new TrDetailsViewModel();
-            vm.DetailsListById = TransactionBL.FindTransactionDetailsListById(numTransaction);
+
+            //Add detail
+            TransactionBL.AddNewTransactionDetail(codeProduct, terminal, numTransaction);
+            //Find details with id transaction  + Add itemSubTotal
+            var detailsList = TransactionBL.FindTransactionDetailsListById(numTransaction);
+            vm.DetailsListWithTot = TransactionBL.AddSubTotalPerDetailToList(detailsList);
 
             return PartialView("_PartialTransactionDetail", vm);
         }

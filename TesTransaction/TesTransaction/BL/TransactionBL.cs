@@ -5,6 +5,7 @@ using TesTransaction.Data.Entity;
 using TesTransaction.Dal;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using TesTransaction.Models;
 
 namespace TesTransaction.BL
 {
@@ -87,6 +88,42 @@ namespace TesTransaction.BL
 
         }
 
+        internal static IList<TrDetailsViewModel> AddSubTotalPerDetailToList(IList<TRANSACTION_DETAILS> detailsList)
+        {
+            IList<TrDetailsViewModel> vmList = new List<TrDetailsViewModel>();
+            foreach (var item in detailsList)
+            {
+                var p = item.price;
+                var q = item.quantity;
+                var d = item.Discount;
+                decimal? st;
+                if (p == 0 || q == 0)
+                {
+                    st = 0;
+                }
+                else if (d == 0 || d == null)
+                {
+                    st = (p * q);
+                }
+                else
+                {
+                    //ex: (100*2)*0.05 = 10
+                    var temp = (p * q) * d;
+                    st = (p * q) - temp;
+                }
+
+                TrDetailsViewModel vm = new TrDetailsViewModel();
+                vm.ProductName = item.nameItem;
+                vm.Price = p;
+                vm.Quantity = q;
+                vm.ProductVat = item.vatItem;
+                vm.Discount = item.Discount;
+                vm.Total = st;
+                vmList.Add(vm);
+            }
+
+            return vmList;
+        }
 
         #endregion
 

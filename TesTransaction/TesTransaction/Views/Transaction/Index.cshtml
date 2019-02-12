@@ -27,27 +27,27 @@
                 }
                 </select>*@
 
-            @Html.TextBoxFor(m => m.TerminalId, new { size = "1" })
+            @Html.TextBoxFor(m => m.TerminalId, new { size = "1", @readonly = "readonly" })
         </div>
         <div>
             @Html.Raw(ViewBag.Error)
             @Html.LabelFor(m => m.DateDay)
-            @Html.TextBoxFor(m => m.DateDay, new { size = "6" })
+            @Html.TextBoxFor(m => m.DateDay, new { size = "6", @readonly = "readonly" })
         </div>
         <div>
             @Html.Raw(ViewBag.Error)
             @Html.LabelFor(m => m.HourDay)
-            @Html.TextBoxFor(m => m.HourDay, new { size = "6" })
+            @Html.TextBoxFor(m => m.HourDay, new { size = "6", @readonly = "readonly" })
         </div>
         <div>
             @Html.Raw(ViewBag.Error)
             @Html.LabelFor(m => m.Vendor)
-            @Html.TextBoxFor(m => m.Vendor)
+            @Html.TextBoxFor(m => m.Vendor, new { @readonly = "readonly" })
         </div>
         <div style="visibility: hidden">
             @Html.Raw(ViewBag.Error)
             @Html.LabelFor(m => m.NumTransaction)
-            @Html.TextBoxFor(m => m.NumTransaction, new { size = "3" })
+            @Html.TextBoxFor(m => m.NumTransaction, new { size = "3", @readonly = "readonly" })
         </div>
     </header>
     <section id="mysection">

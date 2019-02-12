@@ -73,7 +73,7 @@ namespace TesTransaction.Models
         //[Display(Name = "Total")]
         //public string Total { get; set; }
 
-        public IList<TRANSACTION_DETAILS> TransactionDetailsListById { get; set; }
+        //public IList<TRANSACTION_DETAILS> TransactionDetailsListById { get; set; }
 
     }
 
@@ -87,29 +87,30 @@ namespace TesTransaction.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Prix")]
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Qtité")]
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Remise")]
-        public string Discount { get; set; }
+        public decimal? Discount { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "TVA")]
-        public string ProductVat { get; set; }
+        public decimal? ProductVat { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Total")]
-        public string Total { get; set; }
+        public decimal? Total { get; set; }
 
         public IList<TRANSACTION_DETAILS> DetailsListById { get; set; }
-        public IList<TRANSACTION_DETAILS> TransactionDetailsListById { get; set; }
+        public IList<TrDetailsViewModel> DetailsListWithTot { get; set; }
+        //public IList<TRANSACTION_DETAILS> TransactionDetailsListById { get; set; }
     }
 }
