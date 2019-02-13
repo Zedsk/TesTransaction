@@ -36,12 +36,15 @@ namespace TesTransaction.Controllers
         public ActionResult RefreshDetails(string codeProduct, string numTransaction, string terminal)
         {
             TrDetailsViewModel vm = new TrDetailsViewModel();
-
             //Add detail
             TransactionBL.AddNewTransactionDetail(codeProduct, terminal, numTransaction);
             //Find details with id transaction  + Add itemSubTotal
             var detailsList = TransactionBL.FindTransactionDetailsListById(numTransaction);
-            vm.DetailsListWithTot = TransactionBL.AddSubTotalPerDetailToList(detailsList);
+            var detailsListTot = TransactionBL.AddSubTotalPerDetailToList(detailsList);
+            //Sum subTotItems 
+            ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
+
+            vm.DetailsListWithTot = detailsListTot;
 
             return PartialView("_PartialTransactionDetail", vm);
         }

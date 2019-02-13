@@ -150,17 +150,29 @@ namespace TesTransaction.BL
                     st = (p * q) - temp;
                 }
 
-                TrDetailsViewModel vm = new TrDetailsViewModel();
-                vm.ProductName = item.nameItem;
-                vm.Price = p;
-                vm.Quantity = q;
-                vm.ProductVat = item.vatItem;
-                vm.Discount = item.Discount;
-                vm.Total = st;
+                TrDetailsViewModel vm = new TrDetailsViewModel
+                {
+                    ProductName = item.nameItem,
+                    Price = p,
+                    Quantity = q,
+                    ProductVat = item.vatItem,
+                    Discount = item.Discount,
+                    Total = st
+                };
                 vmList.Add(vm);
             }
 
             return vmList;
+        }
+
+        internal static decimal? SumItemsSubTot(IList<TrDetailsViewModel> detailsListTot)
+        {
+            decimal? result = 0;
+            foreach (var vm in detailsListTot)
+            {
+                result += vm.Total;
+            }
+            return result;
         }
 
         #endregion

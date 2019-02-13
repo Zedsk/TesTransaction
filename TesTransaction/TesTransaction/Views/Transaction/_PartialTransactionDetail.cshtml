@@ -39,5 +39,26 @@
     }
 
 </table>
+
+<div id="Total">
+    <label for="subTotal1"><strong>Sous-Total des articles</strong></label>
+    <input type="text" id="subTotal1" name="subTotal1" value="@ViewBag.subTot1" />
+
+    <label for="subDiscount"><strong>Remise globale</strong></label>
+    <input type="text" id="subDiscount" name="subDiscount" value="" />
+
+    <label for="subTotal2"><strong>Sous-Total HTVA</strong></label>
+    <input type="text" id="subTotal2" name="subTotal2" value="" />
+
+    <label for="globalVAT"><strong>TVA </strong></label>
+    <select>
+        <option id="globalVAT" value="0.21">21%</option>
+    </select>
+    @*<input type="text" id="globalVAT" name="globalVAT" value="" />*@
+
+    <label for="Total"><strong>TOTAL à payer </strong></label>
+    <input type="text" id="Total" name="Total" value="" />
+</div>
+
 <p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>
 
