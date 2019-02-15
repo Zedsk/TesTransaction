@@ -36,7 +36,7 @@ namespace TesTransaction.Dal
 
         #region VAT
         VAT GetAppliedVatById(int id);
-
+        List<VAT> GetAllVats();
         #endregion
     }
 }

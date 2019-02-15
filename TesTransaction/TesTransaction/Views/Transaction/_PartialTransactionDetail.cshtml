@@ -40,24 +40,16 @@
 
 </table>
 
-<div id="Total">
+<div class="Totals">
     <label for="subTotal1"><strong>Sous-Total des articles</strong></label>
-    <input type="text" id="subTotal1" name="subTotal1" value="@ViewBag.subTot1" />
+    <input type="text" id="subTotal1" name="subTotal1" value="@ViewBag.subTot1" readonly="readonly" />
 
-    <label for="subDiscount"><strong>Remise globale</strong></label>
-    <input type="text" id="subDiscount" name="subDiscount" value="" />
+    @Html.Raw(ViewBag.Error)
+    <label for="globalDiscount"><strong>Remise globale (%)</strong></label>
+    <input type="text" id="globalDiscount" name="globalDiscount" placeholder="Remise en %" value="@Model.GlobalDiscount" onchange="AddDiscount()" />
 
     <label for="subTotal2"><strong>Sous-Total HTVA</strong></label>
-    <input type="text" id="subTotal2" name="subTotal2" value="" />
-
-    <label for="globalVAT"><strong>TVA </strong></label>
-    <select>
-        <option id="globalVAT" value="0.21">21%</option>
-    </select>
-    @*<input type="text" id="globalVAT" name="globalVAT" value="" />*@
-
-    <label for="Total"><strong>TOTAL à payer </strong></label>
-    <input type="text" id="Total" name="Total" value="" />
+    <input type="text" id="subTotal2" name="subTotal2" value="@ViewBag.subTot1" />
 </div>
 
 <p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>

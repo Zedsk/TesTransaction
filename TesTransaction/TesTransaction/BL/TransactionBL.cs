@@ -201,6 +201,14 @@ namespace TesTransaction.BL
                 return price;
             }
         }
+
+        internal static IList<VAT> FindVatsList()
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetAllVats();
+            }
+        }
         #endregion
     }
 }

@@ -21,11 +21,11 @@ namespace TesTransaction.Controllers
             // To do -> vérification si transaction en cours
             vm.NumTransaction = TransactionBL.InitializeNewTransaction(terminal);
             // to do --> quid date et heure?
-            vm.DateDay = (DateTime.Now.Date).ToString();
-            vm.HourDay = (DateTime.Now.TimeOfDay).ToString("t");
+            vm.DateDay = DateTime.Now.Date.ToString("d");
+            vm.HourDay = DateTime.Now.ToString("T");
 
             vm.Vendor = "Toto"; // --> id = 1
-
+            vm.VatsList = TransactionBL.FindVatsList();
             //detail vide ->  provisoire
             //vm.TransactionDetailsListById = TransactionBL.InitializeTransactionDetails();
 
@@ -33,7 +33,7 @@ namespace TesTransaction.Controllers
         }
 
         //POST: 
-        public ActionResult RefreshDetails(string codeProduct, string numTransaction, string terminal)
+        public ActionResult RefreshDetails(string codeProduct, string numTransaction, string terminal, bool minus)
         {
             TrDetailsViewModel vm = new TrDetailsViewModel();
             //Add detail

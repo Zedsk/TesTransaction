@@ -110,6 +110,10 @@ namespace TesTransaction.Dal
             return db.VATs.Where(v => v.idVat == id).Single();
         }
 
+        public List<VAT> GetAllVats()
+        {
+            return db.VATs.ToList();
+        }
         #endregion
     }
 }
