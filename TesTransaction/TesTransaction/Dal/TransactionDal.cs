@@ -66,7 +66,7 @@ namespace TesTransaction.Dal
         public int CreateTransaction(int terminal)
         {
             // to do --> provisoire vendorId = 1, shopId = 1, customerId = 1
-            TRANSACTIONS tr = new TRANSACTIONS { transactionDate = DateTime.Now, terminalId = terminal, vendorId = 1, shopId = 1, customerId = 1 };
+            TRANSACTIONS tr = new TRANSACTIONS { transactionDateBegin = DateTime.Now, transactionDateEnd = DateTime.Parse("2000-01-01 00:00:00"), terminalId = terminal, vendorId = 1, shopId = 1, customerId = 1 };
             db.TRANSACTIONSs.Add(tr);
             db.SaveChanges();
             return tr.idTransaction;

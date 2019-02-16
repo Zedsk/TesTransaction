@@ -22,7 +22,8 @@ namespace TesTransaction.Data.Entity
         }
     
         public int idTransaction { get; set; }
-        public System.DateTime transactionDate { get; set; }
+        public System.DateTime transactionDateBegin { get; set; }
+        public System.DateTime transactionDateEnd { get; set; }
         public decimal total { get; set; }
         public bool isClose { get; set; }
         public bool isCanceled { get; set; }

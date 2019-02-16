@@ -229,8 +229,8 @@
     <Content Include="Content\test2.css" />
     <Content Include="Data\Entity\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Data\Entity\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -109,7 +109,8 @@
             <PropertyRef Name="idTransaction" />
           </Key>
           <Property Name="idTransaction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="transactionDate" Type="datetime" Nullable="false" />
+          <Property Name="transactionDateBegin" Type="datetime" Nullable="false" />
+          <Property Name="transactionDateEnd" Type="datetime" Nullable="false" />
           <Property Name="total" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="isClose" Type="bit" Nullable="false" />
           <Property Name="isCanceled" Type="bit" Nullable="false" />
@@ -479,7 +480,8 @@
             <PropertyRef Name="idTransaction" />
           </Key>
           <Property Name="idTransaction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="transactionDateBegin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="transactionDateEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="total" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="isClose" Type="Boolean" Nullable="false" />
           <Property Name="isCanceled" Type="Boolean" Nullable="false" />
@@ -847,7 +849,8 @@
             <EntityTypeMapping TypeName="TestTransactionModel.TRANSACTIONS">
               <MappingFragment StoreEntitySet="TRANSACTIONS">
                 <ScalarProperty Name="idTransaction" ColumnName="idTransaction" />
-                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
+                <ScalarProperty Name="transactionDateBegin" ColumnName="transactionDateBegin" />
+                <ScalarProperty Name="transactionDateEnd" ColumnName="transactionDateEnd" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="isClose" ColumnName="isClose" />
                 <ScalarProperty Name="isCanceled" ColumnName="isCanceled" />
