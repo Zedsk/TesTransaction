@@ -20,7 +20,7 @@ namespace TesTransaction.BL
             }
         }
 
-        internal static IList<string> FindTerminals()
+        internal static IList<string> FindTerminalsNames()
         {
             using (IDal dal = new TransactionDal())
             {
@@ -41,7 +41,6 @@ namespace TesTransaction.BL
                 return dal.GetAllTerminals();
             }
         }
-
         #endregion
 
         #region Transaction
@@ -63,32 +62,49 @@ namespace TesTransaction.BL
 
         }
 
-        internal static void AddNewTransactionDetail(string codeProduct, string terminal, string transaction)
+        internal static void AddNewTransactionDetail(string codeProduct, string terminal, string transaction, bool minus)
         {
             using (IDal dal = new TransactionDal())
             {
                 //find productId with codeProduct
                 var prod = dal.GetProductByCode(codeProduct);
-                //verify if product exist in detail
+                //verify if product exist in detail and Add or Remove itemDetail
                 IList<TRANSACTION_DETAILS> detailList = FindTransactionDetailsListById(transaction);
                 var result = VerifyProductInDetail(prod.idProduct, detailList);
                 if (result)
                 {
+                    //Product exist --> Modify qty
                     foreach (var item in detailList)
                     {
                         if (item.productId == prod.idProduct)
                         {
-                            //qty++
-                            dal.EditQtyToDetailById(item.idTransactionDetails);
-                            break;
+                            var newqty = 0;
+                            if (minus)
+                            {
+                                //qty--
+                                newqty = item.quantity - 1;
+                                if (newqty == 0)
+                                {
+                                    dal.DeleteDetail(item.idTransactionDetails);
+                                    break;
+                                }
+                                dal.EditQtyToDetailById(item.idTransactionDetails, newqty);
+                                break;
+                            }
+                            else
+                            {
+                                //qty++
+                                newqty = item.quantity + 1;
+                                dal.EditQtyToDetailById(item.idTransactionDetails, newqty);
+                                break;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    //find value vatItem
-                    var vatItem = dal.GetAppliedVatById(prod.vatId).appliedVat;
                     //Add new detail --> param product, terminalId, transactionId, vatItem 
+                    var vatItem = dal.GetAppliedVatById(prod.vatId).appliedVat;
                     int terminalId = int.Parse(terminal);
                     int transactionId = int.Parse(transaction);
                     dal.CreateDetail(prod, terminalId, transactionId, vatItem);
@@ -157,7 +173,7 @@ namespace TesTransaction.BL
                     Quantity = q,
                     ProductVat = item.vatItem,
                     Discount = item.Discount,
-                    Total = st
+                    TotalItem = st
                 };
                 vmList.Add(vm);
             }
@@ -170,9 +186,17 @@ namespace TesTransaction.BL
             decimal? result = 0;
             foreach (var vm in detailsListTot)
             {
-                result += vm.Total;
+                result += vm.TotalItem;
             }
             return result;
+        }
+
+        internal static IList<TrDetailsViewModel> ListDetailsWithTot(string numTransaction)
+        {
+            var detailsList = FindTransactionDetailsListById(numTransaction);
+            var detailsListTot = TransactionBL.AddSubTotalPerDetailToList(detailsList);
+            return detailsListTot;
+
         }
 
         #endregion

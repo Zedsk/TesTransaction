@@ -84,14 +84,21 @@ namespace TesTransaction.Dal
             return db.TRANSACTION_DETAILSs.Where(t => t.transactionId == id).ToList();
         }
 
-        public void EditQtyToDetailById(int id)
+        public void EditQtyToDetailById(int id, int qty)
         {
             var detail = db.TRANSACTION_DETAILSs.First(d => d.idTransactionDetails == id);
             if (detail != null)
             {
-                detail.quantity += 1;
+                detail.quantity = qty;
                 db.SaveChanges();
             }
+        }
+
+        public void DeleteDetail(int id)
+        {
+            TRANSACTION_DETAILS detail = db.TRANSACTION_DETAILSs.Find(id);
+            db.TRANSACTION_DETAILSs.Remove(detail);
+            db.SaveChanges();
         }
 
         #endregion
@@ -114,6 +121,7 @@ namespace TesTransaction.Dal
         {
             return db.VATs.ToList();
         }
+
         #endregion
     }
 }

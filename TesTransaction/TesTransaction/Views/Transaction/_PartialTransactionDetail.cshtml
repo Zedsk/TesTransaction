@@ -1,6 +1,6 @@
 ﻿@model TesTransaction.Models.TrDetailsViewModel
 
-
+<div>@Html.ValidationMessageFor(m => m.AddProduct, "", new { @class = "text-danger" })</div>
 <table class="table" id="tableDetail">
     <tr>
         <th>Produit</th>
@@ -11,21 +11,7 @@
         <th>Total</th>
     </tr>
     @{
-        if (Model.DetailsListWithTot != null)
-        {
-            foreach (var item in Model.DetailsListWithTot)
-            {
-                <tr>
-                    <td id="nameItem">@item.ProductName</td>
-                    <td id="price">@item.Price</td>
-                    <td id="quantity">@item.Quantity</td>
-                    <td id="Discount">@item.Discount</td>
-                    <td id="vatItem">@item.ProductVat</td>
-                    <td id="itemSubTot">@item.Total</td>
-                </tr>
-            }
-        }
-        else
+        if (Model.DetailsListWithTot == null || Model.DetailsListWithTot.Count == 0)
         {
             <tr>
                 <td>-</td>
@@ -36,21 +22,39 @@
                 <td>-</td>
             </tr>
         }
+        else
+        {
+            foreach (var item in Model.DetailsListWithTot)
+            {
+                <tr>
+                    <td id="nameItem">@item.ProductName</td>
+                    <td id="price">@item.Price</td>
+                    <td id="quantity">@item.Quantity</td>
+                    <td id="Discount">@item.Discount</td>
+                    <td id="vatItem">@item.ProductVat</td>
+                    <td id="itemSubTot">@item.TotalItem</td>
+                </tr>
+            }
+        }
     }
 
 </table>
-
 <div class="Totals">
     <label for="subTotal1"><strong>Sous-Total des articles</strong></label>
     <input type="text" id="subTotal1" name="subTotal1" value="@ViewBag.subTot1" readonly="readonly" />
 
-    @Html.Raw(ViewBag.Error)
-    <label for="globalDiscount"><strong>Remise globale (%)</strong></label>
-    <input type="text" id="globalDiscount" name="globalDiscount" placeholder="Remise en %" value="@Model.GlobalDiscount" onchange="AddDiscount()" />
+    <div id="reductions">
+        <div>
+            <span id="errorGlobalDiscount" class="text-danger" style=" visibility:hidden"></span>
+            <div>
+                <label for="globalDiscount"><strong>Remise globale (%)</strong></label>
+                <input type="text" id="globalDiscount" name="globalDiscount" placeholder="Remise en %" value="@Model.GlobalDiscount" onchange="AddDiscount()" />
+            </div>
+        </div>
+    </div>
 
     <label for="subTotal2"><strong>Sous-Total HTVA</strong></label>
-    <input type="text" id="subTotal2" name="subTotal2" value="@ViewBag.subTot1" />
+    <input type="text" id="subTotal2" name="subTotal2" value="@ViewBag.subTot1" readonly="readonly" />
 </div>
 
 <p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>
-
