@@ -15,44 +15,26 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <header id="header1">
         <div style="visibility: hidden">
-            @*@Html.Raw(ViewBag.Error)
-                @Html.LabelFor(m => m.TerminalName)*@
-            @*@Html.DropDownListFor(m => m.TerminalName, new SelectList(Model.TerminalsNames), new { size = "1" })*@
-
-            @*<select name="listTerminals" id="listTerminals">
-                @foreach (var item in Model.TerminalsList)
-                {
-                    <option id="tId" value="@item.idTerminal">
-                        @item.nameTerminal
-                    </option>
-                }
-                </select>*@
-
-            @*@Html.Raw(ViewBag.Error)*@
             @Html.LabelFor(m => m.TerminalId)
             @Html.TextBoxFor(m => m.TerminalId, new { size = "1", @readonly = "readonly" })
             @Html.ValidationMessageFor(m => m.TerminalId, "", new { @class = "text-danger" })
         </div>
         <div>
-            @*@Html.Raw(ViewBag.Error)*@
             @Html.LabelFor(m => m.DateDay)
             @Html.TextBoxFor(m => m.DateDay, new { size = "6", @readonly = "readonly" })
             @Html.ValidationMessageFor(m => m.DateDay, "", new { @class = "text-danger" })
         </div>
         <div>
-            @*@Html.Raw(ViewBag.Error)*@
             @Html.LabelFor(m => m.HourDay)
             @Html.TextBoxFor(m => m.HourDay, new { size = "6", @readonly = "readonly" })
             @Html.ValidationMessageFor(m => m.HourDay, "", new { @class = "text-danger" })
         </div>
         <div>
-            @*@Html.Raw(ViewBag.Error)*@
             @Html.LabelFor(m => m.Vendor)
             @Html.TextBoxFor(m => m.Vendor, new { @readonly = "readonly" })
             @Html.ValidationMessageFor(m => m.Vendor, "", new { @class = "text-danger" })
         </div>
         <div style="visibility: visible">
-            @*@Html.Raw(ViewBag.Error)*@
             @Html.LabelFor(m => m.NumTransaction)
             @Html.TextBoxFor(m => m.NumTransaction, new { size = "3", @readonly = "readonly" })
             @Html.ValidationMessageFor(m => m.NumTransaction, "", new { @class = "text-danger" })
@@ -65,39 +47,24 @@
                     <input id="addProduct" type="text" placeholder="Add..">
                     <button type="button" id="ButtonAddP" class="fct_btn" value="" onclick="ButtonAddProduct_Click()">Ajouter</button>
                 </div>
-                @*@Html.ValidationMessageFor(m => m.AddProduct, "", new { @class = "text-danger" })*@
+                
                 <span id="errorAddProduct" class="text-danger" style=" visibility:hidden"></span>
 
             </div>
             <div id="detail">
-                @*@Html.Partial("_PartialTransactionDetail")*@
-                @*@Html.Partial("_PartialTransactionDetail", new TrDetailsViewModel { DetailsListById = Model.TransactionDetailsListById })*@
-
                 @Html.Partial("_PartialTransactionDetail", new TrDetailsViewModel { DetailsListWithTot = Model.DetailsListWithTot })
             </div>
             <p>Vue Mère : @DateTime.Now.ToLongTimeString()</p>
             <div class="Totals">
-
-                @*<label for="listVats"><strong>TVA</strong></label>
-                    <select id="listVats" name="listVats" onchange="AddVat()">
-                        <option value="" label="Choix de la TVA"></option>
-                        @foreach (var item in Model.VatsList)
-                        {
-                            <option id="globalVAT" value="@item.appliedVat">
-                                @item.appliedVat
-                            </option>
-                        }
-                    </select>*@
-
                 @Html.LabelFor(m => m.GlobalVAT)
                 @Html.DropDownListFor(m => m.GlobalVAT, new SelectList(Model.VatsList, "appliedVat", "appliedVat"), "Choix de la TVA", new { @onchange = "AddVat()" })
                 @Html.ValidationMessageFor(m => m.GlobalVAT, "", new { @class = "text-danger" })
+                <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
 
-                @*<label for="GlobalTotal"><strong>TOTAL TVAC </strong></label>
-                    <input type="text" id="GlobalTotal" name="GlobalTotal" value="" readonly="readonly" />*@
                 @Html.LabelFor(m => m.GlobalTotal)
                 @Html.TextBoxFor(m => m.GlobalTotal, new { @readonly = "readonly" })
                 @Html.ValidationMessageFor(m => m.GlobalTotal, "", new { @class = "text-danger" })
+                <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
             </div>
             <div id="calculator">
                 <table>
@@ -195,86 +162,24 @@
             document.getElementById('addProduct').value = val.substring(0, val.length - 1);
         }
 
-        function ButtonAdd_Click() {
-            //todo
-        }
-
         function ButtonAddProduct_Click() {
             var minus = false;
             CreateRquestAddOrRemove(minus);
-
-            //var val = document.getElementById('addProduct').value;
-            //var numTransaction = document.getElementById('NumTransaction').value;
-
-            ////var terminal = document.getElementById('tId').value;
-            //var terminal = document.getElementById('TerminalId').value;
-
-            //var minus = false;
-
-            //var xhr = new XMLHttpRequest();
-            //xhr.onreadystatechange = function () {
-            //    if (this.readyState == 4 && this.status == 200) {
-            //        document.getElementById('addProduct').value = "";
-            //        document.getElementById('detail').innerHTML = xhr.responseText;
-            //    }
-            //}
-            //////Get Method
-            ////var url = "/Transaction/RefreshDetails?codeProduct=" + val
-            ////          + "&numTransaction=" + numTransaction
-            ////          + "&terminal=" + terminal;
-
-            ////xhr.open("GET", url);
-            ////xhr.send();
-
-            ////Post Method
-            //var url = "/Transaction/RefreshDetails";
-            //var param = "codeProduct=" + val
-            //    + "&numTransaction=" + numTransaction
-            //    + "&terminal=" + terminal
-            //    + "&minus=" + minus;
-            //xhr.open("POST", url);
-            //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            //xhr.send(param);
-
         }
 
         function ButtonRemoveProduct_Click() {
             var minus = true;
             CreateRquestAddOrRemove(minus);
-
-            //var val = document.getElementById('addProduct').value;
-            //var numTransaction = document.getElementById('NumTransaction').value;
-            //var terminal = document.getElementById('TerminalId').value;
-            ////var minus = true;
-            //var xhr = new XMLHttpRequest();
-            //xhr.onreadystatechange = function () {
-            //    if (this.readyState == 4 && this.status == 200) {
-            //        document.getElementById('addProduct').value = "";
-            //        document.getElementById('detail').innerHTML = xhr.responseText;
-            //    }
-            //}
-
-            ////Post Method
-            //var url = "/Transaction/RefreshDetails";
-            //var param = "codeProduct=" + val
-            //    + "&numTransaction=" + numTransaction
-            //    + "&terminal=" + terminal
-            //    + "&minus=" + minus;
-            //xhr.open("POST", url);
-            //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            //xhr.send(param);
         }
 
         function CreateRquestAddOrRemove(minus) {
             document.getElementById('errorAddProduct').textContent = "";
             document.getElementById('errorAddProduct').style.visibility = "hidden";
-            //try {
-            //    var val = document.getElementById('addProduct').value;
-            //    if (val === null || val === "") {
-            //        //alert("Il faut saisir un produit");
-            //        throw "Il faut saisir un produit";
-
-            //    } else {
+            try {
+                var val = document.getElementById('addProduct').value;
+                if (val === null || val === "") {
+                    throw "Il faut saisir un produit";
+                } else {
                     var val = document.getElementById('addProduct').value;
                     var numTransaction = document.getElementById('NumTransaction').value;
                     var terminal = document.getElementById('TerminalId').value;
@@ -296,19 +201,15 @@
                     xhr.open("POST", url);
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhr.send(param);
-            //    }
-            //} catch (e) {
-            //    document.getElementById('errorAddProduct').textContent = e;
-            //    document.getElementById('errorAddProduct').style.visibility = "visible";
-            //    console.log(e);
-            //}
+                }
+            } catch (e) {
+                document.getElementById('errorAddProduct').textContent = e;
+                document.getElementById('errorAddProduct').style.visibility = "visible";
+                console.log(e);
+            }
         }
 
         function AddDiscount() {
-            //var subT = parseFloat(document.getElementById('subTotal2').value);
-            //if (subT == 0 || subT == null) {
-            //    subT = parseFloat(document.getElementById('subTotal1').value);
-            //}
             document.getElementById('errorGlobalDiscount').textContent = "";
             document.getElementById('errorGlobalDiscount').style.visibility = "hidden";
             try {
@@ -317,11 +218,8 @@
                 var d = (parseFloat(document.getElementById('globalDiscount').value)) / 100;
                 if (d < 0 || d > 1) {
                     throw "valeur en % devant être comprise entre 0 et 100";
-                    //alert("valeur en % devant être comprise entre 0 et 100");
-                    @*@ViewBag.Error = "valeur devant être comprise entre 0 et 100";*@
                 } else if (Number.isNaN(d) || d == undefined || d == null || d === "") {
                     throw "valeur devant être un nombre entre 0 et 100";
-                    //alert("valeur devant être un nombre entre 0 et 100");
                 } else if (d == 0) {
                     document.getElementById('subTotal2').value = subT;
                 } else {
@@ -337,19 +235,27 @@
         }
 
         function AddVat() {
-            var v = document.getElementById('GlobalVAT').value;
-            var subT = document.getElementById('subTotal2').value;
-            //v = "0,21"  --> parseFloat(document.getElementById('listVats').value) ne marche pas
-            //le parseFloat donne 0, souci avec la ","  il faut la remplacer par "."
-            subT = parseFloat(subT.replace(",", "."));
-            if (v === "" || v === "0,00" || v === null) {
-                
-                document.getElementById('GlobalTotal').value = subT;
-            } else {
-                v = parseFloat(v.replace(",", "."));
-                var result = parseFloat(subT * ++v).toFixed(2);
-                document.getElementById('GlobalTotal').value = result;
+            document.getElementById('errorAddVat').textContent = "";
+            document.getElementById('errorAddVat').style.visibility = "hidden";
+            try {
+                var v = document.getElementById('GlobalVAT').value;
+                var subT = document.getElementById('subTotal2').value;
+                //v = "0,21"  --> parseFloat(document.getElementById('listVats').value) ne marche pas
+                //le parseFloat donne 0, souci avec la ","  il faut la remplacer par "."
+                subT = parseFloat(subT.replace(",", "."));
+                if (v === "" || v === "0,00" || v === null) {
+                    document.getElementById('GlobalTotal').value = subT;
+                } else {
+                    v = parseFloat(v.replace(",", "."));
+                    var result = parseFloat(subT * ++v).toFixed(2);
+                    document.getElementById('GlobalTotal').value = result;
+                }
+            } catch (e) {
+                document.getElementById('errorAddVat').textContent = e;
+                document.getElementById('errorAddVat').style.visibility = "visible";
+                console.log(e);
             }
+            
         }
 
         function ButtonPayment_Click() {
@@ -359,7 +265,6 @@
             var subTotitem = document.getElementById('subTotal1').value;
             var discountG = document.getElementById('globalDiscount').value;
             var subTot = document.getElementById('subTotal2').value;
-            //var vat = document.getElementById('listVats').value;
             var vat = document.getElementById('GlobalVAT').value;
             var total = document.getElementById('GlobalTotal').value;
 
