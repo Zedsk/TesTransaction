@@ -112,6 +112,7 @@
           <Property Name="transactionDateBegin" Type="datetime" Nullable="false" />
           <Property Name="transactionDateEnd" Type="datetime" Nullable="false" />
           <Property Name="total" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="discountGlobal" Type="decimal" Precision="8" Scale="2" />
           <Property Name="isClose" Type="bit" Nullable="false" />
           <Property Name="isCanceled" Type="bit" Nullable="false" />
           <Property Name="isReturn" Type="bit" Nullable="false" />
@@ -483,6 +484,7 @@
           <Property Name="transactionDateBegin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="transactionDateEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="total" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="discountGlobal" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="isClose" Type="Boolean" Nullable="false" />
           <Property Name="isCanceled" Type="Boolean" Nullable="false" />
           <Property Name="isReturn" Type="Boolean" Nullable="false" />
@@ -852,6 +854,7 @@
                 <ScalarProperty Name="transactionDateBegin" ColumnName="transactionDateBegin" />
                 <ScalarProperty Name="transactionDateEnd" ColumnName="transactionDateEnd" />
                 <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="discountGlobal" ColumnName="discountGlobal" />
                 <ScalarProperty Name="isClose" ColumnName="isClose" />
                 <ScalarProperty Name="isCanceled" ColumnName="isCanceled" />
                 <ScalarProperty Name="isReturn" ColumnName="isReturn" />

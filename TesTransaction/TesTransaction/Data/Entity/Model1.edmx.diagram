@@ -4,20 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8a7e8d2972f546da8adf425063f8e988" Name="Diagram1">
-        <EntityTypeShape EntityType="TestTransactionModel.AGE" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.BRAND" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.CASH_BOTTOM_DAY" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.CATEGORY" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.HERO" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.PAYMENT" Width="1.5" PointX="11.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.PAYMENT_METHOD" Width="1.5" PointX="9" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.PRODUCT" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.TERMINAL" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.TICKET" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.TRANSACTION_DETAILS" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+      <Diagram DiagramId="bfae087857c04af9b5b9e0c49c91c0ce" Name="Diagram1">
+        <EntityTypeShape EntityType="TestTransactionModel.AGE" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.BRAND" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.CASH_BOTTOM_DAY" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.CATEGORY" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.HERO" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.PAYMENT" Width="1.5" PointX="11.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.PAYMENT_METHOD" Width="1.5" PointX="9" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.PRODUCT" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.TERMINAL" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.TICKET" Width="1.5" PointX="3.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.TRANSACTION_DETAILS" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestTransactionModel.TRANSACTIONS" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.VAT" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.VAT" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <AssociationConnector Association="TestTransactionModel.FK_PRODUCT_AGE" ManuallyRouted="false" />
         <AssociationConnector Association="TestTransactionModel.FK_PRODUCT_BRAND" ManuallyRouted="false" />
         <AssociationConnector Association="TestTransactionModel.FK_CASH_BOTTOM_BEGIN_TERMINAL" ManuallyRouted="false" />

@@ -94,6 +94,16 @@
     width: 80px;
 }
 
+#Button0 {
+    width: 100px;
+    height: 50px;
+}
+
+#ButtonReturn {
+    width: 50px;
+    height: 100px;
+}
+
 @media screen and (max-width:600px) {
     #page {
         font-size: x-small;
@@ -127,5 +137,15 @@
     .fct_btn {
         height: 40px;
         width: 70px;
+    }
+
+    #Button0 {
+        width: 80px;
+        height: 40px;
+    }
+
+    #ButtonReturn {
+        width: 40px;
+        height: 80px;
     }
 }
