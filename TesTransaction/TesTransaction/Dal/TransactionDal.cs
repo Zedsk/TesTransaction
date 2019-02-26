@@ -101,6 +101,19 @@ namespace TesTransaction.Dal
             db.SaveChanges();
         }
 
+        public void UpdateTransaction(int idTransaction, decimal globalTotal, decimal? discountG, int globalVAT)
+        {
+            var transac = db.TRANSACTIONSs.First(d => d.idTransaction == idTransaction);
+            if (transac != null)
+            {
+                transac.total = globalTotal;
+                transac.discountGlobal = discountG;
+                transac.vatId = globalVAT;
+
+                db.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region Product
@@ -122,6 +135,11 @@ namespace TesTransaction.Dal
             return db.VATs.ToList();
         }
 
+        public int GetVatIdByVal(decimal globalVAT)
+        {
+            var temp = db.VATs.Where(v => v.appliedVat == globalVAT).Single();
+            return temp.idVat;
+        }
         #endregion
     }
 }

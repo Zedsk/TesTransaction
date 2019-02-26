@@ -28,6 +28,7 @@ namespace TesTransaction.Dal
         void CreateDetail(PRODUCT prod, int transactionId, int terminalId, decimal vat);
         void EditQtyToDetailById(int id, int qty);
         void DeleteDetail(int id);
+        void UpdateTransaction(int idTransaction, decimal globalTotal, decimal? discountG, int globalVAT);
         #endregion
 
         #region Product
@@ -38,6 +39,7 @@ namespace TesTransaction.Dal
         #region VAT
         VAT GetAppliedVatById(int id);
         List<VAT> GetAllVats();
+        int GetVatIdByVal(decimal globalVAT);
         #endregion
     }
 }

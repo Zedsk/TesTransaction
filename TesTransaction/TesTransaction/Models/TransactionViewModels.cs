@@ -31,62 +31,17 @@ namespace TesTransaction.Models
         [Display(Name = "Vendeur")]
         public string Vendor { get; set; }
 
-        //[Required(ErrorMessage = "Il faut saisir un produit")]
-        //[DataType(DataType.Text)]
-        //public string AddProduct { get; set; }
-
         [Required(ErrorMessage = "Un total tvac est nécessaire")]
         [DataType(DataType.Text)]
         [Display(Name = "TOTAL TVAC")]
         public string GlobalTotal { get; set; }
 
-        //[Required(ErrorMessage = "TVA obligatoire")]
         [DataType(DataType.Text)]
         [Display(Name = "TVA")]
         public decimal GlobalVAT { get; set; }
 
         public IList<VAT> VatsList { get; set; }
         public IList<TrDetailsViewModel> DetailsListWithTot { get; set; }
-
-        //[DataType(DataType.Text)]
-        //[Display(Name = "Nom de caisse")]
-        //public string TerminalName { get; set; }
-
-        //public IList<string> TerminalsNames { get; set; }
-        //public IList<TERMINAL> TerminalsList { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Text)]
-        //[Display(Name = "Produit")]
-        //public string ProductName { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Text)]
-        //[Display(Name = "Prix")]
-        //public string Price { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Text)]
-        //[Display(Name = "Qtité")]
-        //public string Quantity { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Text)]
-        //[Display(Name = "Remise")]
-        //public string Discount { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Text)]
-        //[Display(Name = "TVA")]
-        //public string ProductVat { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Text)]
-        //[Display(Name = "TotalItem")]
-        //public string TotalItem { get; set; }
-
-        //public IList<TRANSACTION_DETAILS> TransactionDetailsListById { get; set; }
-
     }
 
     public class TrDetailsViewModel
@@ -120,24 +75,29 @@ namespace TesTransaction.Models
         [Range(0, 100, ErrorMessage = "valeur devant être comprise entre 0 et 100")]
         public decimal? GlobalDiscount { get; set; }
 
-        //[DataType(DataType.Text)]
-        //[Display(Name = "TVA")]
-        //public decimal GlobalVAT { get; set; }
-
         [Required(ErrorMessage = "Il faut saisir un produit")]
         [DataType(DataType.Text)]
         public string AddProduct { get; set; }
 
         public bool Minus { get; set; }
 
-        //public IList<TRANSACTION_DETAILS> TransactionDetailsListById { get; set; }
-        //public IList<TRANSACTION_DETAILS> DetailsListById { get; set; }
         public IList<TrDetailsViewModel> DetailsListWithTot { get; set; }
-
     }
 
     public class TrPaymentViewModel
     {
+        public int TerminalId { get; set; }
 
+        public string NumTransaction { get; set; }
+
+        public string Vendor { get; set; }
+
+        public decimal GlobalVAT { get; set; }
+
+        public string GlobalTotal { get; set; }
+
+        public decimal? GlobalDiscount { get; set; }
+
+        public IList<PAYMENT_METHOD> PMethods { get; set; }
     }
 }

@@ -13,134 +13,135 @@
     <script src="@Url.Content("~/Scripts/pos2.js")" type="text/javascript"></script>
 }
 
-<div id="page">
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <header id="header1">
-        <div style="visibility: hidden">
-            @Html.LabelFor(m => m.TerminalId)
-            @Html.TextBoxFor(m => m.TerminalId, new { size = "1", @readonly = "readonly" })
-            @Html.ValidationMessageFor(m => m.TerminalId, "", new { @class = "text-danger" })
-        </div>
-        <div>
-            @Html.LabelFor(m => m.DateDay)
-            @Html.TextBoxFor(m => m.DateDay, new { size = "6", @readonly = "readonly" })
-            @Html.ValidationMessageFor(m => m.DateDay, "", new { @class = "text-danger" })
-        </div>
-        <div>
-            @Html.LabelFor(m => m.HourDay)
-            @Html.TextBoxFor(m => m.HourDay, new { size = "6", @readonly = "readonly" })
-            @Html.ValidationMessageFor(m => m.HourDay, "", new { @class = "text-danger" })
-        </div>
-        <div>
-            @Html.LabelFor(m => m.Vendor)
-            @Html.TextBoxFor(m => m.Vendor, new { @readonly = "readonly" })
-            @Html.ValidationMessageFor(m => m.Vendor, "", new { @class = "text-danger" })
-        </div>
-        <div style="visibility: visible">
-            @Html.LabelFor(m => m.NumTransaction)
-            @Html.TextBoxFor(m => m.NumTransaction, new { size = "3", @readonly = "readonly" })
-            @Html.ValidationMessageFor(m => m.NumTransaction, "", new { @class = "text-danger" })
-        </div>
-    </header>
-    <section id="mysection">
-        <div id="containerLeft">
-            <div id="addP">
-                <div>
-                    <input id="addProduct" type="text" placeholder="Add..">
-                    <button type="button" id="ButtonAddP" class="fct_btn" value="" onclick="ButtonAddProduct_Click()">Ajouter</button>
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <div id="page">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <header id="header1">
+            <div style="visibility: hidden">
+                @Html.LabelFor(m => m.TerminalId)
+                @Html.TextBoxFor(m => m.TerminalId, new { size = "1", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.TerminalId, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(m => m.DateDay)
+                @Html.TextBoxFor(m => m.DateDay, new { size = "6", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.DateDay, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(m => m.HourDay)
+                @Html.TextBoxFor(m => m.HourDay, new { size = "6", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.HourDay, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Vendor)
+                @Html.TextBoxFor(m => m.Vendor, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.Vendor, "", new { @class = "text-danger" })
+            </div>
+            <div style="visibility: visible">
+                @Html.LabelFor(m => m.NumTransaction)
+                @Html.TextBoxFor(m => m.NumTransaction, new { size = "3", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.NumTransaction, "", new { @class = "text-danger" })
+            </div>
+        </header>
+        <section id="mysection">
+            <div id="containerLeft">
+                <div id="addP">
+                    <div>
+                        <input id="addProduct" type="text" placeholder="Add..">
+                        <button type="button" id="ButtonAddP" class="fct_btn" value="" onclick="ButtonAddProduct_Click()">Ajouter</button>
+                    </div>
+                    <span id="errorAddProduct" class="text-danger" style=" visibility:hidden"></span>
                 </div>
-                <span id="errorAddProduct" class="text-danger" style=" visibility:hidden"></span>
-            </div>
-            <div id="detail">
-                @Html.Partial("_PartialTransactionDetail", new TrDetailsViewModel { DetailsListWithTot = Model.DetailsListWithTot })
-            </div>
-            <p>Vue Mère : @DateTime.Now.ToLongTimeString()</p>
-            <div class="Totals">
-                @Html.LabelFor(m => m.GlobalVAT)
-                @Html.DropDownListFor(m => m.GlobalVAT, new SelectList(Model.VatsList, "appliedVat", "appliedVat"), "Choix de la TVA", new { @onchange = "AddVat()" })
-                @Html.ValidationMessageFor(m => m.GlobalVAT, "", new { @class = "text-danger" })
-                <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
+                <div id="detail">
+                    @Html.Partial("_PartialTransactionDetail", new TrDetailsViewModel { DetailsListWithTot = Model.DetailsListWithTot })
+                </div>
+                <p>Vue Mère : @DateTime.Now.ToLongTimeString()</p>
+                <div class="Totals">
+                    @Html.LabelFor(m => m.GlobalVAT)
+                    @Html.DropDownListFor(m => m.GlobalVAT, new SelectList(Model.VatsList, "appliedVat", "appliedVat"), "Choix de la TVA", new { @onchange = "AddVat()" })
+                    @Html.ValidationMessageFor(m => m.GlobalVAT, "", new { @class = "text-danger" })
+                    <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
 
-                @Html.LabelFor(m => m.GlobalTotal)
-                @Html.TextBoxFor(m => m.GlobalTotal, new { @readonly = "readonly" })
-                @Html.ValidationMessageFor(m => m.GlobalTotal, "", new { @class = "text-danger" })
-                <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
-            </div>
-            <div id="calculator">
-                <table>
-                    <tr>
-                        <td>
-                            <input type="button" id="Button1" class="calc_btn" value="1" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="Button2" class="calc_btn" value="2" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="Button3" class="calc_btn" value="3" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonAdd" class="calc_btn" value="+" onclick="ButtonAddProduct_Click()">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonCustomer" class="fct_btn" value="Customer" onclick="ButtonCustomer_Click()">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" id="Button4" class="calc_btn" value="4" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="Button5" class="calc_btn" value="5" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="Button6" class="calc_btn" value="6" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonMinus" class="calc_btn" value="-" onclick="ButtonRemoveProduct_Click()">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonPayment" class="fct_btn" value="Payment" onclick="ButtonPayment_Click()">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" id="Button7" class="calc_btn" value="7" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="Button8" class="calc_btn" value="8" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="Button9" class="calc_btn" value="9" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td rowspan="2">
-                            <input type="button" id="ButtonReturn" class="calc_btn" value="&larr;" onclick="ButtonDelete_Click()">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonSuspend" class="fct_btn" value="Suspend" onclick="ButtonSuspend_Click">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="button" id="Button0" class="calc_btn" value="0" onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonComa" class="calc_btn" value="," onclick="ButtonCalc_Click(this)">
-                        </td>
-                        <td>
-                            <input type="button" id="ButtonBackProduct" class="fct_btn" value="Back" onclick="ButtonBackProduct_Click()">
-                        </td>
-                    </tr>
-                </table>
-            </div> <!-- end calculator -->
-        </div>  <!-- end containerLeft -->
-        <div id="containerRight">
-            <input id="searchProduct" name="searchProduct" type="text" placeholder="Search..">
-            <div id="search">
+                    @Html.LabelFor(m => m.GlobalTotal)
+                    @Html.TextBoxFor(m => m.GlobalTotal, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.GlobalTotal, "", new { @class = "text-danger" })
+                    <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
+                </div>
+                <div id="calculator">
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="button" id="Button1" class="calc_btn" value="1" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="Button2" class="calc_btn" value="2" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="Button3" class="calc_btn" value="3" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="ButtonAdd" class="calc_btn" value="+" onclick="ButtonAddProduct_Click()">
+                            </td>
+                            <td>
+                                <input type="button" id="ButtonCustomer" class="fct_btn" value="Customer" onclick="ButtonCustomer_Click()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" id="Button4" class="calc_btn" value="4" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="Button5" class="calc_btn" value="5" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="Button6" class="calc_btn" value="6" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="ButtonMinus" class="calc_btn" value="-" onclick="ButtonRemoveProduct_Click()">
+                            </td>
+                            <td>
+                                @*<input type="button" id="ButtonPayment" class="fct_btn" value="Payment" onclick="ButtonPayment_Click()">*@
+                                <input type="submit" id="ButtonPayment" class="fct_btn" value="Payment">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" id="Button7" class="calc_btn" value="7" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="Button8" class="calc_btn" value="8" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="Button9" class="calc_btn" value="9" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td rowspan="2">
+                                <input type="button" id="ButtonReturn" class="calc_btn" value="&larr;" onclick="ButtonDelete_Click()">
+                            </td>
+                            <td>
+                                <input type="button" id="ButtonSuspend" class="fct_btn" value="Suspend" onclick="ButtonSuspend_Click">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="button" id="Button0" class="calc_btn" value="0" onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="ButtonComa" class="calc_btn" value="," onclick="ButtonCalc_Click(this)">
+                            </td>
+                            <td>
+                                <input type="button" id="ButtonBackProduct" class="fct_btn" value="Back" onclick="ButtonBackProduct_Click()">
+                            </td>
+                        </tr>
+                    </table>
+                </div> <!-- end calculator -->
+            </div>  <!-- end containerLeft -->
+            <div id="containerRight">
+                <input id="searchProduct" name="searchProduct" type="text" placeholder="Search..">
+                <div id="search">
 
-            </div>
-        </div>  <!-- end containerRight -->
-    </section>
-
-
-</div> <!-- end page-->
+                </div>
+            </div>  <!-- end containerRight -->
+        </section>
+    </div> <!-- end page-->
+}<!-- end form-->

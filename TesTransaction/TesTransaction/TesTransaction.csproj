@@ -158,6 +158,7 @@
     <Compile Include="BL\TransactionBL.cs" />
     <Compile Include="Controllers\CashController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PayController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Dal\IDal.cs" />
     <Compile Include="Dal\TransactionDal.cs" />
@@ -287,6 +288,7 @@
     <Content Include="Views\Cash\Index.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\_PartialTransactionDetail.cshtml" />
+    <Content Include="Views\Pay\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

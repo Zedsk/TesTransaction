@@ -18,6 +18,7 @@ namespace TesTransaction.Controllers
 
             ////transaction num = id
             // To do -> vérification si transaction en cours
+            // to do --> provisoire vendorId = 1, shopId = 1, customerId = 1
             vm.NumTransaction = TransactionBL.InitializeNewTransaction(terminal);
 
             // to do --> quid date et heure?
@@ -27,11 +28,6 @@ namespace TesTransaction.Controllers
             vm.VatsList = TransactionBL.FindVatsList();
             
             return View(vm);
-        }
-
-        public ActionResult Test()
-        {
-            return View();
         }
 
         //POST:
@@ -53,11 +49,12 @@ namespace TesTransaction.Controllers
 
         //POST:
         [HttpPost]
-        public ActionResult Index(string subTotitem, string discountG, string subTot, TrIndexViewModel vmodel)
+        public ActionResult Index(string globalDiscount, TrIndexViewModel vmodel)
         {
             if (ModelState.IsValid)
             {
-                return View();
+                TransactionBL.SaveTransactionBeforePayment(vmodel.NumTransaction, vmodel.GlobalTotal, globalDiscount, vmodel.GlobalVAT);
+                return RedirectToAction("Index", "Pay", new TrPaymentViewModel { GlobalTotal = vmodel.GlobalTotal, NumTransaction = vmodel.NumTransaction });
             }
             var detailsListTot = TransactionBL.ListDetailsWithTot(vmodel.NumTransaction);
             //Sum subTotItems 

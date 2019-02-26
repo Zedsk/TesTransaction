@@ -1,4 +1,9 @@
 
+/*!
+ * Scripts for
+ * Transaction views
+ */
+
 function ButtonCalc_Click(id) {
 	var val = id.getAttribute('Value');
 	document.getElementById('addProduct').value += val;

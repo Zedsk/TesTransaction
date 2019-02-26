@@ -48,6 +48,7 @@ namespace TesTransaction.BL
         {
             using (IDal dal = new TransactionDal())
             {
+                // to do --> provisoire vendorId = 1, shopId = 1, customerId = 1
                 int t = dal.CreateTransaction(terminal);
                 return t.ToString();
             }
@@ -199,6 +200,29 @@ namespace TesTransaction.BL
 
         }
 
+        internal static void SaveTransactionBeforePayment(string numTransaction, string globalTotal, string discountG, decimal globalVAT)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                var idTr = int.Parse(numTransaction);
+                //var gTot = decimal.Parse(globalTotal);
+                //probleme le string "157.98" devient 15798
+                var temp = globalTotal.Replace(".", ",");
+                var gTot = decimal.Parse(temp);
+                //find idVAT by name
+                var gVat = FindVatByVal(globalVAT);
+
+                decimal? gDisc = null;
+                //rem si premiere condition true --> ne regarde pas la seconde??? non
+                if (discountG != "")
+                {
+                    gDisc = decimal.Parse(discountG);
+                    gDisc /= 100;
+                }
+                dal.UpdateTransaction(idTr, gTot, gDisc, gVat);
+            }
+        }
+
         #endregion
 
         #region Product
@@ -231,6 +255,15 @@ namespace TesTransaction.BL
             using (IDal dal = new TransactionDal())
             {
                 return dal.GetAllVats();
+            }
+        }
+
+        internal static int FindVatByVal(decimal globalVAT)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+
+                return dal.GetVatIdByVal(globalVAT);
             }
         }
         #endregion
