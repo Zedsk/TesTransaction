@@ -12,18 +12,29 @@
     <script src="@Url.Content("~/Scripts/pos2.js")" type="text/javascript"></script>
 }
 
-<h2>montant à payer: @Model.GlobalTotal</h2>
 
+<div style="visibility: hidden">
+    @Html.LabelFor(m => m.NumTransaction)
+    @Html.TextBoxFor(m => m.NumTransaction, new { size = "3", @readonly = "readonly" })
+    @Html.ValidationMessageFor(m => m.NumTransaction, "", new { @class = "text-danger" })
+</div>
+<p>Vue Mère : @DateTime.Now.ToLongTimeString()</p>
+
+<h2>@Html.LabelFor(m => m.GlobalTotal)</h2>
+<div id="totalToPay">
+    @*<p>258.99</p>*@
+    @Html.TextBoxFor(m => m.GlobalTotal, new { @readonly = "readonly" })
+</div>
 <div id="payTransac" class="row">
-    <div id="paymentMethod" class="col-md-4">
-        <h4>Menu</h4>
+    <div class="col-md-4">
+        <h4>@Html.LabelFor(m => m.MethodP)</h4>
         <div id="paymentMethods">
-            <button id="cashMethod" class="fct_btn" onclick="">Cash</button>
-            <button id="cardMethod" class="fct_btn" onclick="">Carte</button>
-            <button id="voucherMethod" class="fct_btn" onclick="">Bon</button>
+            <button id="cashMethod" class="btn btn-outline-primary btn-lg" onclick="methodPayment(this)" value="Cash">Cash</button>
+            <button id="cardMethod" class="btn btn-outline-primary btn-lg" onclick="methodPayment(this)" value="Card">Carte</button>
+            <button id="voucherMethod" class="btn btn-outline-primary btn-lg" onclick="methodPayment(this)" value="Voucher">Bon</button>
         </div>
     </div>
     <div id="paymentChoice">
-        <p>TOTO</p>
+        
     </div>
 </div>

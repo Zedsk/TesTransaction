@@ -289,6 +289,9 @@
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\_PartialTransactionDetail.cshtml" />
     <Content Include="Views\Pay\Index.cshtml" />
+    <Content Include="Views\Pay\_PartialPayCash.cshtml" />
+    <Content Include="Views\Pay\_PartialPayCard.cshtml" />
+    <Content Include="Views\Pay\_PartialPayVoucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -104,6 +104,34 @@
     height: 100px;
 }
 
+/**** payment view *****/
+
+#totalToPay > input {
+    margin-top: 20px;
+    padding: 20px;
+    width: 150px;
+    height: 100px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: orange;
+    font-size: xx-large;
+    font-weight: bold;
+    text-align: center;
+}
+
+#payTransac {
+    /*display: flex;
+    flex-direction: column;*/
+}
+
+.btn.active:focus,
+.btn.active:hover,
+.btn.active.focus,
+.btn.active.hover {
+    border-color: orange;
+}
+
+
 @media screen and (max-width:600px) {
     #page {
         font-size: x-small;

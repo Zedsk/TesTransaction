@@ -86,18 +86,19 @@ namespace TesTransaction.Models
 
     public class TrPaymentViewModel
     {
-        public int TerminalId { get; set; }
-
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "n° Opération")]
         public string NumTransaction { get; set; }
 
-        public string Vendor { get; set; }
-
-        public decimal GlobalVAT { get; set; }
-
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Montant à payer")]
         public string GlobalTotal { get; set; }
 
-        public decimal? GlobalDiscount { get; set; }
-
-        public IList<PAYMENT_METHOD> PMethods { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Méthodes de paiement")]
+        public string MethodP { get; set; }
     }
 }

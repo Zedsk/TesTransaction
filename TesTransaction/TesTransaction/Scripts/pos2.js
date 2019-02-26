@@ -136,3 +136,26 @@ function ButtonPayment_Click() {
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.send(param);
 }
+
+function methodPayment(id) {
+    var val = id.getAttribute('Value');
+    var numTransaction = document.getElementById('NumTransaction').value;
+    var total = document.getElementById('GlobalTotal').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var choice = document.getElementById('paymentChoice');
+            choice.setAttribute("visibility", "visible");
+            choice.innerHTML = xhr.responseText;
+        }
+    }
+    //Post Method
+    var url = "/Pay/MethodChoice";
+    var param = "numTransaction=" + numTransaction
+        + "&globalTotal=" + total
+        + "&methodP=" + val;
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(param);
+}
