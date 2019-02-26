@@ -1,4 +1,15 @@
 ﻿
 
 <h1>Cash</h1>
+
+<span id="error" class="text-danger" style=" visibility:hidden"></span>
+<div>
+    <label for="cashReceived"><strong>Montant reçu</strong></label>
+    <input type="text" id="cashReceived" name="cashReceived" onchange="AddCash()" />
+</div>
+<div>
+    <label for="cashReturn"><strong>Montant à rendre</strong></label>
+    <input type="text" id="cashReturn" name="cashReturn" readonly="readonly" />
+</div>
+
 <p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>

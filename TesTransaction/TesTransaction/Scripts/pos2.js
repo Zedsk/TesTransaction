@@ -159,3 +159,27 @@ function methodPayment(id) {
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(param);
 }
+
+function AddCash() {
+    var cash = document.getElementById('cashReceived').value;
+    var total = document.getElementById('GlobalTotal').value;
+    total = parseFloat(total.replace(",", "."));
+    cash = parseFloat(cash.replace(",", "."));
+
+    if (cash > total) {
+        var result = parseFloat(cash - total).toFixed(2);
+        document.getElementById('cashReturn').value = result;
+        document.getElementById('cashReturn').style.borderColor = "orange";
+        document.getElementById('GlobalTotal').value = 0;
+        document.getElementById('GlobalTotal').style.borderColor = "green";
+    } else if (cash < total) {
+        var result = parseFloat(total - cash).toFixed(2);
+        document.getElementById('GlobalTotal').value = result;
+    } else {
+        document.getElementById('cashReturn').value = 0;
+        document.getElementById('cashReturn').style.borderColor = "green";
+        document.getElementById('GlobalTotal').value = 0;
+        document.getElementById('GlobalTotal').style.borderColor = "green";
+    }
+
+}
