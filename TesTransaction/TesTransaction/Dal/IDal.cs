@@ -19,16 +19,20 @@ namespace TesTransaction.Dal
         #region Terminal
         List<TERMINAL> GetAllTerminals();
         TERMINAL GetTerminalById(int id);
-
+        int GetTerminalIdByDate();
         #endregion
 
         #region Transaction
         int CreateTransaction(int terminal);
         List<TRANSACTION_DETAILS> GetAllDetailsByTransactionId(int id);
+        TRANSACTIONS GetTransactionById(int transactionId);
         void CreateDetail(PRODUCT prod, int transactionId, int terminalId, decimal vat);
         void EditQtyToDetailById(int id, int qty);
         void DeleteDetail(int id);
         void UpdateTransaction(int idTransaction, decimal globalTotal, decimal? discountG, int globalVAT);
+        void CancelTransactionById(int transactionId);
+        void UpdateTransactionTicketId(int transactionId, int idTicket);
+        void CloseTransaction(int transac, int ticket);
         #endregion
 
         #region Product
@@ -37,9 +41,21 @@ namespace TesTransaction.Dal
         #endregion
 
         #region VAT
-        VAT GetAppliedVatById(int id);
+        decimal GetVatValById(int? vatId);
         List<VAT> GetAllVats();
         int GetVatIdByVal(decimal globalVAT);
+        #endregion
+
+        #region Payment
+        void CreatePayment(decimal tot, int methodP, int numTransaction);
+        IList<PAYMENT_METHOD> GetAllMethods();
+        IList<PAYMENT> GetAllPaymentsByTransacId(int numTransaction);
+
+        #endregion
+
+        #region Ticket
+        int CreateTicket();
+
         #endregion
     }
 }

@@ -52,12 +52,20 @@ namespace TesTransaction.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CASH_BOTTOM_DAYs.Add(cashDay);
-                db.SaveChanges();
-                var tId = cashDay.terminalId;
-                return RedirectToAction("Index", "Transaction", new { terminal = tId });
-            }
+                try
+                {
+                    db.CASH_BOTTOM_DAYs.Add(cashDay);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Transaction");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = "Il existe déjà un fond de caisse sur ce terminal pour cette date";
+                    ViewBag.terminalId = new SelectList(db.TERMINALs, "idTerminal", "nameTerminal", cashDay.terminalId);
+                    return View(cashDay);
+                }
 
+            }
             ViewBag.terminalId = new SelectList(db.TERMINALs, "idTerminal", "nameTerminal", cashDay.terminalId);
             return View(cashDay);
         }

@@ -1,4 +1,10 @@
-﻿@model TesTransaction.Models.TrDetailsViewModel
+﻿@model TesTransaction.Models.Transactions.TrDetailsViewModel
+
+@{
+
+    Layout = null;
+
+}
 
 <div>@Html.ValidationMessageFor(m => m.AddProduct, "", new { @class = "text-danger" })</div>
 <table class="table" id="tableDetail">

@@ -219,7 +219,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TransactionViewModels.cs" />
+    <Compile Include="Models\Transactions\TrDetailsViewModel.cs" />
+    <Compile Include="Models\Transactions\TrIndexViewModel.cs" />
+    <Compile Include="Models\Transactions\TrPaymentMenuViewModel.cs" />
+    <Compile Include="Models\Transactions\TrTicketViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,7 +230,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\image\logo_magasin.png" />
     <Content Include="Content\test2.css" />
+    <Content Include="Content\ticketprint.css" />
     <Content Include="Data\Entity\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -289,9 +294,7 @@
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\_PartialTransactionDetail.cshtml" />
     <Content Include="Views\Pay\Index.cshtml" />
-    <Content Include="Views\Pay\_PartialPayCash.cshtml" />
-    <Content Include="Views\Pay\_PartialPayCard.cshtml" />
-    <Content Include="Views\Pay\_PartialPayVoucher.cshtml" />
+    <Content Include="Views\Pay\_PartialTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

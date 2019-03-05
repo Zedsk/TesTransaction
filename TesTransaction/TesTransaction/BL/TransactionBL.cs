@@ -6,6 +6,7 @@ using TesTransaction.Dal;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using TesTransaction.Models;
+using TesTransaction.Models.Transactions;
 
 namespace TesTransaction.BL
 {
@@ -41,6 +42,15 @@ namespace TesTransaction.BL
                 return dal.GetAllTerminals();
             }
         }
+
+        internal static int FindTerminalIdByDate()
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetTerminalIdByDate();
+            }
+        }
+
         #endregion
 
         #region Transaction
@@ -105,7 +115,7 @@ namespace TesTransaction.BL
                 else
                 {
                     //Add new detail --> param product, terminalId, transactionId, vatItem 
-                    var vatItem = dal.GetAppliedVatById(prod.vatId).appliedVat;
+                    var vatItem = dal.GetVatValById(prod.vatId);
                     int terminalId = int.Parse(terminal);
                     int transactionId = int.Parse(transaction);
                     dal.CreateDetail(prod, terminalId, transactionId, vatItem);
@@ -141,6 +151,15 @@ namespace TesTransaction.BL
                 return dal.GetAllDetailsByTransactionId(transactionId);
             }
 
+        }
+
+        internal static TRANSACTIONS FindTransactionById(string numTransaction)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                int transactionId = int.Parse(numTransaction);
+                return dal.GetTransactionById(transactionId);
+            }
         }
 
         internal static IList<TrDetailsViewModel> AddSubTotalPerDetailToList(IList<TRANSACTION_DETAILS> detailsList)
@@ -210,7 +229,7 @@ namespace TesTransaction.BL
                 var temp = globalTotal.Replace(".", ",");
                 var gTot = decimal.Parse(temp);
                 //find idVAT by name
-                var gVat = FindVatByVal(globalVAT);
+                var gVat = FindVatIdByVal(globalVAT);
 
                 decimal? gDisc = null;
                 //rem si premiere condition true --> ne regarde pas la seconde??? non
@@ -220,6 +239,25 @@ namespace TesTransaction.BL
                     gDisc /= 100;
                 }
                 dal.UpdateTransaction(idTr, gTot, gDisc, gVat);
+            }
+        }
+
+        internal static void CancelTransac(string numTransaction)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                var transac = int.Parse(numTransaction);
+                dal.CancelTransactionById(transac);
+            }
+        }
+
+        internal static void AddTicketAndCloseTransac(string numTransaction, string numTicket)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                var transac = int.Parse(numTransaction);
+                var ticket = int.Parse(numTicket);
+                dal.CloseTransaction(transac, ticket);
             }
         }
 
@@ -240,7 +278,7 @@ namespace TesTransaction.BL
         {
             using (IDal dal = new TransactionDal())
             {
-                decimal vat = dal.GetAppliedVatById(id).appliedVat;
+                decimal vat = dal.GetVatValById(id);
                 if (vat != 0)
                 {
                     ++vat;
@@ -258,12 +296,132 @@ namespace TesTransaction.BL
             }
         }
 
-        internal static int FindVatByVal(decimal globalVAT)
+        internal static int FindVatIdByVal(decimal globalVAT)
         {
             using (IDal dal = new TransactionDal())
             {
 
                 return dal.GetVatIdByVal(globalVAT);
+            }
+        }
+
+        private static string FindVatValById(int? vatId)
+        {
+            if (vatId != null)
+            {
+                using (IDal dal = new TransactionDal())
+                {
+
+                    return (dal.GetVatValById(vatId)).ToString();
+                }
+            }
+            return "no VAT";
+        }
+        #endregion
+
+        #region Payment
+        internal static TrPaymentMenuViewModel CalculCash(TrPaymentMenuViewModel vmodel)
+        {
+            var temp1 = vmodel.GlobalTotal.Replace(".", ",");
+            var temp2 = vmodel.Amount.Replace(".", ",");
+            decimal cash = decimal.Parse(temp2);
+            decimal tot = decimal.Parse(temp1);
+            int meth = int.Parse(vmodel.MethodP);
+            int transac = int.Parse(vmodel.NumTransaction);
+
+            using (IDal dal = new TransactionDal())
+            {
+                if (cash > tot)
+                {
+                    dal.CreatePayment(tot, meth, transac);
+                    vmodel.CashReturn = (cash - tot).ToString();
+                    vmodel.Amount = "0";
+                    vmodel.GlobalTotal = "0";
+                }
+                else if (cash == tot)
+                {
+                    dal.CreatePayment(tot, meth, transac);
+                    vmodel.CashReturn = "0";
+                    vmodel.Amount = "0";
+                    vmodel.GlobalTotal = "0";
+                }
+                else if (cash < tot)
+                {
+                    dal.CreatePayment(cash, meth, transac);
+                    vmodel.CashReturn = "0";
+                    vmodel.Amount = "0";
+                    vmodel.GlobalTotal = (tot - cash).ToString();
+                }
+                return vmodel;
+            }
+        }
+
+        internal static int AskValidationCard(string amount)
+        {
+            Random random = new Random();
+            int val = random.Next(2);
+            return val;
+        }
+
+        internal static IList<PAYMENT_METHOD> FindMethodsList()
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetAllMethods();
+            }
+        }
+        #endregion
+
+        #region Ticket
+        internal static TrTicketViewModel FillTicket(string numTransaction)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                //find transac
+                var transac = FindTransactionById(numTransaction);
+                //create ticket
+                TrTicketViewModel vm = new TrTicketViewModel();
+                vm.Ticket = (dal.CreateTicket()).ToString();
+
+                vm.DateTicket = (DateTime.Now).ToString();
+                //n° transac
+                vm.Transaction = numTransaction;
+                //to do --> magasin
+
+                //detail
+                vm.DetailsListWithTot = ListDetailsWithTot(numTransaction);
+
+                //discount
+
+                if (transac.discountGlobal == null)
+                {
+                    vm.DiscountG = " - ";
+                }
+                else
+                {
+                    vm.DiscountG = (transac.discountGlobal).ToString();
+                }
+
+                //VAT
+                vm.VatG = (FindVatValById(transac.vatId)).ToString();
+                //vm.VatG = dal.GetAppliedVatById(transac.vatId).appliedVat;
+
+                //Total
+                vm.TotalG = (transac.total).ToString();
+
+                //payment method & amount
+                vm.Payments = FindPaymentsByTransacId(numTransaction);
+
+                return vm;
+            }
+        }
+
+        private static IList<PAYMENT> FindPaymentsByTransacId(string numTransaction)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                int tr = int.Parse(numTransaction);
+                return dal.GetAllPaymentsByTransacId(tr);
             }
         }
         #endregion

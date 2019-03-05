@@ -108,78 +108,105 @@ function AddVat() {
 		console.log(e);
 	}
 }
-			
-function ButtonPayment_Click() {
-	var numTransaction = document.getElementById('NumTransaction').value;
-	var terminal = document.getElementById('TerminalId').value;
-	var vendor = document.getElementById('Vendor').value;
-	var discountG = document.getElementById('globalDiscount').value;
-	var vat = document.getElementById('GlobalVAT').value;
-	var total = document.getElementById('GlobalTotal').value;
 
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById('page').innerHTML = xhr.responseText;
-		}
-	}
+////remplacer par methodes controller
+//function ButtonPayment_Click() {
+//	var numTransaction = document.getElementById('NumTransaction').value;
+//	var terminal = document.getElementById('TerminalId').value;
+//	var vendor = document.getElementById('Vendor').value;
+//	var discountG = document.getElementById('globalDiscount').value;
+//	var vat = document.getElementById('GlobalVAT').value;
+//	var total = document.getElementById('GlobalTotal').value;
 
-	//Post Method
-	var url = "/Transaction/Index";
-	var param = "numTransaction=" + numTransaction
-		+ "&terminalId=" + terminal
-		+ "&vendor=" + vendor
-		+ "&discountG=" + discountG
-		+ "&globalVAT=" + vat
-		+ "&globalTotal=" + total;
-	xhr.open("POST", url);
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.send(param);
-}
+//	var xhr = new XMLHttpRequest();
+//	xhr.onreadystatechange = function () {
+//		if (this.readyState == 4 && this.status == 200) {
+//			document.getElementById('page').innerHTML = xhr.responseText;
+//		}
+//	}
 
-function methodPayment(id) {
-    var val = id.getAttribute('Value');
-    var numTransaction = document.getElementById('NumTransaction').value;
-    var total = document.getElementById('GlobalTotal').value;
+//	//Post Method
+//	var url = "/Transaction/Index";
+//	var param = "numTransaction=" + numTransaction
+//		+ "&terminalId=" + terminal
+//		+ "&vendor=" + vendor
+//		+ "&discountG=" + discountG
+//		+ "&globalVAT=" + vat
+//		+ "&globalTotal=" + total;
+//	xhr.open("POST", url);
+//	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//	xhr.send(param);
+//}
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var choice = document.getElementById('paymentChoice');
-            choice.setAttribute("visibility", "visible");
-            choice.innerHTML = xhr.responseText;
-        }
-    }
-    //Post Method
-    var url = "/Pay/MethodChoice";
-    var param = "numTransaction=" + numTransaction
-        + "&globalTotal=" + total
-        + "&methodP=" + val;
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(param);
-}
+//function methodPayment(id) {
+//    var val = id.getAttribute('Value');
+//    var numTransaction = document.getElementById('NumTransaction').value;
+//    var total = document.getElementById('GlobalTotal').value;
 
-function AddCash() {
-    var cash = document.getElementById('cashReceived').value;
-    var total = document.getElementById('GlobalTotal').value;
-    total = parseFloat(total.replace(",", "."));
-    cash = parseFloat(cash.replace(",", "."));
+//    var xhr = new XMLHttpRequest();
+//    xhr.onreadystatechange = function () {
+//        if (this.readyState == 4 && this.status == 200) {
+//            var choice = document.getElementById('paymentChoice');
+//            choice.setAttribute("visibility", "visible");
+//            choice.innerHTML = xhr.responseText;
+//        }
+//    }
+//    //Post Method
+//    var url = "/Pay/MethodChoice";
+//    var param = "numTransaction=" + numTransaction
+//        + "&globalTotal=" + total
+//        + "&methodP=" + val;
+//    xhr.open("POST", url);
+//    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//    xhr.send(param);
+//}
 
-    if (cash > total) {
-        var result = parseFloat(cash - total).toFixed(2);
-        document.getElementById('cashReturn').value = result;
-        document.getElementById('cashReturn').style.borderColor = "orange";
-        document.getElementById('GlobalTotal').value = 0;
-        document.getElementById('GlobalTotal').style.borderColor = "green";
-    } else if (cash < total) {
-        var result = parseFloat(total - cash).toFixed(2);
-        document.getElementById('GlobalTotal').value = result;
-    } else {
-        document.getElementById('cashReturn').value = 0;
-        document.getElementById('cashReturn').style.borderColor = "green";
-        document.getElementById('GlobalTotal').value = 0;
-        document.getElementById('GlobalTotal').style.borderColor = "green";
-    }
+//function AddCash() {
+//    var cash = document.getElementById('cashReceived').value;
+//    var total = document.getElementById('GlobalTotal').value;
+//    total = parseFloat(total.replace(",", "."));
+//    cash = parseFloat(cash.replace(",", "."));
 
-}
+//    if (cash > total) {
+//        var result = parseFloat(cash - total).toFixed(2);
+//        document.getElementById('cashReturn').value = result;
+//        document.getElementById('cashReturn').style.borderColor = "orange";
+//        document.getElementById('GlobalTotal').value = 0;
+//        document.getElementById('GlobalTotal').style.borderColor = "green";
+//    } else if (cash < total) {
+//        var result = parseFloat(total - cash).toFixed(2);
+//        document.getElementById('GlobalTotal').value = result;
+//    } else {
+//        document.getElementById('cashReturn').value = 0;
+//        document.getElementById('cashReturn').style.borderColor = "green";
+//        document.getElementById('GlobalTotal').value = 0;
+//        document.getElementById('GlobalTotal').style.borderColor = "green";
+//    }
+
+//}
+
+//function AskValidationCard() {
+//    var total = document.getElementById('GlobalTotal').value;
+//    var transac = document.getElementById('NumTransaction').value;
+//    var xhr = new XMLHttpRequest();
+//    xhr.onreadystatechange = function () {
+//        if (this.readyState == 4 && this.status == 200) {
+
+//            document.getElementById('paymentChoice').innerHTML = xhr.responseText;
+//            var test = document.getElementById('vBagAmount').value;
+//            document.getElementById('TTPay').style.visibility = "visible";
+//            if (test === "0") {
+//                document.getElementById('totalToPay').style.visibility = "hidden";
+//                document.getElementById('vBagAmount').style.borderColor = "green";
+//                document.getElementById('CashReturn').style.borderColor = "orange";
+//            }
+//        }
+//    }
+//    //Post Method
+//    var url = "/Pay/PayCard";
+//    var param = "numTransaction=" + transac
+//        + "&amount=" + total;
+//    xhr.open("POST", url);
+//    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//    xhr.send(param);
+//}

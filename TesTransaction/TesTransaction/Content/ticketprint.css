@@ -1,0 +1,11 @@
+@media print{
+    #noprintpart, #titleT {
+        display: none;
+    }
+
+    #myTicket {
+        /*margin-left: 2%;
+        padding: 3%;*/
+        max-width: 302px;
+    }
+}

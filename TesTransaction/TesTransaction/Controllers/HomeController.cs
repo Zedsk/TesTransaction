@@ -29,7 +29,15 @@ namespace TesTransaction.Controllers
 
         public ActionResult Transaction()
         {
-            return View();
+            if (TempData["Error"] == null)
+            {
+                return View("Transaction");
+            }
+            else
+            {
+                ViewBag.Error = TempData["Error"].ToString();
+                return View("Transaction");
+            }
         }
     }
 }

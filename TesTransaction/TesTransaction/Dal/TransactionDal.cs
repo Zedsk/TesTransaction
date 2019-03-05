@@ -60,6 +60,12 @@ namespace TesTransaction.Dal
             return db.TERMINALs.Where(t => t.idTerminal == id).Single();
         }
 
+        public int GetTerminalIdByDate()
+        {
+            CASH_BOTTOM_DAY cashDay = db.CASH_BOTTOM_DAYs.Where(c => c.dateDay == DateTime.Today).Single();
+            return cashDay.terminalId;
+        }
+
         #endregion
 
         #region Transaction
@@ -84,6 +90,11 @@ namespace TesTransaction.Dal
             return db.TRANSACTION_DETAILSs.Where(t => t.transactionId == id).ToList();
         }
 
+        public TRANSACTIONS GetTransactionById(int transactionId)
+        {
+            return db.TRANSACTIONSs.Where(t => t.idTransaction == transactionId).Single();
+        }
+
         public void EditQtyToDetailById(int id, int qty)
         {
             var detail = db.TRANSACTION_DETAILSs.First(d => d.idTransactionDetails == id);
@@ -101,15 +112,50 @@ namespace TesTransaction.Dal
             db.SaveChanges();
         }
 
-        public void UpdateTransaction(int idTransaction, decimal globalTotal, decimal? discountG, int globalVAT)
+        public void UpdateTransaction(int transactionId, decimal globalTotal, decimal? discountG, int globalVAT)
         {
-            var transac = db.TRANSACTIONSs.First(d => d.idTransaction == idTransaction);
+            var transac = db.TRANSACTIONSs.First(d => d.idTransaction == transactionId);
             if (transac != null)
             {
                 transac.total = globalTotal;
                 transac.discountGlobal = discountG;
                 transac.vatId = globalVAT;
 
+                db.SaveChanges();
+            }
+        }
+
+        public void UpdateTransactionTicketId(int transactionId, int idTicket)
+        {
+
+            var transac = db.TRANSACTIONSs.First(t => t.idTransaction == transactionId);
+            if (transac != null)
+            {
+                transac.ticketId = idTicket;
+                db.SaveChanges();
+            }
+        }
+
+        public void CancelTransactionById(int transactionId)
+        {
+            var transac = db.TRANSACTIONSs.First(d => d.idTransaction == transactionId);
+            if (transac != null)
+            {
+                transac.isCanceled = true;
+                transac.isClose = true;
+                transac.transactionDateEnd = DateTime.Now;
+                db.SaveChanges();
+            }
+        }
+
+        public void CloseTransaction(int transacId, int ticket)
+        {
+            var transac = db.TRANSACTIONSs.First(d => d.idTransaction == transacId);
+            if (transac != null)
+            {
+                transac.ticketId = ticket;
+                transac.isClose = true;
+                transac.transactionDateEnd = DateTime.Now;
                 db.SaveChanges();
             }
         }
@@ -125,11 +171,6 @@ namespace TesTransaction.Dal
         #endregion
 
         #region VAT
-        public VAT GetAppliedVatById(int id)
-        {
-            return db.VATs.Where(v => v.idVat == id).Single();
-        }
-
         public List<VAT> GetAllVats()
         {
             return db.VATs.ToList();
@@ -137,9 +178,49 @@ namespace TesTransaction.Dal
 
         public int GetVatIdByVal(decimal globalVAT)
         {
-            var temp = db.VATs.Where(v => v.appliedVat == globalVAT).Single();
-            return temp.idVat;
+            VAT vat = db.VATs.Where(v => v.appliedVat == globalVAT).Single();
+            return vat.idVat;
         }
+
+        public decimal GetVatValById(int? vatId)
+        {
+            VAT vat = db.VATs.Where(v => v.idVat == vatId).Single();
+            return vat.appliedVat;
+        }
+
+        #endregion
+
+        #region Payment
+        public void CreatePayment(decimal tot, int methodP, int numTransaction)
+        {
+            PAYMENT p = new PAYMENT { amount = tot, paymentMethodId = methodP, transactionId = numTransaction };
+            db.PAYMENTs.Add(p);
+            db.SaveChanges();
+        }
+
+        public IList<PAYMENT_METHOD> GetAllMethods()
+        {
+            return db.PAYMENT_METHODs.ToList();
+        }
+
+        public IList<PAYMENT> GetAllPaymentsByTransacId(int numTransaction)
+        {
+            return db.PAYMENTs.Where(p => p.transactionId == numTransaction).ToList();
+        }
+
+        #endregion
+
+        #region Ticket
+        public int CreateTicket()
+        {
+            // to do --> provisoire messageId = 1 , languageId = 1
+            TICKET t = new TICKET { messageId = 1, languageId = 1 };
+            db.TICKETs.Add(t);
+            db.SaveChanges();
+            return t.idTicket;
+        }
+
+
         #endregion
     }
 }

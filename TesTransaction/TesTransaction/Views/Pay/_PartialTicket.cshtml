@@ -1,0 +1,163 @@
+﻿@model TesTransaction.Models.Transactions.TrTicketViewModel
+
+@{
+
+    Layout = null;
+
+}
+
+<!--  -->
+<!-- Logo Magasin -->
+<div style="text-align: center;">
+    <img src="~/Content/image/logo_magasin.png" alt="logo du magasin">
+</div>
+
+<div class="container">
+    <!-- Date et heure-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.DateTicket)
+        </div>
+        <div class="col-md-2 offset-md-2">
+            @Html.TextBoxFor(m => m.DateTicket, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.DateTicket, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <!-- N° ticket -->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.Ticket)
+        </div>
+        <div class="col-md-2 offset-md-2">
+            @Html.TextBoxFor(m => m.Ticket, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <!-- N° Transac -->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.Transaction)
+        </div>
+        <div class="col-md-2 offset-md-2">
+            @Html.TextBoxFor(m => m.Transaction, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.Transaction, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<!-- coordonnées magasin -->
+<div style="text-align: center;">
+    <p>Nom du magasin</p>
+    <p>rue du magasin</p>
+    <p>ville</p>
+    <p>Tel</p>
+    <p>email</p>
+    <p>heures d'ouverture</p>
+</div>
+
+<!-- liste des articles -->
+<div>
+    <table class="table" id="tableDetail">
+        <tr>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+        </tr>
+        @{
+            if (Model.DetailsListWithTot == null || Model.DetailsListWithTot.Count == 0)
+            {
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model.DetailsListWithTot)
+                {
+                    <tr>
+                        <td id="nameItem">@item.ProductName</td>
+                        <td id="price">@item.Price</td>
+                        <td id="quantity">@item.Quantity</td>
+                        <td id="itemSubTot">@item.TotalItem</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>
+
+<div class="container">
+    <!-- remise -->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.DiscountG)
+        </div>
+        <div class="col-md-2 offset-md-2">
+            @Html.TextBoxFor(m => m.DiscountG, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.DiscountG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <!-- TVA -->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.VatG)
+        </div>
+        <div class="col-md-2 offset-md-2">
+            @Html.TextBoxFor(m => m.VatG, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.VatG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <!-- total -->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.TotalG)
+        </div>
+        <div class="col-md-2 offset-md-2">
+            @Html.TextBoxFor(m => m.TotalG, new { @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.TotalG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<!-- methodes de paiment -->
+<!-- montant -->
+<div>
+    <table class="table" id="tablePayment">
+        <tr>
+            <th>Methode</th>
+            <th>Montant</th>
+        </tr>
+        @{
+            if (Model.Payments == null || Model.Payments.Count == 0)
+            {
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model.Payments)
+                {
+                    <tr>
+                        <td id="nameItem">@item.paymentMethodId</td>
+                        <td id="price">@item.amount</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>
+<!-- message -->
+<div>
+    <p style="text-align: justify;">
+        message: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed eros placerat,
+        accumsan velit ut, volutpat orci. Mauris accumsan enim vel arcu ornare, vel vehicula massa laoreet.
+        Nunc posuere nisi est. Curabitur dictum orci non ipsum mattis vestibulum. Donec ut feugiat lectus.
+        Nullam et turpis dapibus, faucibus tellus semper, tristique sapien. Nam congue efficitur laoreet.
+        Donec malesuada sit amet arcu vel condimentum. Nam eu diam ligula.
+    </p>
+</div>
+

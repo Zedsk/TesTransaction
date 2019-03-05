@@ -1,4 +1,4 @@
-﻿@using TesTransaction.Models
+﻿@using TesTransaction.Models.Transactions
 @model TrIndexViewModel
 
 @{
@@ -13,7 +13,7 @@
     <script src="@Url.Content("~/Scripts/pos2.js")" type="text/javascript"></script>
 }
 
-@using (Html.BeginForm(FormMethod.Post))
+@using (Html.BeginForm("Index", "Transaction", FormMethod.Post))
 {
     <div id="page">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -62,11 +62,9 @@
                     @Html.DropDownListFor(m => m.GlobalVAT, new SelectList(Model.VatsList, "appliedVat", "appliedVat"), "Choix de la TVA", new { @onchange = "AddVat()" })
                     @Html.ValidationMessageFor(m => m.GlobalVAT, "", new { @class = "text-danger" })
                     <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
-
                     @Html.LabelFor(m => m.GlobalTotal)
                     @Html.TextBoxFor(m => m.GlobalTotal, new { @readonly = "readonly" })
                     @Html.ValidationMessageFor(m => m.GlobalTotal, "", new { @class = "text-danger" })
-                    <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
                 </div>
                 <div id="calculator">
                     <table>
@@ -84,7 +82,7 @@
                                 <input type="button" id="ButtonAdd" class="calc_btn" value="+" onclick="ButtonAddProduct_Click()">
                             </td>
                             <td>
-                                <input type="button" id="ButtonCustomer" class="fct_btn" value="Customer" onclick="ButtonCustomer_Click()">
+                                <input type="button" id="ButtonCustomer" class="fct_btn" value="Customer" onclick="ButtonCustomer_Click()" disabled>
                             </td>
                         </tr>
                         <tr>
@@ -101,8 +99,7 @@
                                 <input type="button" id="ButtonMinus" class="calc_btn" value="-" onclick="ButtonRemoveProduct_Click()">
                             </td>
                             <td>
-                                @*<input type="button" id="ButtonPayment" class="fct_btn" value="Payment" onclick="ButtonPayment_Click()">*@
-                                <input type="submit" id="ButtonPayment" class="fct_btn" value="Payment">
+                                <input type="submit" name="submitButton" class="fct_btn" value="Payment">
                             </td>
                         </tr>
                         <tr>
@@ -119,7 +116,7 @@
                                 <input type="button" id="ButtonReturn" class="calc_btn" value="&larr;" onclick="ButtonDelete_Click()">
                             </td>
                             <td>
-                                <input type="button" id="ButtonSuspend" class="fct_btn" value="Suspend" onclick="ButtonSuspend_Click">
+                                <input type="submit" name="submitButton" class="fct_btn" value="Cancel">
                             </td>
                         </tr>
                         <tr>
@@ -144,4 +141,4 @@
             </div>  <!-- end containerRight -->
         </section>
     </div> <!-- end page-->
-}<!-- end form-->
+}
