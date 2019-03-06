@@ -15,11 +15,14 @@ namespace TesTransaction.Controllers
         private TestTransactionEntities db = new TestTransactionEntities();
 
         // GET: Cash
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, DateTime? searchString)
         {
             ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             var cashD = db.CASH_BOTTOM_DAYs.Include(c => c.TERMINAL);
-
+            if (!String.IsNullOrEmpty((searchString).ToString()))
+            {
+                cashD = cashD.Where(s => s.dateDay == searchString);
+            }
             switch (sortOrder)
             {
                 case "date_desc":
