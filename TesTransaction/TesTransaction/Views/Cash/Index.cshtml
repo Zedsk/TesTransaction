@@ -7,13 +7,13 @@
 <h2>Index</h2>
 
 <p>
-    @*@Html.ActionLink("Create New", "Create")*@
-    // <strong style="color: red ">todo -> zone de recherche</strong>  | @Html.ActionLink("Back to Menu", "Transaction", "Home")
+    @Html.ActionLink("Create New", "Create") |
+    @Html.ActionLink("Back to Menu", "Transaction", "Home") | // <strong style="color: red ">todo -> zone de recherche</strong>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(m => m.dateDay)
+            @Html.ActionLink(Html.DisplayNameFor(m => m.dateDay).ToString(), "Index", new { sortOrder = ViewBag.DateSortParam })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.beginningCash)
@@ -42,8 +42,8 @@
             @Html.DisplayFor(modelItem => item.TERMINAL.nameTerminal)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal }) |
-            @Html.ActionLink("Details", "Details", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal }) |
+            @Html.ActionLink("Details", "Details", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal }) |*@
             @Html.ActionLink("Delete", "Delete", new { id1 = item.dateDay, id2 = item.TERMINAL.idTerminal })
         </td>
     </tr>

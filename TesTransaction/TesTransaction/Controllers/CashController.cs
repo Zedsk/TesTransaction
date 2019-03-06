@@ -15,9 +15,21 @@ namespace TesTransaction.Controllers
         private TestTransactionEntities db = new TestTransactionEntities();
 
         // GET: Cash
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             var cashD = db.CASH_BOTTOM_DAYs.Include(c => c.TERMINAL);
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    cashD = cashD.OrderByDescending(d => d.dateDay);
+                    break;
+                default:
+                    cashD = cashD.OrderBy(d => d.dateDay);
+                    break;
+            }
+
             return View(cashD.ToList());
         }
 
