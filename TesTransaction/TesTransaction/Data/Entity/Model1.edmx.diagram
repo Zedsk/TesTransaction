@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bfae087857c04af9b5b9e0c49c91c0ce" Name="Diagram1">
-        <EntityTypeShape EntityType="TestTransactionModel.AGE" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.BRAND" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+      <Diagram DiagramId="ff7c8f4874214fc29bc968f7d97f04bd" Name="Diagram1">
+        <EntityTypeShape EntityType="TestTransactionModel.AGE" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.BRAND" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TestTransactionModel.CASH_BOTTOM_DAY" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.CATEGORY" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.HERO" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestTransactionModel.PAYMENT" Width="1.5" PointX="11.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.CATEGORY" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.HERO" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestTransactionModel.PAYMENT" Width="1.5" PointX="11.25" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="TestTransactionModel.PAYMENT_METHOD" Width="1.5" PointX="9" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TestTransactionModel.PRODUCT" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="TestTransactionModel.TERMINAL" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />

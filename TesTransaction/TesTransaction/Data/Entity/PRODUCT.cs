@@ -29,7 +29,7 @@ namespace TesTransaction.Data.Entity
         public int categoryId { get; set; }
         public int ageId { get; set; }
         public int brandId { get; set; }
-        public int heroId { get; set; }
+        public Nullable<int> heroId { get; set; }
         public int vatId { get; set; }
     
         public virtual AGE AGE { get; set; }

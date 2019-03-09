@@ -10,6 +10,7 @@
             <PropertyRef Name="idAge" />
           </Key>
           <Property Name="idAge" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imageAge" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="BRAND">
           <Key>
@@ -17,7 +18,7 @@
           </Key>
           <Property Name="idBrand" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nameBrand" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="imageBrand" Type="varchar" MaxLength="100" />
+          <Property Name="imageBrand" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="CASH_BOTTOM_DAY">
           <Key>
@@ -34,14 +35,14 @@
             <PropertyRef Name="idCategory" />
           </Key>
           <Property Name="idCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="imageCat" Type="varchar" MaxLength="100" />
+          <Property Name="imageCat" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="HERO">
           <Key>
             <PropertyRef Name="idHero" />
           </Key>
           <Property Name="idHero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="imageHero" Type="varchar" MaxLength="100" />
+          <Property Name="imageHero" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="PAYMENT">
           <Key>
@@ -50,6 +51,7 @@
           <Property Name="idPayment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="paymentMethodId" Type="int" Nullable="false" />
           <Property Name="amount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="momentPay" Type="datetime" Nullable="false" />
           <Property Name="transactionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PAYMENT_METHOD">
@@ -68,11 +70,11 @@
           <Property Name="purchasePrice" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="salesPrice" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="discountRate" Type="decimal" Precision="8" Scale="2" />
-          <Property Name="imageProduct" Type="varchar" MaxLength="100" />
+          <Property Name="imageProduct" Type="varchar" MaxLength="200" />
           <Property Name="categoryId" Type="int" Nullable="false" />
           <Property Name="ageId" Type="int" Nullable="false" />
           <Property Name="brandId" Type="int" Nullable="false" />
-          <Property Name="heroId" Type="int" Nullable="false" />
+          <Property Name="heroId" Type="int" />
           <Property Name="vatId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TERMINAL">
@@ -203,7 +205,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PRODUCT_HERO">
-          <End Role="HERO" Type="Self.HERO" Multiplicity="1" />
+          <End Role="HERO" Type="Self.HERO" Multiplicity="0..1" />
           <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HERO">
@@ -363,6 +365,7 @@
             <PropertyRef Name="idAge" />
           </Key>
           <Property Name="idAge" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imageAge" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_AGE" FromRole="AGE" ToRole="PRODUCT" />
         </EntityType>
         <EntityType Name="BRAND">
@@ -371,7 +374,7 @@
           </Key>
           <Property Name="idBrand" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nameBrand" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="imageBrand" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imageBrand" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_BRAND" FromRole="BRAND" ToRole="PRODUCT" />
         </EntityType>
         <EntityType Name="CASH_BOTTOM_DAY">
@@ -390,7 +393,7 @@
             <PropertyRef Name="idCategory" />
           </Key>
           <Property Name="idCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="imageCat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imageCat" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="CATEGORY" ToRole="PRODUCT" />
         </EntityType>
         <EntityType Name="HERO">
@@ -398,7 +401,7 @@
             <PropertyRef Name="idHero" />
           </Key>
           <Property Name="idHero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="imageHero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imageHero" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_HERO" FromRole="HERO" ToRole="PRODUCT" />
         </EntityType>
         <EntityType Name="PAYMENT">
@@ -408,6 +411,7 @@
           <Property Name="idPayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="paymentMethodId" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="momentPay" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="transactionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TRANSACTIONS" Relationship="Self.FK_CARD_TRANSACTION" FromRole="PAYMENT" ToRole="TRANSACTIONS" />
           <NavigationProperty Name="PAYMENT_METHOD" Relationship="Self.FK_PAYMENT_PAYMENT_METHOD" FromRole="PAYMENT" ToRole="PAYMENT_METHOD" />
@@ -429,11 +433,11 @@
           <Property Name="purchasePrice" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="salesPrice" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="discountRate" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="imageProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imageProduct" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="categoryId" Type="Int32" Nullable="false" />
           <Property Name="ageId" Type="Int32" Nullable="false" />
           <Property Name="brandId" Type="Int32" Nullable="false" />
-          <Property Name="heroId" Type="Int32" Nullable="false" />
+          <Property Name="heroId" Type="Int32" />
           <Property Name="vatId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AGE" Relationship="Self.FK_PRODUCT_AGE" FromRole="PRODUCT" ToRole="AGE" />
           <NavigationProperty Name="BRAND" Relationship="Self.FK_PRODUCT_BRAND" FromRole="PRODUCT" ToRole="BRAND" />
@@ -558,7 +562,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PRODUCT_HERO">
-          <End Role="HERO" Type="Self.HERO" Multiplicity="1" />
+          <End Role="HERO" Type="Self.HERO" Multiplicity="0..1" />
           <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HERO">
@@ -742,6 +746,7 @@
             <EntityTypeMapping TypeName="TestTransactionModel.AGE">
               <MappingFragment StoreEntitySet="AGE">
                 <ScalarProperty Name="idAge" ColumnName="idAge" />
+                <ScalarProperty Name="imageAge" ColumnName="imageAge" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -786,6 +791,7 @@
                 <ScalarProperty Name="idPayment" ColumnName="idPayment" />
                 <ScalarProperty Name="paymentMethodId" ColumnName="paymentMethodId" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="momentPay" ColumnName="momentPay" />
                 <ScalarProperty Name="transactionId" ColumnName="transactionId" />
               </MappingFragment>
             </EntityTypeMapping>

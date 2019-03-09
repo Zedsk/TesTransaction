@@ -193,7 +193,7 @@ namespace TesTransaction.Dal
         #region Payment
         public void CreatePayment(decimal tot, int methodP, int numTransaction)
         {
-            PAYMENT p = new PAYMENT { amount = tot, paymentMethodId = methodP, transactionId = numTransaction };
+            PAYMENT p = new PAYMENT { amount = tot, momentPay = DateTime.Now, paymentMethodId = methodP, transactionId = numTransaction };
             db.PAYMENTs.Add(p);
             db.SaveChanges();
         }

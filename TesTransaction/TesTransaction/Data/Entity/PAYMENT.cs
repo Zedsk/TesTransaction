@@ -17,6 +17,7 @@ namespace TesTransaction.Data.Entity
         public int idPayment { get; set; }
         public int paymentMethodId { get; set; }
         public decimal amount { get; set; }
+        public System.DateTime momentPay { get; set; }
         public int transactionId { get; set; }
     
         public virtual TRANSACTIONS TRANSACTIONS { get; set; }
