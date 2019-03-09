@@ -71,6 +71,7 @@ namespace TesTransaction.Controllers
                 {
                     db.CASH_BOTTOM_DAYs.Add(cashDay);
                     db.SaveChanges();
+                    Session["sessTerminalId"] = cashDay.terminalId;
                     return RedirectToAction("Index", "Transaction");
                 }
                 catch (Exception ex)
@@ -86,6 +87,7 @@ namespace TesTransaction.Controllers
         }
 
         // GET: Cash/Edit/5
+        //id1 = dateday   id2 = terminalId
         public ActionResult Edit(DateTime id1, int? id2)
         {
             if (id1 == null || id2 == null)
@@ -142,6 +144,48 @@ namespace TesTransaction.Controllers
             db.CASH_BOTTOM_DAYs.Remove(cashD);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Cash/End
+        public ActionResult End()
+        {
+            var id1 = DateTime.Today;
+            var id2 = Session["sessTerminalId"];
+            if (id1 == null || id2 == null)
+            {
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData["Error"] = "Le terminal n'a pas été trouvé, existe-t-il un fond de caisse sur ce terminal pour cette date?";
+                return RedirectToAction("Transaction", "Home");
+            }
+            CASH_BOTTOM_DAY cashD = db.CASH_BOTTOM_DAYs.Find(id1, id2);
+            if (cashD == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.terminalId = new SelectList(db.TERMINALs, "idTerminal", "nameTerminal", cashD.terminalId);
+            return View(cashD);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult End([Bind(Include = "dateDay,terminalId,beginningCash,endCash")] CASH_BOTTOM_DAY cashD)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(cashD).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "??";
+                }
+            }
+            ViewBag.terminalId = new SelectList(db.TERMINALs, "idTerminal", "nameTerminal", cashD.terminalId);
+            return View(cashD);
         }
 
         protected override void Dispose(bool disposing)

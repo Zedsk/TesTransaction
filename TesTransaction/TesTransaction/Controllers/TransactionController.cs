@@ -48,61 +48,125 @@ namespace TesTransaction.Controllers
         [HttpGet]
         public ActionResult TransacReturn(TrPaymentMenuViewModel vmodel)
         {
-            var detailsListTot = TransactionBL.ListDetailsWithTot(vmodel.NumTransaction);
-            var transac = TransactionBL.FindTransactionById(vmodel.NumTransaction);
-            TrIndexViewModel vm = new TrIndexViewModel
+            try
             {
-                //vm.TerminalId = terminal;
-                NumTransaction = vmodel.NumTransaction,
-                TerminalId = transac.terminalId,
-                // to do --> quid date et heure?
-                DateDay = DateTime.Now.Date.ToString("d"),
-                HourDay = DateTime.Now.ToString("T"),
-                //to do --> ameliorer   Vendor = string  et vendorId = int
-                Vendor = (transac.vendorId).ToString(),
-                //to do or not--> transac.discountGlobal à afficher
-                //to do or not--> with transac.vatId  return appliedVat
-                VatsList = TransactionBL.FindVatsList(),
-                DetailsListWithTot = detailsListTot
-            };
-            //Sum subTotItems 
-            ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
-            return View("Index", vm);
+                //to do --> check if detailsListTot count = 0 
+                var detailsListTot = TransactionBL.ListDetailsWithTot(vmodel.NumTransaction);
+                var transac = TransactionBL.FindTransactionById(vmodel.NumTransaction);
+                TrIndexViewModel vm = new TrIndexViewModel
+                {
+                    NumTransaction = vmodel.NumTransaction,
+                    TerminalId = transac.terminalId,
+                    // to do --> quid date et heure?
+                    DateDay = DateTime.Now.Date.ToString("d"),
+                    HourDay = DateTime.Now.ToString("T"),
+                    //to do --> ameliorer   Vendor = string  et vendorId = int
+                    Vendor = (transac.vendorId).ToString(),
+                    //to do or not--> transac.discountGlobal à afficher
+                    //to do or not--> with transac.vatId  return appliedVat
+                    VatsList = TransactionBL.FindVatsList(),
+                    DetailsListWithTot = detailsListTot
+                };
+                //Sum subTotItems 
+                ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
+                return View("Index", vm);
+            }
+            catch (InvalidOperationException ex)
+            {
+                //to do insert to log file
+                //NumTransaction not valid
+                return RedirectToAction("Index", "Pay", vmodel);
+            }
+            catch (Exception ex)
+            {
+                var temp1 = ex.GetType();
+
+                return View("Error");
+            }
         }
 
         //POST:
         [HttpPost]
         public ActionResult RefreshDetails(string numTransaction, string terminalId, TrDetailsViewModel vmodel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //Add detail
-                TransactionBL.AddNewTransactionDetail(vmodel.AddProduct, terminalId, numTransaction, vmodel.Minus);
+                if (ModelState.IsValid)
+                {
+                    //Add detail
+                    TransactionBL.AddNewTransactionDetail(vmodel.AddProduct, terminalId, numTransaction, vmodel.Minus);
+                }
+                //Find details with id transaction  + Add itemSubTotal
+                var detailsListTot = TransactionBL.ListDetailsWithTot(numTransaction);
+                //Sum subTotItems 
+                ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
+                vmodel.DetailsListWithTot = detailsListTot;
+                return PartialView("_PartialTransactionDetail", vmodel);
             }
-            //Find details with id transaction  + Add itemSubTotal
-            var detailsListTot = TransactionBL.ListDetailsWithTot(numTransaction);
-            //Sum subTotItems 
-            ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
-            vmodel.DetailsListWithTot = detailsListTot;
-            return PartialView("_PartialTransactionDetail", vmodel);
+            catch (InvalidOperationException)
+            {
+                ViewBag.ErrorAdd = "N° de produit invalide";
+                return PartialView("_PartialTransactionDetail", vmodel);
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            
+        }
+
+        //POST:
+        [HttpPost]
+        public ActionResult SearchProduct(string product)
+        {
+            TrSearchViewModel vm = new TrSearchViewModel();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = TransactionBL.FindProductByCode(product);
+                    vm.Product = item.barcode;
+                    vm.Image = item.imageProduct;
+                    vm.Price = (item.salesPrice).ToString();
+                }
+                return PartialView("_PartialTransactionSearch", vm);
+            }
+            catch (InvalidOperationException)
+            {
+                ViewBag.ErrorSearch = "N° de produit invalide";
+                return PartialView("_PartialTransactionSearch", vm);
+            }
+            catch (Exception ex)
+            {
+                var temp = ex.GetType();
+                return View("Error");
+            }
         }
 
         //POST:
         [HttpPost]
         public ActionResult Index(string submitButton, string globalDiscount, TrIndexViewModel vmodel)
         {
-            switch (submitButton)
+            try
             {
-                case "Payment":
-                    return (Payment(globalDiscount, vmodel));
+                switch (submitButton)
+                {
+                    case "Payment":
+                        return (Payment(globalDiscount, vmodel));
 
-                case "Cancel":
-                    return (CancelTransac(vmodel));
+                    case "Cancel":
+                        return (CancelTransac(vmodel));
 
-                default:
-                    ViewBag.ticket = false;
-                    return View(vmodel);
+                    default:
+                        ViewBag.ticket = false;
+                        return View(vmodel);
+                }
             }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            
         }
 
         private ActionResult Payment(string globalDiscount, TrIndexViewModel vmodel)

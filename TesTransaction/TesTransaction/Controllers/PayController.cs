@@ -14,29 +14,38 @@ namespace TesTransaction.Controllers
         [HttpGet]
         public ActionResult Index(string gt, string nt)
         {
-            TrPaymentMenuViewModel vm = new TrPaymentMenuViewModel();
-            if (string.IsNullOrEmpty(gt) || string.IsNullOrEmpty(nt))
+            try
             {
-                //provisoire
-                vm.GlobalTotal = "123.99";
-                vm.NumTransaction = "999";
-                ViewBag.tot = "123.99";
-                ViewBag.transac = "999";
-                //ViewBag.amount = "0";
-                //ViewBag.cashBack = "0";
-            }
-            else
-            {
-                vm.GlobalTotal = gt;
-                vm.NumTransaction = nt;
-                ViewBag.tot = gt;
-                ViewBag.transac = nt;
-            }
+                TrPaymentMenuViewModel vm = new TrPaymentMenuViewModel();
+                if (string.IsNullOrEmpty(gt) || string.IsNullOrEmpty(nt))
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    vm.GlobalTotal = gt;
+                    vm.NumTransaction = nt;
+                    ViewBag.tot = gt;
+                    ViewBag.transac = nt;
+                }
 
-            vm.MethodsP = TransactionBL.FindMethodsList();
-            ViewBag.messageCard = "";
-            ViewBag.ticket = false;
-            return View(vm);
+                vm.MethodsP = TransactionBL.FindMethodsList();
+                ViewBag.messageCard = "";
+                ViewBag.ticket = false;
+                return View(vm);
+            }
+            catch (NullReferenceException ex)
+            {
+                //to do --> add ex to log file
+                ViewBag.Error = "Il n'y a pas de transaction en cours !";
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                var temp = ex.GetType();
+                //to do --> add ex to log file
+                return View("Error");
+            }
         }
 
         [HttpPost]

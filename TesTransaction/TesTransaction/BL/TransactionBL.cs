@@ -264,13 +264,13 @@ namespace TesTransaction.BL
         #endregion
 
         #region Product
-        //internal static PRODUCTs FindProductByCode(string codeProduct)
-        //{
-        //    using(IDal dal = new TransactionDal())
-        //    {
-        //        return dal.
-        //    }
-        //}
+        internal static PRODUCT FindProductByCode(string codeProduct)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetProductByCode(codeProduct);
+            }
+        }
         #endregion
 
         #region VAT

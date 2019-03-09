@@ -109,6 +109,44 @@ function AddVat() {
 	}
 }
 
+function SearchByCode() {
+    document.getElementById('errorSearchProduct').textContent = "";
+    document.getElementById('errorSearchProduct').style.visibility = "hidden";
+    try {
+        var val = document.getElementById('searchProduct').value;
+        if (val === null || val === "") {
+            //alert("Il faut saisir un produit");
+            throw "Il faut saisir un produit";
+
+        } else {
+            var val = document.getElementById('searchProduct').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('searchProduct').value = "";
+                    document.getElementById('containerRight').innerHTML = xhr.responseText;
+                }
+            }
+
+            //Post Method
+            var url = "/Transaction/SearchProduct";
+            var param = "Product=" + val;
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(param);
+        }
+    } catch (e) {
+        document.getElementById('errorSearchProduct').textContent = e;
+        document.getElementById('errorSearchProduct').style.visibility = "visible";
+        console.log(e);
+    }
+}
+
+function AddItem(item) {
+    document.getElementById('addProduct').value = item;
+}
+
 ////remplacer par methodes controller
 //function ButtonPayment_Click() {
 //	var numTransaction = document.getElementById('NumTransaction').value;

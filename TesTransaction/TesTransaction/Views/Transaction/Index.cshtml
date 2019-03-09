@@ -134,10 +134,7 @@
                 </div> <!-- end calculator -->
             </div>  <!-- end containerLeft -->
             <div id="containerRight">
-                <input id="searchProduct" name="searchProduct" type="text" placeholder="Search..">
-                <div id="search">
-
-                </div>
+                @Html.Partial("_PartialTransactionSearch", new TrSearchViewModel { })
             </div>  <!-- end containerRight -->
         </section>
     </div> <!-- end page-->

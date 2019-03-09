@@ -222,6 +222,7 @@
     <Compile Include="Models\Transactions\TrDetailsViewModel.cs" />
     <Compile Include="Models\Transactions\TrIndexViewModel.cs" />
     <Compile Include="Models\Transactions\TrPaymentMenuViewModel.cs" />
+    <Compile Include="Models\Transactions\TrSearchViewModel.cs" />
     <Compile Include="Models\Transactions\TrTicketViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -230,7 +231,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\image\brand\Logo_Lego.png" />
+    <Content Include="Content\image\brand\Logo_Mattel.png" />
+    <Content Include="Content\image\brand\Logo_Nikko.png" />
+    <Content Include="Content\image\brand\Logo_Nintendo.png" />
+    <Content Include="Content\image\hero\harry_potter_logo_2.png" />
     <Content Include="Content\image\logo_magasin.png" />
+    <Content Include="Content\image\product\First_Order_Star_Destroyer.jpg" />
+    <Content Include="Content\image\product\GarageHotWheelsMattel.jpg" />
+    <Content Include="Content\image\product\Le_Faucon_Millenium_du_raid_de_Kessel.jpg" />
     <Content Include="Content\test2.css" />
     <Content Include="Content\ticketprint.css" />
     <Content Include="Data\Entity\Model1.Context.tt">
@@ -295,9 +304,12 @@
     <Content Include="Views\Transaction\_PartialTransactionDetail.cshtml" />
     <Content Include="Views\Pay\Index.cshtml" />
     <Content Include="Views\Pay\_PartialTicket.cshtml" />
+    <Content Include="Views\Cash\End.cshtml" />
+    <Content Include="Views\Transaction\_PartialTransactionSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\image\category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

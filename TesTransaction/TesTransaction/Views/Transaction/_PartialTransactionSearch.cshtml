@@ -1,0 +1,44 @@
+﻿@model TesTransaction.Models.Transactions.TrSearchViewModel
+
+@{
+
+    Layout = null;
+
+}
+
+<div class="searchProduct">
+    <span id="errorSearchProduct" class="text-danger" style=" visibility:hidden"></span>
+    <span id="ErrorSearch" class="text-danger">@ViewBag.ErrorSearch</span>
+
+    <input id="searchProduct" name="searchProduct" class="searchProduct" type="text" placeholder="Code produit...">
+    <button type="button" class="btn btn-default" onclick="SearchByCode()">
+        <span class="glyphicon glyphicon-search"></span> Code
+    </button>
+</div>
+<div class="searchButtons">
+    <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Marque
+    </button>
+    <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Héro
+    </button>
+    <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Age
+    </button>
+    <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Catégorie
+    </button>
+</div>
+<div id="search">
+    @if (Model.Product != null)
+    {
+        <button type="button" class="close-image" onclick="AddItem(@Model.Product)">
+            @Html.DisplayFor(p => p.Product)
+            <img src="@Url.Content(Model.Image)" alt="image du jouet" />
+            @Html.DisplayFor(p => p.Price)
+        </button>
+    }
+</div>
+
+
+<p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>
