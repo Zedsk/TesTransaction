@@ -147,6 +147,42 @@ function AddItem(item) {
     document.getElementById('addProduct').value = item;
 }
 
+function SearchBy(method) {
+    var val = method.getAttribute('Value');
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('containerRight').innerHTML = xhr.responseText;
+        }
+    }
+
+    //Post Method
+    var url = "/Transaction/SearchBy";
+    var param = "Method=" + val;
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(param);
+}
+
+function ProductBy(id, meth) {
+    var val = id.getAttribute('Value');
+    var method = meth;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('containerRight').innerHTML = xhr.responseText;
+        }
+    }
+
+    //Post Method
+    var url = "/Transaction/ProductBy";
+    var param = "Method=" + method
+        + "&Argument=" + val;
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(param);
+}
+
 ////remplacer par methodes controller
 //function ButtonPayment_Click() {
 //	var numTransaction = document.getElementById('NumTransaction').value;

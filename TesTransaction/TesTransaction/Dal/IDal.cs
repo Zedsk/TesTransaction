@@ -57,5 +57,16 @@ namespace TesTransaction.Dal
         int CreateTicket();
 
         #endregion
+
+        #region Search
+        IList<BRAND> GetAllBrands();
+        IList<PRODUCT> GetAllProductByIdBrand(int id);
+        IList<HERO> GetAllHeros();
+        IList<PRODUCT> GetAllProductByIdHero(int id);
+        IList<AGE> GetAllAges();
+        IList<PRODUCT> GetAllProductByIdAge(int id);
+        IList<CATEGORY> GetAllCats();
+        IList<PRODUCT> GetAllProductByIdCat(int id);
+        #endregion
     }
 }

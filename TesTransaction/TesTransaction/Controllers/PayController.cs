@@ -34,7 +34,7 @@ namespace TesTransaction.Controllers
                 ViewBag.ticket = false;
                 return View(vm);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 //to do --> add ex to log file
                 ViewBag.Error = "Il n'y a pas de transaction en cours !";

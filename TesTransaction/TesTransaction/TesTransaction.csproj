@@ -231,15 +231,41 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\image\age\logo_age1.png" />
+    <Content Include="Content\image\age\logo_age2.png" />
+    <Content Include="Content\image\age\logo_age3.png" />
+    <Content Include="Content\image\age\logo_age4.png" />
+    <Content Include="Content\image\age\logo_age5.png" />
+    <Content Include="Content\image\age\logo_age6.png" />
+    <Content Include="Content\image\age\logo_age7.png" />
+    <Content Include="Content\image\age\logo_age8.png" />
+    <Content Include="Content\image\age\logo_age9.png" />
     <Content Include="Content\image\brand\Logo_Lego.png" />
     <Content Include="Content\image\brand\Logo_Mattel.png" />
     <Content Include="Content\image\brand\Logo_Nikko.png" />
     <Content Include="Content\image\brand\Logo_Nintendo.png" />
+    <Content Include="Content\image\category\logoCat1.png" />
+    <Content Include="Content\image\category\logoCat2.jpg" />
+    <Content Include="Content\image\category\logoCat3.jpg" />
+    <Content Include="Content\image\category\logoCat4.jpg" />
+    <Content Include="Content\image\category\logoCat5.jpg" />
+    <Content Include="Content\image\category\logoCat6.jpg" />
+    <Content Include="Content\image\category\logoCat7.jpg" />
+    <Content Include="Content\image\category\logoCat8.jpg" />
+    <Content Include="Content\image\category\logoCat9.jpg" />
     <Content Include="Content\image\hero\harry_potter_logo_2.png" />
+    <Content Include="Content\image\hero\Logo_Hotwheels.png" />
+    <Content Include="Content\image\hero\Logo_Schtroumpf.jpg" />
+    <Content Include="Content\image\hero\Logo_StarWars.jpg" />
     <Content Include="Content\image\logo_magasin.png" />
     <Content Include="Content\image\product\First_Order_Star_Destroyer.jpg" />
     <Content Include="Content\image\product\GarageHotWheelsMattel.jpg" />
+    <Content Include="Content\image\product\LapinCretin3DS.jpg" />
+    <Content Include="Content\image\product\Le_camion_pizza.jpg" />
     <Content Include="Content\image\product\Le_Faucon_Millenium_du_raid_de_Kessel.jpg" />
+    <Content Include="Content\image\product\le_train_de_passagers.jpg" />
+    <Content Include="Content\image\product\VoitureHotWheelsNikko.jpg" />
+    <Content Include="Content\image\product\ZeldaSwitch.jpg" />
     <Content Include="Content\test2.css" />
     <Content Include="Content\ticketprint.css" />
     <Content Include="Data\Entity\Model1.Context.tt">
@@ -309,7 +335,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\image\category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

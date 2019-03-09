@@ -16,16 +16,16 @@
     </button>
 </div>
 <div class="searchButtons">
-    <button type="button" class="btn btn-default">
+    <button type="button" class="btn btn-default" value="Brand" onclick="SearchBy(this)">
         <span class="glyphicon glyphicon-search"></span> Marque
     </button>
-    <button type="button" class="btn btn-default">
+    <button type="button" class="btn btn-default" value="Hero" onclick="SearchBy(this)">
         <span class="glyphicon glyphicon-search"></span> Héro
     </button>
-    <button type="button" class="btn btn-default">
+    <button type="button" class="btn btn-default" value="Age" onclick="SearchBy(this)">
         <span class="glyphicon glyphicon-search"></span> Age
     </button>
-    <button type="button" class="btn btn-default">
+    <button type="button" class="btn btn-default" value="Cat" onclick="SearchBy(this)">
         <span class="glyphicon glyphicon-search"></span> Catégorie
     </button>
 </div>
@@ -35,8 +35,65 @@
         <button type="button" class="close-image" onclick="AddItem(@Model.Product)">
             @Html.DisplayFor(p => p.Product)
             <img src="@Url.Content(Model.Image)" alt="image du jouet" />
-            @Html.DisplayFor(p => p.Price)
+            @Html.DisplayFor(p => p.Price)<span class="glyphicon glyphicon-euro"></span>
         </button>
+    }
+    @if (Model.Brands != null)
+    {
+        foreach (var brand in Model.Brands)
+        {
+            <button type="button" class="close-image" value="@brand.idBrand" onclick="ProductBy(this, 'brand')">
+
+                <img src="@Url.Content(brand.imageBrand)" alt="Logo de la marque" />
+
+            </button>
+        }
+    }
+    @if (Model.Heros != null)
+    {
+        foreach (var hero in Model.Heros)
+        {
+            <button type="button" class="close-image" value="@hero.idHero" onclick="ProductBy(this, 'hero')">
+
+                <img src="@Url.Content(hero.imageHero)" alt="Logo du héro" />
+
+            </button>
+        }
+    }
+    @if (Model.Ages != null)
+    {
+        foreach (var age in Model.Ages)
+        {
+            <button type="button" class="close-image" value="@age.idAge" onclick="ProductBy(this, 'age')">
+
+                <img src="@Url.Content(age.imageAge)" alt="Logo de l'age" />
+
+            </button>
+        }
+    }
+    @if (Model.Cats != null)
+    {
+        foreach (var cat in Model.Cats)
+        {
+            <button type="button" class="close-image" value="@cat.idCategory" onclick="ProductBy(this, 'cat')">
+
+                <img src="@Url.Content(cat.imageCat)" alt="Logo de la catégorie" />
+
+            </button>
+        }
+    }
+    @if (Model.Products != null)
+    {
+        foreach (var item in Model.Products)
+        {
+            <button type="button" class="close-image" onclick="AddItem(@item.barcode)">
+                @*@Html.Display(item.barcode)*@
+                <p>@item.barcode</p>
+                <img src="@Url.Content(item.imageProduct)" alt="image du jouet" />
+                @*@Html.Display((item.salesPrice).ToString())*@
+                <p>@item.salesPrice<span class="glyphicon glyphicon-euro"></span></p>
+            </button>
+        }
     }
 </div>
 
