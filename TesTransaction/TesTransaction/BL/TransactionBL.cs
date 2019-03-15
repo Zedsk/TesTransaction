@@ -271,6 +271,22 @@ namespace TesTransaction.BL
                 return dal.GetProductByCode(codeProduct);
             }
         }
+
+        internal static List<PRODUCT> FindAllProductByCode(string codeProduct)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetAllProductByCode(codeProduct);
+            }
+        }
+
+        internal static List<PRODUCT> FindAllProductByName(string product)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetAllProductByName(product);
+            }
+        }
         #endregion
 
         #region VAT

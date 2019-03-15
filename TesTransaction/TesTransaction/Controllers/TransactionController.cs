@@ -160,10 +160,14 @@ namespace TesTransaction.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var item = TransactionBL.FindProductByCode(product);
-                    vm.Product = item.barcode;
-                    vm.Image = item.imageProduct;
-                    vm.Price = (item.salesPrice).ToString();
+                    if (int.TryParse(product, out int codeP))
+                    {
+                        vm.Products = TransactionBL.FindAllProductByCode(product);
+                    }
+                    else
+                    {
+                        vm.Products = TransactionBL.FindAllProductByName(product);
+                    }
                 }
                 return PartialView("_PartialTransactionSearch", vm);
             }

@@ -109,7 +109,7 @@ function AddVat() {
 	}
 }
 
-function SearchByCode() {
+function SearchByCodeOrName() {
     document.getElementById('errorSearchProduct').textContent = "";
     document.getElementById('errorSearchProduct').style.visibility = "hidden";
     try {
@@ -119,12 +119,12 @@ function SearchByCode() {
             throw "Il faut saisir un produit";
 
         } else {
-            var val = document.getElementById('searchProduct').value;
+            //var val = document.getElementById('searchProduct').value;
 
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById('searchProduct').value = "";
+                    //document.getElementById('searchProduct').value = "";
                     document.getElementById('containerRight').innerHTML = xhr.responseText;
                 }
             }

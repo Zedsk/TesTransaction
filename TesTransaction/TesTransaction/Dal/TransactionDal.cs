@@ -168,6 +168,20 @@ namespace TesTransaction.Dal
             return db.PRODUCTs.Where(p => p.barcode == codeProduct).Single();
         }
 
+        public PRODUCT GetProductByName(string product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PRODUCT> GetAllProductByCode(string codeProduct)
+        {
+            return db.PRODUCTs.Where(p => p.barcode.Contains(codeProduct)).ToList();
+        }
+
+        public List<PRODUCT> GetAllProductByName(string codeProduct)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region VAT

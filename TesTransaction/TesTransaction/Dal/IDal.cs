@@ -37,7 +37,9 @@ namespace TesTransaction.Dal
 
         #region Product
         PRODUCT GetProductByCode(string codeProduct);
-
+        List<PRODUCT> GetAllProductByCode(string codeProduct);
+        PRODUCT GetProductByName(string product);
+        List<PRODUCT> GetAllProductByName(string codeProduct);
         #endregion
 
         #region VAT
