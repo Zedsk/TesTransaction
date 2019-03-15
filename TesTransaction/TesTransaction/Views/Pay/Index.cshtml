@@ -83,18 +83,9 @@
                     </div>
                 </div>
             </div> <!-- end containerPay -->
-            <div id="respBank">
-                @if (Model.Resp == 1)
-                {
-                    <p style="color:green">@ViewBag.messageCard</p>
-                }
-                else
-                {
-                    <p style="color:red">@ViewBag.messageCard</p>
-                }
-            </div>
             <div id="amountCell" class="cellPay">
                 <h2>@Html.LabelFor(m => m.Amount)</h2>
+                <p style="color:red">@ViewBag.limitCash</p>
                 <div>
                     @Html.TextBoxFor(m => m.Amount, new { @Value = ViewBag.amount, @class = "totToPay", @style = "border-color:silver" })
                     @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
@@ -107,15 +98,23 @@
                     @Html.ValidationMessageFor(m => m.MethodP, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div>
-                <input type="submit" name="submitButton" class="btn btn-outline" value="Payment">
+            <div id="paymentZone">
+                @if (!ViewBag.ticket)
+                {
+                    <div><input type="submit" name="submitButton" class="btn btn-outline" value="Payment"></div>
+
+                    if (Model.PayCardToConfirm)
+                    {
+                        <div id="divCardConfirmed">@Html.LabelFor(m => m.PayCardConfirmed, new { @class = "custom-control-label" })</div>
+                        <div>@Html.CheckBoxFor(m => m.PayCardConfirmed, new { @class = "custom-control-input" })</div>
+                    }
+                }
             </div>
         }
     </div>
     @if (ViewBag.ticket)
     {
         <div id="myTicket">
-            <h2 id="titleT">Visualisation du Ticket</h2>
             @Html.Partial("_PartialTicket", Model.Ticket)
         </div>
     }

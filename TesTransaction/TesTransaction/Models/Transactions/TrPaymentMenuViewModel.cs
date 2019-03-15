@@ -34,13 +34,19 @@ namespace TesTransaction.Models.Transactions
         [Display(Name = "Montant à rendre")]
         public string CashReturn { get; set; }
 
-        [DataType(DataType.Text)]
-        [Display(Name = "Réponse du système")]
-        public int Resp { get; set; }
+        //[DataType(DataType.Text)]
+        //[Display(Name = "Réponse du système")]
+        //public int Resp { get; set; }
 
         public TrTicketViewModel Ticket { get; set; }
 
         [DataType(DataType.Text)]
         public string NumTicket { get; set; }
+
+        [Display(Name = "Confirmation du paiement par carte")]
+        public bool PayCardConfirmed { get; set; }
+
+        [Display(Name = "Paiement par carte à confimer")]
+        public bool PayCardToConfirm { get; set; }
     }
 }

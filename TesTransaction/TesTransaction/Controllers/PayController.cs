@@ -97,11 +97,15 @@ namespace TesTransaction.Controllers
                     //method debit card
                     case "2":
                         //simulation
-                        return (PayCardDebit(vmodel));
+                        if (vmodel.PayCardConfirmed)
+                        {
+                            return (PayCardDebit(vmodel));
+                        }
+                        return (PayCardDebitNotConfirmed(vmodel));
 
                     //method credit card
                     case "3":
-                        ////simulation
+                        ////simulation same process CardDebit
                         //return (PayCardCredit(vmodel));
                         return (PayCardDebit(vmodel));
 
@@ -172,7 +176,17 @@ namespace TesTransaction.Controllers
 
         private ActionResult PayCash(TrPaymentMenuViewModel vmodel)
         {
-            TransactionBL.CalculCash(vmodel);
+            var temp = vmodel.Amount.Replace(".", ",");
+            decimal cash = decimal.Parse(temp);
+            // legal limit for cash
+            if (cash <= 3000)
+            {
+                TransactionBL.CalculCash(vmodel);
+            }
+            else
+            {
+                @ViewBag.limitCash = "Montant cash max de 3000 € dépassé !";
+            }
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
             ViewBag.cashBack = vmodel.CashReturn;
@@ -194,35 +208,32 @@ namespace TesTransaction.Controllers
 
         private ActionResult PayCardDebit(TrPaymentMenuViewModel vmodel)
         {
-            vmodel.Resp = TransactionBL.AskValidationCard(vmodel.Amount);
-            if (vmodel.Resp == 1)
+            TransactionBL.CalculCash(vmodel);
+            ViewBag.tot = vmodel.GlobalTotal;
+            ViewBag.amount = vmodel.Amount;
+            ViewBag.cashBack = vmodel.CashReturn;
+            if (ViewBag.tot == "0")
             {
-                TransactionBL.CalculCash(vmodel);
-                ViewBag.messageCard = "Demande acceptée !";
-                ViewBag.tot = vmodel.GlobalTotal;
-                ViewBag.amount = vmodel.Amount;
-                ViewBag.cashBack = vmodel.CashReturn;
-                if (ViewBag.tot == "0")
-                {
-                    vmodel.Ticket = TransactionBL.FillTicket(vmodel.NumTransaction);
-                    ViewBag.NumT = vmodel.Ticket.Ticket;
-                    vmodel.NumTicket = vmodel.Ticket.Ticket;
-                    ViewBag.ticket = true;
-                }
-                else
-                {
-                    ViewBag.ticket = false;
-                }
+                vmodel.Ticket = TransactionBL.FillTicket(vmodel.NumTransaction);
+                ViewBag.NumT = vmodel.Ticket.Ticket;
+                vmodel.NumTicket = vmodel.Ticket.Ticket;
+                ViewBag.ticket = true;
             }
             else
             {
-                ViewBag.messageCard = "Demande refusée !";
-                ViewBag.tot = vmodel.GlobalTotal;
-                ViewBag.amount = "";
-                ViewBag.cashBack = "0";
                 ViewBag.ticket = false;
             }
             vmodel.MethodsP = TransactionBL.FindMethodsList();
+            return View(vmodel);
+        }
+
+        private ActionResult PayCardDebitNotConfirmed(TrPaymentMenuViewModel vmodel)
+        {
+            vmodel.PayCardToConfirm = true;
+            vmodel.MethodsP = TransactionBL.FindMethodsList();
+            ViewBag.tot = vmodel.GlobalTotal;
+            ViewBag.amount = vmodel.Amount;
+            ViewBag.ticket = false;
             return View(vmodel);
         }
 
