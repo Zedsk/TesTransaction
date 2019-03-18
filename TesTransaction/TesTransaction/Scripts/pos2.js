@@ -45,7 +45,12 @@ function CreateRquestAddOrRemove(minus) {
 				if (this.readyState == 4 && this.status == 200) {
 					document.getElementById('addProduct').value = "";
                     document.getElementById('detail').innerHTML = xhr.responseText;
-                    document.getElementById('GlobalTot').value = document.getElementById('subTotal1').value;
+                    var disc = document.getElementById('globalDiscount').value;
+                    if (disc === "" || disc === null || disc === undefined) {
+                        document.getElementById('GlobalTot').value = document.getElementById('subTotal1').value;
+                    } else {
+                        AddDiscount();
+                    }
 				}
 			}
 

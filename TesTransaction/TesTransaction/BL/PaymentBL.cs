@@ -94,8 +94,9 @@ namespace TesTransaction.BL
             {
                 amounts += decimal.Parse(listAmounts[i]);
             }
-            decimal tot = decimal.Parse(gTot) - amounts;
-            return tot;
+            string tot = gTot.Replace(".", ",");
+            decimal result = decimal.Parse(tot) - amounts;
+            return result;
         }
 
         internal static IList<PAYMENT> FindPaymentsByTransacId(string numTransaction)
