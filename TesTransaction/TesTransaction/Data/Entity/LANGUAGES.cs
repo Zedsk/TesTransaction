@@ -12,18 +12,18 @@ namespace TesTransaction.Data.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class VAT
+    public partial class LANGUAGES
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public VAT()
+        public LANGUAGES()
         {
-            this.PRODUCT = new HashSet<PRODUCT>();
+            this.TICKET_MESSAGE = new HashSet<TICKET_MESSAGE>();
         }
     
-        public int idVat { get; set; }
-        public decimal appliedVat { get; set; }
+        public int idLanguage { get; set; }
+        public string nameLanguage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCT> PRODUCT { get; set; }
+        public virtual ICollection<TICKET_MESSAGE> TICKET_MESSAGE { get; set; }
     }
 }

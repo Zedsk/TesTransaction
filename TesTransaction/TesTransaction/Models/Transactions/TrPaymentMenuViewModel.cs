@@ -27,7 +27,7 @@ namespace TesTransaction.Models.Transactions
         public IList<PAYMENT_METHOD> MethodsP { get; set; }
 
         [DataType(DataType.Text)]
-        [Display(Name = "Montant")]
+        [Display(Name = "Montant  à traiter")]
         public string Amount { get; set; }
 
         [DataType(DataType.Text)]
@@ -48,5 +48,8 @@ namespace TesTransaction.Models.Transactions
 
         [Display(Name = "Paiement par carte à confimer")]
         public bool PayCardToConfirm { get; set; }
+
+        [Display(Name = "Montants déjà payés")]
+        public List<string> AmountsPaid { get; set; }
     }
 }

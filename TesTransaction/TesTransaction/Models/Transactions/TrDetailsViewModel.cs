@@ -32,11 +32,6 @@ namespace TesTransaction.Models.Transactions
         [Display(Name = "total")]
         public decimal? TotalItem { get; set; }
 
-        [DataType(DataType.Text)]
-        [Display(Name = "Remise globale (%)")]
-        [Range(0, 100, ErrorMessage = "valeur devant être comprise entre 0 et 100")]
-        public decimal? GlobalDiscount { get; set; }
-
         [Required(ErrorMessage = "Il faut saisir un produit")]
         [DataType(DataType.Text)]
         public string AddProduct { get; set; }

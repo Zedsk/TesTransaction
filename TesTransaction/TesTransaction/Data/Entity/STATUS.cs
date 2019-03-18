@@ -12,17 +12,16 @@ namespace TesTransaction.Data.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class TICKET
+    public partial class STATUS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TICKET()
+        public STATUS()
         {
             this.TRANSACTIONS = new HashSet<TRANSACTIONS>();
         }
     
-        public int idTicket { get; set; }
-        public int messageId { get; set; }
-        public int languageId { get; set; }
+        public int idStatus { get; set; }
+        public string nameStatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRANSACTIONS> TRANSACTIONS { get; set; }

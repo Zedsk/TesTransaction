@@ -22,7 +22,6 @@ namespace TesTransaction.Data.Entity
     
         public int idProduct { get; set; }
         public string barcode { get; set; }
-        public decimal purchasePrice { get; set; }
         public decimal salesPrice { get; set; }
         public Nullable<decimal> discountRate { get; set; }
         public string imageProduct { get; set; }

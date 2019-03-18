@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -30,20 +31,39 @@ namespace TesTransaction.Controllers
                     HourDay = DateTime.Now.ToString("T"),
 
                     Vendor = "Toto", // --> id = 1
-
-                    VatsList = TransactionBL.FindVatsList()
                 };
                 return View(vm);
             }
-            catch (InvalidOperationException)
+            catch (EntityException ex)
             {
-                //Viewbag not work with RedirectToAction --> use TempData
-                //ViewBag.Error = "Il manque un fond de caisse pour cette date";
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+                TempData["Error"] = "L'initialisation de la transaction ne s'est pas déroulé correctement, veuillez contacter l'administrateur";
+                return RedirectToAction("Transaction", "Home");
+            }
+            catch (InvalidOperationException ex)
+            {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
                 TempData["Error"] = "Il manque un fond de caisse pour cette date";
                 return RedirectToAction("Transaction", "Home");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
                 TempData["Error"] = "Il y a un soucis avec l'action demandé, veuillez contacter l'administrateur";
                 return RedirectToAction("Transaction", "Home");
             }
@@ -52,7 +72,6 @@ namespace TesTransaction.Controllers
         }
 
         [HandleError]
-        [HttpGet]
         public ActionResult TransacReturn(TrPaymentMenuViewModel vmodel)
         {
             try
@@ -64,6 +83,8 @@ namespace TesTransaction.Controllers
                     //vm.TerminalId = terminal;
                     NumTransaction = vmodel.NumTransaction,
                     TerminalId = transac.terminalId,
+                    GlobalTot = transac.total.ToString(),
+                    GlobalDiscount = (transac.discountGlobal)*100,
                     // to do --> quid date et heure?
                     DateDay = DateTime.Now.Date.ToString("d"),
                     HourDay = DateTime.Now.ToString("T"),
@@ -71,7 +92,6 @@ namespace TesTransaction.Controllers
                     Vendor = (transac.vendorId).ToString(),
                     //to do or not--> transac.discountGlobal à afficher
                     //to do or not--> with transac.vatId  return appliedVat
-                    VatsList = TransactionBL.FindVatsList(),
                     DetailsListWithTot = detailsListTot
                 };
                 //Sum subTotItems 
@@ -82,12 +102,21 @@ namespace TesTransaction.Controllers
             {
                 //to do insert to log file
                 //NumTransaction not valid
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
                 return RedirectToAction("Index", "Pay", vmodel);
             }
             catch (Exception ex)
             {
-                var temp1 = ex.GetType();
-
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
                 return View("Error");
             }
         }
@@ -112,8 +141,15 @@ namespace TesTransaction.Controllers
                         return View(vmodel);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 return View("Error");
             }
         }
@@ -138,13 +174,27 @@ namespace TesTransaction.Controllers
                 vmodel.DetailsListWithTot = detailsListTot;
                 return PartialView("_PartialTransactionDetail", vmodel);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 ViewBag.ErrorAdd = "N° de produit invalide";
                 return PartialView("_PartialTransactionDetail", vmodel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 return View("Error");
             }
         }
@@ -166,19 +216,33 @@ namespace TesTransaction.Controllers
                     }
                     else
                     {
-                        vm.Products = TransactionBL.FindAllProductByName(product);
+                        //to do 
+                        //vm.Products = TransactionBL.FindAllProductByName(product);
                     }
                 }
                 return PartialView("_PartialTransactionSearch", vm);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 ViewBag.ErrorSearch = "N° de produit invalide";
                 return PartialView("_PartialTransactionSearch", vm);
             }
             catch (Exception ex)
             {
-                var temp = ex.GetType();
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 return View("Error");
             }
         }
@@ -211,8 +275,15 @@ namespace TesTransaction.Controllers
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 return View("Error");
             }
         }
@@ -268,8 +339,15 @@ namespace TesTransaction.Controllers
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 return View("Error");
             }
         }
@@ -306,16 +384,16 @@ namespace TesTransaction.Controllers
             if (ModelState.IsValid)
             {
                 //save part of transaction
-                TransactionBL.SaveTransactionBeforePayment(vmodel.NumTransaction, vmodel.GlobalTotal, globalDiscount, vmodel.GlobalVAT);
-                var gt = vmodel.GlobalTotal;
-                var nt = vmodel.NumTransaction;
-                return RedirectToAction("Index", "Pay", new { gt, nt });
+                TransactionBL.SaveTransactionBeforePayment(vmodel.NumTransaction, vmodel.GlobalTot, globalDiscount);
+                var gTot = vmodel.GlobalTot;
+                var nTransac = vmodel.NumTransaction;
+                return RedirectToAction("Index", "Pay", new { gTot, nTransac });
             }
             var detailsListTot = TransactionBL.ListDetailsWithTot(vmodel.NumTransaction);
             //Sum subTotItems 
             ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
             vmodel.DetailsListWithTot = detailsListTot;
-            vmodel.VatsList = TransactionBL.FindVatsList();
+            //vmodel.VatsList = TransactionBL.FindVatsList();
             return View(vmodel);
         }
         #endregion
@@ -329,7 +407,6 @@ namespace TesTransaction.Controllers
                 //Sum subTotItems 
                 ViewBag.subTot1 = TransactionBL.SumItemsSubTot(detailsListTot);
                 vmodel.DetailsListWithTot = detailsListTot;
-                vmodel.VatsList = TransactionBL.FindVatsList();
                 return View("Index", vmodel);
             }
             TransactionBL.CancelTransac(vmodel.NumTransaction);

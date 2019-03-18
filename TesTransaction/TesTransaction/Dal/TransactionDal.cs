@@ -71,8 +71,9 @@ namespace TesTransaction.Dal
         #region Transaction
         public int CreateTransaction(int terminal)
         {
-            // to do --> provisoire vendorId = 1, shopId = 1, customerId = 1
-            TRANSACTIONS tr = new TRANSACTIONS { transactionDateBegin = DateTime.Now, transactionDateEnd = DateTime.Parse("2000-01-01 00:00:00"), terminalId = terminal, vendorId = 1, shopId = 1, customerId = 1 };
+            STATUS status = db.STATUSs.Where(s => s.nameStatus.ToLower() == "open").Single();
+            // to do --> provisoire vendorId = 1, shopId = 1, customerId = 1, messageId = 1 languageId = 1
+            TRANSACTIONS tr = new TRANSACTIONS { transactionDateBegin = DateTime.Now, transactionDateEnd = DateTime.Parse("2000-01-01 00:00:00"), terminalId = terminal, vendorId = 1, shopId = 1, statusId = status.idStatus, customerId = 1, messageId = 1, languageMessage = 1 };
             db.TRANSACTIONSs.Add(tr);
             db.SaveChanges();
             return tr.idTransaction;
@@ -112,26 +113,26 @@ namespace TesTransaction.Dal
             db.SaveChanges();
         }
 
-        public void UpdateTransaction(int transactionId, decimal globalTotal, decimal? discountG, int globalVAT)
+        public void UpdateTransaction(int transactionId, decimal globalTotal, decimal? discountG)
         {
             var transac = db.TRANSACTIONSs.First(d => d.idTransaction == transactionId);
             if (transac != null)
             {
                 transac.total = globalTotal;
                 transac.discountGlobal = discountG;
-                transac.vatId = globalVAT;
+                //transac.vatId = globalVAT;
 
                 db.SaveChanges();
             }
         }
 
-        public void UpdateTransactionTicketId(int transactionId, int idTicket)
+        public void UpdateTransactionMessageId(int transactionId, int idMessage)
         {
 
             var transac = db.TRANSACTIONSs.First(t => t.idTransaction == transactionId);
             if (transac != null)
             {
-                transac.ticketId = idTicket;
+                transac.messageId = idMessage;
                 db.SaveChanges();
             }
         }
@@ -141,20 +142,21 @@ namespace TesTransaction.Dal
             var transac = db.TRANSACTIONSs.First(d => d.idTransaction == transactionId);
             if (transac != null)
             {
-                transac.isCanceled = true;
-                transac.isClose = true;
+                // canceled = 3
+                transac.statusId = 3;
                 transac.transactionDateEnd = DateTime.Now;
                 db.SaveChanges();
             }
         }
 
-        public void CloseTransaction(int transacId, int ticket)
+        public void CloseTransaction(int transacId)
         {
             var transac = db.TRANSACTIONSs.First(d => d.idTransaction == transacId);
             if (transac != null)
             {
-                transac.ticketId = ticket;
-                transac.isClose = true;
+                //transac.messageId = message;
+                //close = 2
+                transac.statusId = 2;
                 transac.transactionDateEnd = DateTime.Now;
                 db.SaveChanges();
             }
@@ -225,16 +227,11 @@ namespace TesTransaction.Dal
         #endregion
 
         #region Ticket
-        public int CreateTicket()
+        public string GetTicketMessageByIdAndLanguage(int messageId, int languageMessage)
         {
-            // to do --> provisoire messageId = 1 , languageId = 1
-            TICKET t = new TICKET { messageId = 1, languageId = 1 };
-            db.TICKETs.Add(t);
-            db.SaveChanges();
-            return t.idTicket;
+            var ticket = db.TICKET_MESSAGEs.Where(t => t.idMessage == messageId && t.languageId == languageMessage).Single();
+            return ticket.message;
         }
-
-
         #endregion
 
         #region Search

@@ -30,17 +30,22 @@ namespace TesTransaction.Models.Transactions
         [Display(Name = "Vendeur")]
         public string Vendor { get; set; }
 
-        [Required(ErrorMessage = "Un total tvac est nécessaire")]
         [DataType(DataType.Text)]
-        [Display(Name = "TOTAL TVAC")]
-        public string GlobalTotal { get; set; }
+        [Display(Name = "Remise globale (%)")]
+        [Range(0, 100, ErrorMessage = "valeur devant être comprise entre 0 et 100")]
+        public decimal? GlobalDiscount { get; set; }
+
+        [Required(ErrorMessage = "Un Total est nécessaire")]
+        [DataType(DataType.Text)]
+        [Display(Name = "TOTAL")]
+        public string GlobalTot { get; set; }
 
         //[Required(ErrorMessage = "TVA obligatoire")]
-        [DataType(DataType.Text)]
-        [Display(Name = "TVA")]
-        public decimal GlobalVAT { get; set; }
+        //[DataType(DataType.Text)]
+        //[Display(Name = "TVA")]
+        //public decimal GlobalVAT { get; set; }
 
-        public IList<VAT> VatsList { get; set; }
+        //public IList<VAT> VatsList { get; set; }
         public IList<TrDetailsViewModel> DetailsListWithTot { get; set; }
     }
 }

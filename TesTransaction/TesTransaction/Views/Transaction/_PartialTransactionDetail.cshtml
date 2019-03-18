@@ -34,7 +34,7 @@
         {
             foreach (var item in Model.DetailsListWithTot)
             {
-                <tr>
+                <tr onclick="AddItem(@item.ProductName)">
                     <td id="nameItem">@item.ProductName</td>
                     <td id="price">@item.Price</td>
                     <td id="quantity">@item.Quantity</td>
@@ -50,19 +50,6 @@
 <div class="Totals">
     <label for="subTotal1"><strong>Sous-Total des articles</strong></label>
     <input type="text" id="subTotal1" name="subTotal1" value="@ViewBag.subTot1" readonly="readonly" />
-
-    <div id="reductions">
-        <div>
-            <span id="errorGlobalDiscount" class="text-danger" style=" visibility:hidden"></span>
-            <div>
-                <label for="globalDiscount"><strong>Remise globale (%)</strong></label>
-                <input type="text" id="globalDiscount" name="globalDiscount" placeholder="Remise en %" value="@Model.GlobalDiscount" onchange="AddDiscount()" />
-            </div>
-        </div>
-    </div>
-
-    <label for="subTotal2"><strong>Sous-Total HTVA</strong></label>
-    <input type="text" id="subTotal2" name="subTotal2" value="@ViewBag.subTot1" readonly="readonly" />
 </div>
 
 <p>Vue partielle : @DateTime.Now.ToLongTimeString()</p>

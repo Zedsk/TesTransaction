@@ -11,39 +11,93 @@ namespace TesTransaction.Controllers
     public class PayController : Controller
     {
         // GET: Pay
+        [HandleError]
         [HttpGet]
-        public ActionResult Index(string gt, string nt)
+        public ActionResult Index(string gTot, string nTransac)
         {
             try
             {
                 TrPaymentMenuViewModel vm = new TrPaymentMenuViewModel();
-                if (string.IsNullOrEmpty(gt) || string.IsNullOrEmpty(nt))
+                if (string.IsNullOrEmpty(nTransac))
                 {
+                    ////provisoire
+                    //vm.GlobalTotal = "399.97";
+                    //vm.NumTransaction = "11";
+                    //ViewBag.tot = "399.97";
+                    //ViewBag.transac = "11";
+                    //ViewBag.ticket = false;
                     throw new NullReferenceException();
                 }
                 else
                 {
-                    vm.GlobalTotal = gt;
-                    vm.NumTransaction = nt;
-                    ViewBag.tot = gt;
-                    ViewBag.transac = nt;
+                    if (string.IsNullOrEmpty(gTot))
+                    {
+                        gTot = TransactionBL.FindTotalByTransacId(nTransac);
+                    }
+                    var listAmounts = TransactionBL.MakeAmountsList(nTransac);
+                    if (listAmounts.Count == 0)
+                    {
+                        vm.GlobalTotal = gTot;
+                        ViewBag.tot = gTot;
+                        ViewBag.ticket = false;
+                    }
+                    else
+                    {
+                        vm.AmountsPaid = listAmounts;
+                        decimal result = TransactionBL.AdaptTotalWithPaid(gTot, listAmounts);
+                        if (result < 0)
+                        {
+                            decimal temp = Math.Abs(result);
+                            vm.CashReturn = temp.ToString();
+                            ViewBag.cashBack = temp.ToString();
+                            vm.GlobalTotal = "0";
+                            ViewBag.tot = "0";
+                            vm.Ticket = TransactionBL.FillTicket(nTransac);
+                            ViewBag.ticket = true;
+                        }
+                        else if (result == 0)
+                        {
+                            ViewBag.cashBack = "0";
+                            vm.GlobalTotal = "0";
+                            ViewBag.tot = "0";
+                            vm.Ticket = TransactionBL.FillTicket(nTransac);
+                            ViewBag.ticket = true;
+                        }
+                        else
+                        {
+                            vm.GlobalTotal = result.ToString();
+                            ViewBag.tot = result.ToString();
+                            ViewBag.ticket = false;
+                        }
+                    }
+                    vm.NumTransaction = nTransac;
+                    ViewBag.transac = nTransac;
                 }
-
                 vm.MethodsP = TransactionBL.FindMethodsList();
                 ViewBag.messageCard = "";
-                ViewBag.ticket = false;
                 return View(vm);
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
-                //to do --> add ex to log file
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 ViewBag.Error = "Il n'y a pas de transaction en cours !";
                 return View("Error");
             }
             catch (Exception ex)
             {
-                var temp = ex.GetType();
-                //to do --> add ex to log file
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
+
                 return View("Error");
             }
         }
@@ -52,24 +106,37 @@ namespace TesTransaction.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(string submitButton, TrPaymentMenuViewModel vmodel)
         {
-            switch (submitButton)
+            try
             {
-                case "Payment":
-                    return (Payment(vmodel));
+                switch (submitButton)
+                {
+                    case "Payment":
+                        return (Payment(vmodel));
 
-                case "End":
-                    return (EndTransac(vmodel));
+                    case "End":
+                        return (EndTransac(vmodel));
 
-                case "Cancel":
-                    return (CancelTransac(vmodel));
+                    case "Cancel":
+                        return (CancelTransac(vmodel));
 
-                case "Back":
-                    return (BackTransac(vmodel));
+                    case "Back":
+                        return (BackTransac(vmodel));
 
-                default:
-                    ViewBag.ticket = false;
-                    return View(vmodel);
+                    default:
+                        ViewBag.ticket = false;
+                        return View(vmodel);
+                }
+            }
+            catch (Exception ex)
+            {
+                //to do insert to log file
+                var e1 = ex.GetBaseException(); // --> log
+                var e4 = ex.Message; // --> log
+                var e5 = ex.Source; // --> log
+                var e8 = ex.GetType(); // --> log
+                var e9 = ex.GetType().Name; // --> log
 
+                return View("Error");
             }
         }
 
@@ -77,16 +144,6 @@ namespace TesTransaction.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (vmodel.GlobalTotal == "0")
-                {
-                    ViewBag.nopay = "La transaction est payée!";
-                    ViewBag.tot = vmodel.GlobalTotal;
-                    ViewBag.amount = vmodel.Amount;
-                    ViewBag.cashBack = vmodel.CashReturn;
-                    vmodel.MethodsP = TransactionBL.FindMethodsList();
-                    ViewBag.ticket = true;
-                    return View(vmodel);
-                }
                 TrPaymentMenuViewModel vm = new TrPaymentMenuViewModel();
                 switch (vmodel.MethodP)
                 {
@@ -107,7 +164,11 @@ namespace TesTransaction.Controllers
                     case "3":
                         ////simulation same process CardDebit
                         //return (PayCardCredit(vmodel));
-                        return (PayCardDebit(vmodel));
+                        if (vmodel.PayCardConfirmed)
+                        {
+                            return (PayCardDebit(vmodel));
+                        }
+                        return (PayCardDebitNotConfirmed(vmodel));
 
                     //method voucher
                     case "4":
@@ -128,7 +189,6 @@ namespace TesTransaction.Controllers
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
             ViewBag.cashBack = vmodel.CashReturn;
-            vmodel.MethodsP = TransactionBL.FindMethodsList();
             ViewBag.messageCard = "";
             ViewBag.ticket = false;
             return View(vmodel);
@@ -142,7 +202,7 @@ namespace TesTransaction.Controllers
                 //to do --> print ticket  ???
 
                 //to do --> add n° ticket & close transaction
-                TransactionBL.AddTicketAndCloseTransac(vmodel.NumTransaction, vmodel.NumTicket);
+                TransactionBL.AddTicketAndCloseTransac(vmodel.NumTransaction);
                 return RedirectToAction("Transaction", "Home");
             }
             vmodel.MethodsP = TransactionBL.FindMethodsList();
@@ -191,6 +251,7 @@ namespace TesTransaction.Controllers
             ViewBag.amount = vmodel.Amount;
             ViewBag.cashBack = vmodel.CashReturn;
             vmodel.MethodsP = TransactionBL.FindMethodsList();
+            vmodel.AmountsPaid = TransactionBL.MakeAmountsList(vmodel.NumTransaction);
             ViewBag.messageCard = "";
             if (ViewBag.tot == "0")
             {
@@ -208,6 +269,8 @@ namespace TesTransaction.Controllers
 
         private ActionResult PayCardDebit(TrPaymentMenuViewModel vmodel)
         {
+            // to do verif method
+            vmodel.AmountsPaid = TransactionBL.MakeAmountsList(vmodel.NumTransaction);
             TransactionBL.CalculCash(vmodel);
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
@@ -215,8 +278,6 @@ namespace TesTransaction.Controllers
             if (ViewBag.tot == "0")
             {
                 vmodel.Ticket = TransactionBL.FillTicket(vmodel.NumTransaction);
-                ViewBag.NumT = vmodel.Ticket.Ticket;
-                vmodel.NumTicket = vmodel.Ticket.Ticket;
                 ViewBag.ticket = true;
             }
             else
@@ -245,7 +306,7 @@ namespace TesTransaction.Controllers
         //    {
         //        //to do --> create payment
         //        ViewBag.messageCard = "Demande acceptée !";
-        //        ViewBag.tot = vmodel.GlobalTotal;
+        //        ViewBag.tot = vmodel.GlobalTot;
         //        ViewBag.amount = vmodel.Amount;
         //        ViewBag.cashBack = vmodel.CashReturn;
         //        if (ViewBag.tot == "0")
@@ -265,7 +326,7 @@ namespace TesTransaction.Controllers
         //    else
         //    {
         //        ViewBag.messageCard = "Demande refusée !";
-        //        ViewBag.tot = vmodel.GlobalTotal;
+        //        ViewBag.tot = vmodel.GlobalTot;
         //        ViewBag.amount = "";
         //        ViewBag.cashBack = "0";
         //        ViewBag.ticket = false;

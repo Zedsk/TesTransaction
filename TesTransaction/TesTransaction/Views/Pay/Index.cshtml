@@ -35,8 +35,8 @@
                     else
                     {
                         <li class="nav-item"><input type="submit" name="submitButton" class="btn btn-outline" value="End" disabled></li>
-                        <li class="nav-item"><input type="submit" name="submitButton" class="btn btn-danger" value="Cancel"></li>
-                        <li class="nav-item"><input type="submit" name="submitButton" class="btn btn-outline" value="Back"></li>
+                        <li class="nav-item"><input type="submit" name="submitButton" class="btn btn-danger" value="Cancel" onclick="return confirm('Etes-vous sur de vouloir supprimer la transaction?');"></li>
+                        <li class="nav-item"><input type="submit" name="submitButton" class="btn btn-outline" value="Back" onclick="return confirm('Voulez-vous retourner à la transaction?');"></li>
                     }
                 </ul>
             </div>
@@ -49,8 +49,8 @@
                     @Html.ValidationMessageFor(m => m.NumTicket, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div id="containerPay">
-                <div id="totalToPay" class="cellPay">
+            <div class="containerPay">
+                <div class="cellPay">
                     <h2>@Html.LabelFor(m => m.GlobalTotal)</h2>
                     <div>
                         @if (ViewBag.tot == "0")
@@ -64,9 +64,10 @@
                     </div>
                     @Html.ValidationMessageFor(m => m.GlobalTotal, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="cellPay">
                     <h2>@Html.LabelFor(m => m.CashReturn)</h2>
-                    <div id="cReturn">
+                    <div>
                         @if (ViewBag.cashBack == "0" || ViewBag.cashBack == "" || ViewBag.cashBack == null)
                         {
                             <div>
@@ -83,14 +84,33 @@
                     </div>
                 </div>
             </div> <!-- end containerPay -->
-            <div id="amountCell" class="cellPay">
-                <h2>@Html.LabelFor(m => m.Amount)</h2>
-                <p style="color:red">@ViewBag.limitCash</p>
-                <div>
-                    @Html.TextBoxFor(m => m.Amount, new { @Value = ViewBag.amount, @class = "totToPay", @style = "border-color:silver" })
+            <div class="containerPay">
+                <div class="cellPay">
+                    <h2>@Html.LabelFor(m => m.Amount)</h2>
+                    <p style="color:red">@ViewBag.limitCash</p>
+                    <div>
+                        @Html.TextBoxFor(m => m.Amount, new { @Value = ViewBag.amount, @class = "totToPay", @style = "border-color:silver" })
+                    </div>
                     @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
                 </div>
-            </div>
+                <div class="cellPay">
+                    <h2>@Html.LabelFor(m => m.AmountsPaid)</h2>
+                    <p style="color:red"> </p>
+                    <div>
+                        @if (Model.AmountsPaid != null)
+                        {
+                            <ol class="totToPayList">
+                                @for (int i = 0; i < Model.AmountsPaid.Count; i++)
+                                {
+                                    <li>@Model.AmountsPaid[i]<span class="glyphicon glyphicon-euro"></span></li>
+                                }
+                            </ol>
+                        }
+                    </div>
+                    @Html.ValidationMessageFor(m => m.AmountsPaid, "", new { @class = "text-danger" })
+                </div>
+            </div> <!-- end containerPay -->
+
             <div id="paymentMethods">
                 <h2>@Html.LabelFor(m => m.MethodP)</h2>
                 <div>
@@ -107,6 +127,7 @@
                     {
                         <div id="divCardConfirmed">@Html.LabelFor(m => m.PayCardConfirmed, new { @class = "custom-control-label" })</div>
                         <div>@Html.CheckBoxFor(m => m.PayCardConfirmed, new { @class = "custom-control-input" })</div>
+
                     }
                 }
             </div>
@@ -117,5 +138,10 @@
         <div id="myTicket">
             @Html.Partial("_PartialTicket", Model.Ticket)
         </div>
+        <div id="optionsTicket">
+
+        </div>
     }
 </div>
+
+

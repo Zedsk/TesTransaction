@@ -29,10 +29,10 @@ namespace TesTransaction.Dal
         void CreateDetail(PRODUCT prod, int transactionId, int terminalId, decimal vat);
         void EditQtyToDetailById(int id, int qty);
         void DeleteDetail(int id);
-        void UpdateTransaction(int idTransaction, decimal globalTotal, decimal? discountG, int globalVAT);
+        void UpdateTransaction(int transactionId, decimal globalTotal, decimal? discountG);
         void CancelTransactionById(int transactionId);
-        void UpdateTransactionTicketId(int transactionId, int idTicket);
-        void CloseTransaction(int transac, int ticket);
+        void UpdateTransactionMessageId(int transactionId, int idTicket);
+        void CloseTransaction(int transac);
         #endregion
 
         #region Product
@@ -56,7 +56,7 @@ namespace TesTransaction.Dal
         #endregion
 
         #region Ticket
-        int CreateTicket();
+        string GetTicketMessageByIdAndLanguage(int messageId, int languageMessage);
 
         #endregion
 

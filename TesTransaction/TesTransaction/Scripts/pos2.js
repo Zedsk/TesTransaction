@@ -1,8 +1,12 @@
+/* ========================================================================
+ * Scripts javascript for 
+ * MyPOS
+ * ======================================================================== */
 
-/*!
+/*
  * Scripts for
  * Transaction views
- */
+* ======================================================================== */
 
 function ButtonCalc_Click(id) {
 	var val = id.getAttribute('Value');
@@ -40,7 +44,8 @@ function CreateRquestAddOrRemove(minus) {
 			xhr.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
 					document.getElementById('addProduct').value = "";
-					document.getElementById('detail').innerHTML = xhr.responseText;
+                    document.getElementById('detail').innerHTML = xhr.responseText;
+                    document.getElementById('GlobalTot').value = document.getElementById('subTotal1').value;
 				}
 			}
 
@@ -62,51 +67,28 @@ function CreateRquestAddOrRemove(minus) {
 }
 			
 function AddDiscount() {
-	document.getElementById('errorGlobalDiscount').textContent = "";
-	document.getElementById('errorGlobalDiscount').style.visibility = "hidden";
-	try {
-		var subT = document.getElementById('subTotal1').value;
-		subT = parseFloat(subT.replace(",", "."));
-		var d = (parseFloat(document.getElementById('globalDiscount').value)) / 100;
-		if (d < 0 || d > 1) {
-			throw "valeur en % devant être comprise entre 0 et 100";	
-		} else if (Number.isNaN(d) || d == undefined || d == null || d === "") {
-			throw "valeur devant être un nombre entre 0 et 100";
-		} else if (d == 0) {
-			document.getElementById('subTotal2').value = subT;
-		} else {
-			var result = parseFloat(subT - (subT * d)).toFixed(2);
-			document.getElementById('subTotal2').value = result;
-		}
-	}
-	catch (e) {
-		document.getElementById('errorGlobalDiscount').textContent = e;
-		document.getElementById('errorGlobalDiscount').style.visibility = "visible";
-		console.log(e);
-	}
-}
-
-function AddVat() {
-	document.getElementById('errorAddVat').textContent = "";
-	document.getElementById('errorAddVat').style.visibility = "hidden";
-	try {
-		var v = document.getElementById('GlobalVAT').value;
-		var subT = document.getElementById('subTotal2').value;
-		//v = "0,21"  --> parseFloat(document.getElementById('listVats').value) ne marche pas
-		//le parseFloat donne 0, souci avec la ","  il faut la remplacer par "."
-		subT = parseFloat(subT.replace(",", "."));
-		if (v === "" || v === "0,00" || v === null) {
-			document.getElementById('GlobalTotal').value = subT;
-		} else {
-			v = parseFloat(v.replace(",", "."));
-			var result = parseFloat(subT * ++v).toFixed(2);
-			document.getElementById('GlobalTotal').value = result;
-		}
-	} catch (e) {
-		document.getElementById('errorAddVat').textContent = e;
-		document.getElementById('errorAddVat').style.visibility = "visible";
-		console.log(e);
-	}
+    document.getElementById('errorGlobalDiscount').textContent = "";
+    document.getElementById('errorGlobalDiscount').style.visibility = "hidden";
+    try {
+        var subT = document.getElementById('subTotal1').value;
+        subT = parseFloat(subT.replace(",", "."));
+        var d = (parseFloat(document.getElementById('globalDiscount').value)) / 100;
+        if (d < 0 || d > 1) {
+            throw "valeur en % devant être comprise entre 0 et 100";
+        } else if (Number.isNaN(d) || d == undefined || d == null || d === "") {
+            throw "valeur devant être un nombre entre 0 et 100";
+        } else if (d == 0) {
+            document.getElementById('GlobalTot').value = subT;
+        } else {
+            var result = parseFloat(subT - (subT * d)).toFixed(2);
+            document.getElementById('GlobalTot').value = result;
+        }
+    }
+    catch (e) {
+        document.getElementById('errorGlobalDiscount').textContent = e;
+        document.getElementById('errorGlobalDiscount').style.visibility = "visible";
+        console.log(e);
+    }
 }
 
 function SearchByCodeOrName() {

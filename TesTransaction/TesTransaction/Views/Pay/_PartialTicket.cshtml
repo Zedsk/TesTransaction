@@ -19,18 +19,8 @@
             @Html.LabelFor(m => m.DateTicket)
         </div>
         <div class="col-md-2 offset-md-2">
-            @Html.TextBoxFor(m => m.DateTicket, new { @readonly = "readonly" })
+            @Html.DisplayFor(m => m.DateTicket)
             @Html.ValidationMessageFor(m => m.DateTicket, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <!-- N° ticket -->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.LabelFor(m => m.Ticket)
-        </div>
-        <div class="col-md-2 offset-md-2">
-            @Html.TextBoxFor(m => m.Ticket, new { @readonly = "readonly" })
-            @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "text-danger" })
         </div>
     </div>
     <!-- N° Transac -->
@@ -39,7 +29,7 @@
             @Html.LabelFor(m => m.Transaction)
         </div>
         <div class="col-md-2 offset-md-2">
-            @Html.TextBoxFor(m => m.Transaction, new { @readonly = "readonly" })
+            @Html.DisplayFor(m => m.Transaction)
             @Html.ValidationMessageFor(m => m.Transaction, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -56,7 +46,7 @@
 
 <!-- liste des articles -->
 <div>
-    <table class="table" id="tableDetail">
+    <table class="table table-condensed" id="tableDetail">
         <tr>
             <th>Produit</th>
             <th>Prix</th>
@@ -96,7 +86,7 @@
             @Html.LabelFor(m => m.DiscountG)
         </div>
         <div class="col-md-2 offset-md-2">
-            @Html.TextBoxFor(m => m.DiscountG, new { @readonly = "readonly" })
+            @Html.DisplayFor(m => m.DiscountG)
             @Html.ValidationMessageFor(m => m.DiscountG, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -106,7 +96,7 @@
             @Html.LabelFor(m => m.VatG)
         </div>
         <div class="col-md-2 offset-md-2">
-            @Html.TextBoxFor(m => m.VatG, new { @readonly = "readonly" })
+            @Html.DisplayFor(m => m.VatG)
             @Html.ValidationMessageFor(m => m.VatG, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -116,7 +106,7 @@
             @Html.LabelFor(m => m.TotalG)
         </div>
         <div class="col-md-2 offset-md-2">
-            @Html.TextBoxFor(m => m.TotalG, new { @readonly = "readonly" })
+            @Html.DisplayFor(m => m.TotalG)
             @Html.ValidationMessageFor(m => m.TotalG, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -124,7 +114,7 @@
 <!-- methodes de paiment -->
 <!-- montant -->
 <div>
-    <table class="table" id="tablePayment">
+    <table class="table table-condensed" id="tablePayment">
         <tr>
             <th>Methode</th>
             <th>Montant</th>
@@ -143,7 +133,7 @@
                 {
                     <tr>
                         <td id="nameItem">@item.paymentMethodId</td>
-                        <td id="price">@item.amount</td>
+                        <td id="price">@item.amount<span class="glyphicon glyphicon-euro"></span></td>
                     </tr>
                 }
             }
@@ -152,12 +142,8 @@
 </div>
 <!-- message -->
 <div>
-    <p style="text-align: justify;">
-        message: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed eros placerat,
-        accumsan velit ut, volutpat orci. Mauris accumsan enim vel arcu ornare, vel vehicula massa laoreet.
-        Nunc posuere nisi est. Curabitur dictum orci non ipsum mattis vestibulum. Donec ut feugiat lectus.
-        Nullam et turpis dapibus, faucibus tellus semper, tristique sapien. Nam congue efficitur laoreet.
-        Donec malesuada sit amet arcu vel condimentum. Nam eu diam ligula.
+    <p id="messageT">
+        @Html.DisplayFor(m => m.Message)
     </p>
+    @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
 </div>
-

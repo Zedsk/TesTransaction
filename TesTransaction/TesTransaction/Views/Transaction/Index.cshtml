@@ -58,13 +58,19 @@
                 </div>
                 <p>Vue Mère : @DateTime.Now.ToLongTimeString()</p>
                 <div class="Totals">
-                    @Html.LabelFor(m => m.GlobalVAT)
-                    @Html.DropDownListFor(m => m.GlobalVAT, new SelectList(Model.VatsList, "appliedVat", "appliedVat"), "Choix de la TVA", new { @onchange = "AddVat()" })
-                    @Html.ValidationMessageFor(m => m.GlobalVAT, "", new { @class = "text-danger" })
-                    <span id="errorAddVat" class="text-danger" style=" visibility:hidden"></span>
-                    @Html.LabelFor(m => m.GlobalTotal)
-                    @Html.TextBoxFor(m => m.GlobalTotal, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(m => m.GlobalTotal, "", new { @class = "text-danger" })
+                    <div id="reductions">
+                        <div>
+                            <span id="errorGlobalDiscount" class="text-danger" style=" visibility:hidden"></span>
+                            <div>
+                                <label for="globalDiscount"><strong>Remise globale (%)</strong></label>
+                                <input type="text" id="globalDiscount" name="globalDiscount" placeholder="Remise en %" value="@Model.GlobalDiscount" onchange="AddDiscount()" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @Html.LabelFor(m => m.GlobalTot)
+                    @Html.TextBoxFor(m => m.GlobalTot, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.GlobalTot, "", new { @Value = ViewBag.subTot1, @class = "text-danger" })
                 </div>
                 <div id="calculator">
                     <table>
@@ -117,7 +123,7 @@
                                 <input type="button" id="ButtonReturn" class="calc_btn" value="&larr;" onclick="ButtonDelete_Click()">
                             </td>
                             <td>
-                                <input type="submit" name="submitButton" class="fct_btn" value="Cancel">
+                                <input type="submit" name="submitButton" class="fct_btn" value="Cancel" onclick="return confirm('Etes-vous sur de vouloir supprimer la transaction?');">
                             </td>
                         </tr>
                         <tr>

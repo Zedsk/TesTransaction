@@ -76,6 +76,13 @@ namespace TesTransaction.Controllers
                 }
                 catch (Exception ex)
                 {
+                    //to do insert to log file
+                    var e1 = ex.GetBaseException(); // --> log
+                    var e4 = ex.Message; // --> log
+                    var e5 = ex.Source; // --> log
+                    var e8 = ex.GetType(); // --> log
+                    var e9 = ex.GetType().Name; // --> log
+
                     ViewBag.Error = "Il existe déjà un fond de caisse sur ce terminal pour cette date";
                     ViewBag.terminalId = new SelectList(db.TERMINALs, "idTerminal", "nameTerminal", cashDay.terminalId);
                     return View(cashDay);
@@ -179,8 +186,15 @@ namespace TesTransaction.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    //to do insert to log file
+                    var e1 = ex.GetBaseException(); // --> log
+                    var e4 = ex.Message; // --> log
+                    var e5 = ex.Source; // --> log
+                    var e8 = ex.GetType(); // --> log
+                    var e9 = ex.GetType().Name; // --> log
+
                     ViewBag.Error = "??";
                 }
             }

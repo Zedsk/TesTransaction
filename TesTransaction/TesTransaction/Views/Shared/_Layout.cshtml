@@ -9,11 +9,11 @@
     @Scripts.Render("~/bundles/modernizr")
 
     <!-- empeche le retour en arrière -->
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
         window.onunload = function () { null };
-    </script>
+    </script>*@
 
     @RenderSection("Styles", false)
 </head>

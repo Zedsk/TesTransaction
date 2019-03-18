@@ -219,7 +219,7 @@ namespace TesTransaction.BL
 
         }
 
-        internal static void SaveTransactionBeforePayment(string numTransaction, string globalTotal, string discountG, decimal globalVAT)
+        internal static void SaveTransactionBeforePayment(string numTransaction, string globalTotal, string discountG)
         {
             using (IDal dal = new TransactionDal())
             {
@@ -228,17 +228,13 @@ namespace TesTransaction.BL
                 //probleme le string "157.98" devient 15798
                 var temp = globalTotal.Replace(".", ",");
                 var gTot = decimal.Parse(temp);
-                //find idVAT by name
-                var gVat = FindVatIdByVal(globalVAT);
-
                 decimal? gDisc = null;
-                //rem si premiere condition true --> ne regarde pas la seconde??? non
                 if (discountG != "")
                 {
                     gDisc = decimal.Parse(discountG);
                     gDisc /= 100;
                 }
-                dal.UpdateTransaction(idTr, gTot, gDisc, gVat);
+                dal.UpdateTransaction(idTr, gTot, gDisc);
             }
         }
 
@@ -251,16 +247,20 @@ namespace TesTransaction.BL
             }
         }
 
-        internal static void AddTicketAndCloseTransac(string numTransaction, string numTicket)
+        internal static void AddTicketAndCloseTransac(string numTransaction)
         {
             using (IDal dal = new TransactionDal())
             {
                 var transac = int.Parse(numTransaction);
-                var ticket = int.Parse(numTicket);
-                dal.CloseTransaction(transac, ticket);
+                dal.CloseTransaction(transac);
             }
         }
 
+        internal static string FindTotalByTransacId(string nTransac)
+        {
+            TRANSACTIONS transac = FindTransactionById(nTransac);
+            return transac.total.ToString();
+        }
         #endregion
 
         #region Product
@@ -280,6 +280,14 @@ namespace TesTransaction.BL
             }
         }
 
+        internal static object FindProductByName(string product)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetProductByName(product);
+            }
+        }
+
         internal static List<PRODUCT> FindAllProductByName(string product)
         {
             using (IDal dal = new TransactionDal())
@@ -287,6 +295,7 @@ namespace TesTransaction.BL
                 return dal.GetAllProductByName(product);
             }
         }
+
         #endregion
 
         #region VAT
@@ -386,6 +395,44 @@ namespace TesTransaction.BL
                 return dal.GetAllMethods();
             }
         }
+
+        internal static List<string> MakeAmountsList(string amount, List<string> amountsList)
+        {
+            if (amountsList == null)
+            {
+                List<string> newList = new List<string>
+                {
+                    amount
+                };
+                return newList;
+            }
+            amountsList.Add(amount);
+            return amountsList;
+        }
+
+        internal static List<string> MakeAmountsList(string numTransaction)
+        {
+            IList<PAYMENT> listPayments = new List<PAYMENT>();
+            List<string> amountsList = new List<string>();
+            listPayments = FindPaymentsByTransacId(numTransaction);
+            foreach (var payment in listPayments)
+            {
+                amountsList.Add((payment.amount).ToString());
+            }
+            return amountsList;
+        }
+
+        internal static decimal AdaptTotalWithPaid(string gTot, List<string> listAmounts)
+        {
+            decimal amounts = 0;
+            for (int i = 0; i < listAmounts.Count; i++)
+            {
+                amounts += decimal.Parse(listAmounts[i]);
+            }
+            decimal tot = decimal.Parse(gTot) - amounts;
+            return tot;
+        }
+
         #endregion
 
         #region Ticket
@@ -397,8 +444,6 @@ namespace TesTransaction.BL
                 var transac = FindTransactionById(numTransaction);
                 //create ticket
                 TrTicketViewModel vm = new TrTicketViewModel();
-                vm.Ticket = (dal.CreateTicket()).ToString();
-
                 vm.DateTicket = (DateTime.Now).ToString();
                 //n° transac
                 vm.Transaction = numTransaction;
@@ -419,16 +464,26 @@ namespace TesTransaction.BL
                 }
 
                 //VAT
-                vm.VatG = (FindVatValById(transac.vatId)).ToString();
-                //vm.VatG = dal.GetAppliedVatById(transac.vatId).appliedVat;
-
+                
                 //Total
                 vm.TotalG = (transac.total).ToString();
 
                 //payment method & amount
                 vm.Payments = FindPaymentsByTransacId(numTransaction);
 
+                //message
+                var message = FindTicketMessageById(transac.messageId, transac.languageMessage);
+                vm.Message = message;
+                
                 return vm;
+            }
+        }
+
+        private static string FindTicketMessageById(int messageId, int languageMessage)
+        {
+            using (IDal dal = new TransactionDal())
+            {
+                return dal.GetTicketMessageByIdAndLanguage(messageId, languageMessage);
             }
         }
 
