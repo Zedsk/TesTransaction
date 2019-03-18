@@ -34,7 +34,7 @@ namespace TesTransaction.Controllers
                     {
                         gTot = TransactionBL.FindTotalByTransacId(nTransac);
                     }
-                    var listAmounts = TransactionBL.MakeAmountsList(nTransac);
+                    var listAmounts = PaymentBL.MakeAmountsList(nTransac);
                     if (listAmounts.Count == 0)
                     {
                         vm.GlobalTotal = gTot;
@@ -44,7 +44,7 @@ namespace TesTransaction.Controllers
                     else
                     {
                         vm.AmountsPaid = listAmounts;
-                        decimal result = TransactionBL.AdaptTotalWithPaid(gTot, listAmounts);
+                        decimal result = PaymentBL.AdaptTotalWithPaid(gTot, listAmounts);
                         if (result < 0)
                         {
                             decimal temp = Math.Abs(result);
@@ -52,7 +52,7 @@ namespace TesTransaction.Controllers
                             ViewBag.cashBack = temp.ToString();
                             vm.GlobalTotal = "0";
                             ViewBag.tot = "0";
-                            vm.Ticket = TransactionBL.FillTicket(nTransac);
+                            vm.Ticket = TicketBL.FillTicket(nTransac);
                             ViewBag.ticket = true;
                         }
                         else if (result == 0)
@@ -60,7 +60,7 @@ namespace TesTransaction.Controllers
                             ViewBag.cashBack = "0";
                             vm.GlobalTotal = "0";
                             ViewBag.tot = "0";
-                            vm.Ticket = TransactionBL.FillTicket(nTransac);
+                            vm.Ticket = TicketBL.FillTicket(nTransac);
                             ViewBag.ticket = true;
                         }
                         else
@@ -73,7 +73,7 @@ namespace TesTransaction.Controllers
                     vm.NumTransaction = nTransac;
                     ViewBag.transac = nTransac;
                 }
-                vm.MethodsP = TransactionBL.FindMethodsList();
+                vm.MethodsP = PaymentBL.FindMethodsList();
                 ViewBag.messageCard = "";
                 return View(vm);
             }
@@ -179,13 +179,13 @@ namespace TesTransaction.Controllers
                         ViewBag.tot = vmodel.GlobalTotal;
                         ViewBag.amount = vmodel.Amount;
                         ViewBag.cashBack = vmodel.CashReturn;
-                        vmodel.MethodsP = TransactionBL.FindMethodsList();
+                        vmodel.MethodsP = PaymentBL.FindMethodsList();
                         ViewBag.messageCard = "";
                         ViewBag.ticket = false;
                         return View(vmodel);
                 }
             }
-            vmodel.MethodsP = TransactionBL.FindMethodsList();
+            vmodel.MethodsP = PaymentBL.FindMethodsList();
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
             ViewBag.cashBack = vmodel.CashReturn;
@@ -205,7 +205,7 @@ namespace TesTransaction.Controllers
                 TransactionBL.AddTicketAndCloseTransac(vmodel.NumTransaction);
                 return RedirectToAction("Transaction", "Home");
             }
-            vmodel.MethodsP = TransactionBL.FindMethodsList();
+            vmodel.MethodsP = PaymentBL.FindMethodsList();
             ViewBag.nopay = "La transaction n'est pas payée!";
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
@@ -241,7 +241,7 @@ namespace TesTransaction.Controllers
             // legal limit for cash
             if (cash <= 3000)
             {
-                TransactionBL.CalculCash(vmodel);
+                PaymentBL.CalculCash(vmodel);
             }
             else
             {
@@ -250,12 +250,12 @@ namespace TesTransaction.Controllers
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
             ViewBag.cashBack = vmodel.CashReturn;
-            vmodel.MethodsP = TransactionBL.FindMethodsList();
-            vmodel.AmountsPaid = TransactionBL.MakeAmountsList(vmodel.NumTransaction);
+            vmodel.MethodsP = PaymentBL.FindMethodsList();
+            vmodel.AmountsPaid = PaymentBL.MakeAmountsList(vmodel.NumTransaction);
             ViewBag.messageCard = "";
             if (ViewBag.tot == "0")
             {
-                vmodel.Ticket = TransactionBL.FillTicket(vmodel.NumTransaction);
+                vmodel.Ticket = TicketBL.FillTicket(vmodel.NumTransaction);
                 ViewBag.NumT = vmodel.Ticket.Ticket;
                 vmodel.NumTicket = vmodel.Ticket.Ticket;
                 ViewBag.ticket = true;
@@ -270,28 +270,28 @@ namespace TesTransaction.Controllers
         private ActionResult PayCardDebit(TrPaymentMenuViewModel vmodel)
         {
             // to do verif method
-            vmodel.AmountsPaid = TransactionBL.MakeAmountsList(vmodel.NumTransaction);
-            TransactionBL.CalculCash(vmodel);
+            vmodel.AmountsPaid = PaymentBL.MakeAmountsList(vmodel.NumTransaction);
+            PaymentBL.CalculCash(vmodel);
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
             ViewBag.cashBack = vmodel.CashReturn;
             if (ViewBag.tot == "0")
             {
-                vmodel.Ticket = TransactionBL.FillTicket(vmodel.NumTransaction);
+                vmodel.Ticket = TicketBL.FillTicket(vmodel.NumTransaction);
                 ViewBag.ticket = true;
             }
             else
             {
                 ViewBag.ticket = false;
             }
-            vmodel.MethodsP = TransactionBL.FindMethodsList();
+            vmodel.MethodsP = PaymentBL.FindMethodsList();
             return View(vmodel);
         }
 
         private ActionResult PayCardDebitNotConfirmed(TrPaymentMenuViewModel vmodel)
         {
             vmodel.PayCardToConfirm = true;
-            vmodel.MethodsP = TransactionBL.FindMethodsList();
+            vmodel.MethodsP = PaymentBL.FindMethodsList();
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
             ViewBag.ticket = false;

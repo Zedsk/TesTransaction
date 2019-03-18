@@ -155,7 +155,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BL\PaymentBL.cs" />
+    <Compile Include="BL\ProductBL.cs" />
+    <Compile Include="BL\SearchBL.cs" />
+    <Compile Include="BL\TerminalBL.cs" />
+    <Compile Include="BL\TicketBL.cs" />
     <Compile Include="BL\TransactionBL.cs" />
+    <Compile Include="BL\VatBL.cs" />
     <Compile Include="Controllers\CashController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PayController.cs" />

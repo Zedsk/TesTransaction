@@ -16,7 +16,7 @@ namespace TesTransaction.Controllers
         {
             try
             {
-                int terminal = TransactionBL.FindTerminalIdByDate();
+                int terminal = TerminalBL.FindTerminalIdByDate();
                 TrIndexViewModel vm = new TrIndexViewModel
                 {
                     ////terminal name or id
@@ -212,7 +212,7 @@ namespace TesTransaction.Controllers
                 {
                     if (int.TryParse(product, out int codeP))
                     {
-                        vm.Products = TransactionBL.FindAllProductByCode(product);
+                        vm.Products = ProductBL.FindAllProductByCode(product);
                     }
                     else
                     {
@@ -290,25 +290,25 @@ namespace TesTransaction.Controllers
 
         private ActionResult SearchByCat(TrSearchViewModel vm)
         {
-            vm.Cats = TransactionBL.FindCatsList();
+            vm.Cats = SearchBL.FindCatsList();
             return PartialView("_PartialTransactionSearch", vm);
         }
 
         private ActionResult SearchByAge(TrSearchViewModel vm)
         {
-            vm.Ages = TransactionBL.FindAgesList();
+            vm.Ages = SearchBL.FindAgesList();
             return PartialView("_PartialTransactionSearch", vm);
         }
 
         private ActionResult SearchByHero(TrSearchViewModel vm)
         {
-            vm.Heros = TransactionBL.FindHerosList();
+            vm.Heros = SearchBL.FindHerosList();
             return PartialView("_PartialTransactionSearch", vm);
         }
 
         private ActionResult SearchByBrand(TrSearchViewModel vm)
         {
-            vm.Brands = TransactionBL.FindBrandsList();
+            vm.Brands = SearchBL.FindBrandsList();
             return PartialView("_PartialTransactionSearch", vm);
         }
 
@@ -354,25 +354,25 @@ namespace TesTransaction.Controllers
 
         private ActionResult ProductByBrand(string argument, TrSearchViewModel vmodel)
         {
-            vmodel.Products = TransactionBL.FindProductListByIdBrand(argument);
+            vmodel.Products = SearchBL.FindProductListByIdBrand(argument);
             return PartialView("_PartialTransactionSearch", vmodel);
         }
 
         private ActionResult ProductByHero(string argument, TrSearchViewModel vmodel)
         {
-            vmodel.Products = TransactionBL.FindProductListByIdHero(argument);
+            vmodel.Products = SearchBL.FindProductListByIdHero(argument);
             return PartialView("_PartialTransactionSearch", vmodel);
         }
 
         private ActionResult ProductByAge(string argument, TrSearchViewModel vmodel)
         {
-            vmodel.Products = TransactionBL.FindProductListByIdAge(argument);
+            vmodel.Products = SearchBL.FindProductListByIdAge(argument);
             return PartialView("_PartialTransactionSearch", vmodel);
         }
 
         private ActionResult ProductByCat(string argument, TrSearchViewModel vmodel)
         {
-            vmodel.Products = TransactionBL.FindProductListByIdCat(argument);
+            vmodel.Products = SearchBL.FindProductListByIdCat(argument);
             return PartialView("_PartialTransactionSearch", vmodel);
         }
 
