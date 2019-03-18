@@ -2,15 +2,25 @@
     ViewBag.Title = "Home Page";
 }
 
+@section Styles {
+    <link href="@Url.Content("~/Content/test2.css")" rel="stylesheet" type="text/css" />
+}
+
 <div class="jumbotron">
     <h1>MyPOS</h1>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Transactions</h2>
-
-        <p><a class="btn btn-default" href="~/Home/Transaction">Go &raquo;</a></p>
+    <div class="col-md-6">
+        <h2 class="titles">Transactions</h2>
+        <div class="titlesButtons">
+            <button type="button" class="btn btn-default menuButton" onclick="location.href='@Url.Action("Transaction", "Home")'" style="font-size: xx-large">Go &raquo;</button>
+        </div>
     </div>
-
+    <div class="col-md-6">
+        <h2 class="titles">Gestion</h2>
+        <div class="titlesButtons">
+            <button type="button" class="btn btn-default menuButton" onclick="location.href='@Url.Action("Transaction", "Home")'" style="font-size: xx-large" disabled>Go &raquo;</button>
+        </div>
+    </div>
 </div>

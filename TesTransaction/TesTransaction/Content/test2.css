@@ -1,3 +1,36 @@
+/**** Home views *****/
+
+.titles {
+    border: 5px solid orange;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.titlesButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuTransac {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuButton {
+    width: 162px;
+    height: 100px;
+    margin: 10px;
+    background-color: orange;
+    font-weight: bold;
+    font-size: large;
+    border-radius: 25px;
+}
+
+/**** transaction view *****/
+
 #page {
     margin: auto;
     max-width: 2000px;
@@ -231,6 +264,14 @@
         font-size: x-small;
     }
 
+    /**** Home views *****/
+
+    .menuTransac {
+        flex-direction: column;
+    }
+
+    /**** transaction view *****/
+
     #page {
         font-size: x-small;
     }
@@ -288,6 +329,8 @@
         width: 40px;
         height: 80px;
     }
+
+    /**** payment view *****/
 
     #containerPay {
         flex-direction: column;

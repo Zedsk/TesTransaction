@@ -67,6 +67,14 @@
                             </div>
                         </div>
                     </div>
+                    @*@if (Model.GlobalDiscount != null || Model.GlobalDiscount != 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }*@
 
                     @Html.LabelFor(m => m.GlobalTot)
                     @Html.TextBoxFor(m => m.GlobalTot, new { @readonly = "readonly" })

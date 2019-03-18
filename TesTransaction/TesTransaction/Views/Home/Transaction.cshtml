@@ -3,6 +3,10 @@
     ViewBag.Title = "Transaction";
 }
 
+@section Styles {
+    <link href="@Url.Content("~/Content/test2.css")" rel="stylesheet" type="text/css" />
+}
+
 <h2>Transaction</h2>
 
 <p>
@@ -13,15 +17,37 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h4>Menu</h4>
-            <ul>
-                <li><a class="btn btn-primary" href="~/Cash/Create" role="button">Début de journée</a></li>
-                <li><a class="btn btn-primary" href="~/Transaction/Index" role="button">Continuer</a></li>
-                <li><a class="btn btn-primary" href="#" role="button" disabled>Vidange</a></li>
-                <li><a class="btn btn-primary" href="~/Cash/End" role="button" >Fin de journée</a></li>
-                <li><a class="btn btn-primary" href="~/Cash/Index" role="button">Consulter les fonds de caisse</a></li>
-            </ul>
+        <h4>Menu</h4>
+        <div class="jumbotron menuTransac">
+            <div>
+                <button type="button" class="btn btn-primary menuButton" onclick="location.href='@Url.Action("Create", "Cash")'">Créer un </br>fond de caisse</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary menuButton" onclick="location.href='@Url.Action("Index", "Transaction")'">Nouvelle</br>Transaction</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary menuButton" onclick="location.href='@Url.Action("Index", "Cash")'" disabled>Vider la </br> caisse</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary menuButton" onclick="location.href='@Url.Action("End", "Cash")'">Cloturer le </br>fond de caisse</button>
+            </div>
+        </div>
+        <div class="jumbotron menuTransac">
+            <div>
+                <button type="button" class="btn btn-primary menuButton" onclick="location.href='@Url.Action("Index", "Cash")'">Consulter les </br> fonds de caisse</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary menuButton" onclick="location.href='@Url.Action("Index", "Cash")'" disabled>Ré-imprimer </br> un ticket</button>
+            </div>
+            <div>
+
+            </div>
+            <div>
+
+            </div>
+            <div>
+
+            </div>
         </div>
     </div>
 </div>
