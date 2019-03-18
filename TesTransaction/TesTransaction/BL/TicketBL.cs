@@ -11,7 +11,7 @@ namespace TesTransaction.BL
     {
         internal static TrTicketViewModel FillTicket(string numTransaction)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 //find transac
                 var transac = TransactionBL.FindTransactionById(numTransaction);
@@ -58,7 +58,7 @@ namespace TesTransaction.BL
 
         private static string FindTicketMessageById(int messageId, int languageMessage)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTicket dal = new DalTicket())
             {
                 return dal.GetTicketMessageByIdAndLanguage(messageId, languageMessage);
             }

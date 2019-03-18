@@ -19,7 +19,7 @@ namespace TesTransaction.BL
             int meth = int.Parse(vmodel.MethodP);
             int transac = int.Parse(vmodel.NumTransaction);
 
-            using (IDal dal = new TransactionDal())
+            using (IDalPayment dal = new DalPayment())
             {
                 if (cash > tot)
                 {
@@ -55,7 +55,7 @@ namespace TesTransaction.BL
 
         internal static IList<PAYMENT_METHOD> FindMethodsList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalPayment dal = new DalPayment())
             {
                 return dal.GetAllMethods();
             }
@@ -100,7 +100,7 @@ namespace TesTransaction.BL
 
         internal static IList<PAYMENT> FindPaymentsByTransacId(string numTransaction)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalPayment dal = new DalPayment())
             {
 
                 int tr = int.Parse(numTransaction);

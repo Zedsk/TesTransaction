@@ -11,7 +11,7 @@ namespace TesTransaction.BL
     {
         internal static PRODUCT FindProductByCode(string codeProduct)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalProduct dal = new DalProduct())
             {
                 return dal.GetProductByCode(codeProduct);
             }
@@ -19,7 +19,7 @@ namespace TesTransaction.BL
 
         internal static List<PRODUCT> FindAllProductByCode(string codeProduct)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalProduct dal = new DalProduct())
             {
                 return dal.GetAllProductByCode(codeProduct);
             }
@@ -27,7 +27,7 @@ namespace TesTransaction.BL
 
         internal static object FindProductByName(string product)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalProduct dal = new DalProduct())
             {
                 return dal.GetProductByName(product);
             }
@@ -35,7 +35,7 @@ namespace TesTransaction.BL
 
         internal static List<PRODUCT> FindAllProductByName(string product)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalProduct dal = new DalProduct())
             {
                 return dal.GetAllProductByName(product);
             }

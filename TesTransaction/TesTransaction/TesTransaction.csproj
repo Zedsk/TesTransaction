@@ -166,8 +166,22 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PayController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
-    <Compile Include="Dal\IDal.cs" />
-    <Compile Include="Dal\TransactionDal.cs" />
+    <Compile Include="Dal\DalCashDay.cs" />
+    <Compile Include="Dal\DalPayment.cs" />
+    <Compile Include="Dal\DalProduct.cs" />
+    <Compile Include="Dal\DalSearch.cs" />
+    <Compile Include="Dal\DalTerminal.cs" />
+    <Compile Include="Dal\DalTicket.cs" />
+    <Compile Include="Dal\DalVat.cs" />
+    <Compile Include="Dal\IDalTransaction.cs" />
+    <Compile Include="Dal\IDalCashDay.cs" />
+    <Compile Include="Dal\IDalPayment.cs" />
+    <Compile Include="Dal\IDalProduct.cs" />
+    <Compile Include="Dal\IDalSearch.cs" />
+    <Compile Include="Dal\IDalTerminal.cs" />
+    <Compile Include="Dal\IDalTicket.cs" />
+    <Compile Include="Dal\IDalVat.cs" />
+    <Compile Include="Dal\DalTransaction.cs" />
     <Compile Include="Data\Entity\AGE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -11,7 +11,7 @@ namespace TesTransaction.BL
     {
         internal static IList<BRAND> FindBrandsList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 return dal.GetAllBrands();
             }
@@ -19,7 +19,7 @@ namespace TesTransaction.BL
 
         internal static IList<PRODUCT> FindProductListByIdBrand(string argument)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 int id = int.Parse(argument);
                 return dal.GetAllProductByIdBrand(id);
@@ -28,7 +28,7 @@ namespace TesTransaction.BL
 
         internal static IList<HERO> FindHerosList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 return dal.GetAllHeros();
             }
@@ -36,7 +36,7 @@ namespace TesTransaction.BL
 
         internal static IList<PRODUCT> FindProductListByIdHero(string argument)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 int id = int.Parse(argument);
                 return dal.GetAllProductByIdHero(id);
@@ -45,7 +45,7 @@ namespace TesTransaction.BL
 
         internal static IList<AGE> FindAgesList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 return dal.GetAllAges();
             }
@@ -53,7 +53,7 @@ namespace TesTransaction.BL
 
         internal static IList<PRODUCT> FindProductListByIdAge(string argument)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 int id = int.Parse(argument);
                 return dal.GetAllProductByIdAge(id);
@@ -62,7 +62,7 @@ namespace TesTransaction.BL
 
         internal static IList<CATEGORY> FindCatsList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 return dal.GetAllCats();
             }
@@ -70,7 +70,7 @@ namespace TesTransaction.BL
 
         internal static IList<PRODUCT> FindProductListByIdCat(string argument)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalSearch dal = new DalSearch())
             {
                 int id = int.Parse(argument);
                 return dal.GetAllProductByIdCat(id);

@@ -269,8 +269,6 @@ namespace TesTransaction.Controllers
 
         private ActionResult PayCardDebit(TrPaymentMenuViewModel vmodel)
         {
-            // to do verif method
-            vmodel.AmountsPaid = PaymentBL.MakeAmountsList(vmodel.NumTransaction);
             PaymentBL.CalculCash(vmodel);
             ViewBag.tot = vmodel.GlobalTotal;
             ViewBag.amount = vmodel.Amount;
@@ -284,6 +282,7 @@ namespace TesTransaction.Controllers
             {
                 ViewBag.ticket = false;
             }
+            vmodel.AmountsPaid = PaymentBL.MakeAmountsList(vmodel.NumTransaction);
             vmodel.MethodsP = PaymentBL.FindMethodsList();
             return View(vmodel);
         }

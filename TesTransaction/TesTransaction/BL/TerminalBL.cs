@@ -11,7 +11,7 @@ namespace TesTransaction.BL
     {
         internal static TERMINAL FindTerminalById(int id)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTerminal dal = new DalTerminal())
             {
                 return dal.GetTerminalById(id);
             }
@@ -19,7 +19,7 @@ namespace TesTransaction.BL
 
         internal static IList<string> FindTerminalsNames()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTerminal dal = new DalTerminal())
             {
                 List<TERMINAL> terminals = dal.GetAllTerminals();
                 List<string> terminalsNames = new List<string>();
@@ -33,7 +33,7 @@ namespace TesTransaction.BL
 
         internal static IList<TERMINAL> FindTerminalsList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTerminal dal = new DalTerminal())
             {
                 return dal.GetAllTerminals();
             }
@@ -41,7 +41,7 @@ namespace TesTransaction.BL
 
         internal static int FindTerminalIdByDate()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTerminal dal = new DalTerminal())
             {
                 return dal.GetTerminalIdByDate();
             }

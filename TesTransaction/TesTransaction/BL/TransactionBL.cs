@@ -15,7 +15,7 @@ namespace TesTransaction.BL
         #region Transaction
         internal static string InitializeNewTransaction(int terminal)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 // to do --> provisoire vendorId = 1, shopId = 1, customerId = 1
                 int t = dal.CreateTransaction(terminal);
@@ -34,10 +34,15 @@ namespace TesTransaction.BL
 
         internal static void AddNewTransactionDetail(string codeProduct, string terminal, string transaction, bool minus)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 //find productId with codeProduct
-                var prod = dal.GetProductByCode(codeProduct);
+                PRODUCT prod;
+                using (IDalProduct dalP = new DalProduct())
+                {
+                    prod = dalP.GetProductByCode(codeProduct);
+                }
+
                 //verify if product exist in detail and Add or Remove itemDetail
                 IList<TRANSACTION_DETAILS> detailList = FindTransactionDetailsListById(transaction);
                 var result = VerifyProductInDetail(prod.idProduct, detailList);
@@ -74,7 +79,11 @@ namespace TesTransaction.BL
                 else
                 {
                     //Add new detail --> param product, terminalId, transactionId, vatItem 
-                    var vatItem = dal.GetVatValById(prod.vatId);
+                    decimal vatItem;
+                    using (IDalVat dalV = new DalVat())
+                    {
+                        vatItem = dalV.GetVatValById(prod.vatId);
+                    }
                     int terminalId = int.Parse(terminal);
                     int transactionId = int.Parse(transaction);
                     dal.CreateDetail(prod, terminalId, transactionId, vatItem);
@@ -104,7 +113,7 @@ namespace TesTransaction.BL
 
         internal static IList<TRANSACTION_DETAILS> FindTransactionDetailsListById(string transaction)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 int transactionId = int.Parse(transaction);
                 return dal.GetAllDetailsByTransactionId(transactionId);
@@ -114,7 +123,7 @@ namespace TesTransaction.BL
 
         internal static TRANSACTIONS FindTransactionById(string numTransaction)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 int transactionId = int.Parse(numTransaction);
                 return dal.GetTransactionById(transactionId);
@@ -180,7 +189,7 @@ namespace TesTransaction.BL
 
         internal static void SaveTransactionBeforePayment(string numTransaction, string globalTotal, string discountG)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 var idTr = int.Parse(numTransaction);
                 //var gTot = decimal.Parse(globalTotal);
@@ -199,7 +208,7 @@ namespace TesTransaction.BL
 
         internal static void CancelTransac(string numTransaction)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 var transac = int.Parse(numTransaction);
                 dal.CancelTransactionById(transac);
@@ -208,7 +217,7 @@ namespace TesTransaction.BL
 
         internal static void AddTicketAndCloseTransac(string numTransaction)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalTransaction dal = new DalTransaction())
             {
                 var transac = int.Parse(numTransaction);
                 dal.CloseTransaction(transac);

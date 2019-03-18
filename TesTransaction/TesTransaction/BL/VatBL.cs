@@ -11,7 +11,7 @@ namespace TesTransaction.BL
     {
         internal static Decimal VatIncl(int id, decimal price)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalVat dal = new DalVat())
             {
                 //decimal vat = dal.GetAppliedVatById(id).appliedVat;
                 decimal vat = dal.GetVatValById(id);
@@ -27,7 +27,7 @@ namespace TesTransaction.BL
 
         internal static IList<VAT> FindVatsList()
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalVat dal = new DalVat())
             {
                 return dal.GetAllVats();
             }
@@ -35,7 +35,7 @@ namespace TesTransaction.BL
 
         internal static int FindVatIdByVal(decimal globalVAT)
         {
-            using (IDal dal = new TransactionDal())
+            using (IDalVat dal = new DalVat())
             {
 
                 return dal.GetVatIdByVal(globalVAT);
@@ -46,7 +46,7 @@ namespace TesTransaction.BL
         {
             if (vatId != null)
             {
-                using (IDal dal = new TransactionDal())
+                using (IDalVat dal = new DalVat())
                 {
 
                     return (dal.GetVatValById(vatId)).ToString();
